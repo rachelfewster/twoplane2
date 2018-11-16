@@ -1,0 +1,8 @@
+\begin{figure}
+\begin{center}
+\includegraphics[width=12cm]{HMMcorr.pdf}
+\caption{Correlation of detections at various lags ($k$) for an availability process with mean availability cycle length of 138 and mean proportion of time available of 28/138. Correlations at $k=10$ and $k=120$ are shown explicitly.  \label{fig:HMMcorr}}
+\end{center}
+\end{figure}
+\efloatseparator
+ 

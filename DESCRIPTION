@@ -1,0 +1,11 @@
+Package: twoplane
+Type: Package
+Title: Two-plane mark-recapture distance sampling with unknown recaptures
+Version: 1.0
+Date: 2013-10-02
+Author: David Borchers and Peter Nightingale
+Maintainer: David Borchers <dlb@st-andrews.ac.uk>
+Description: Estimates density from mark-recapture line transect survey without any recapture (duplicate) identification. Does this on the basis of the locations of detections by each observer, an animal movement model and a Markov model for the animal availability process.
+License: GPL (>= 2)
+Depends: Rcpp (>= 0.10.5), boot, expm, HiddenMarkov, functional
+LinkingTo: Rcpp

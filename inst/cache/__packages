@@ -1,0 +1,11 @@
+base
+knitr
+xtable
+Matrix
+expm
+Rcpp
+boot
+HiddenMarkov
+functional
+twoplane
+plot3D

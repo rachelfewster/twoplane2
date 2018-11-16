@@ -1,0 +1,14 @@
+# test that dft() works:
+# ---------------------
+planeknots=100 # observer speed in knots
+planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
+k=10 # time separation of observers in seconds
+#sigmaknots=7.5 
+#sigmarate=sigmaknots*nm2km/60/60 # std dev of movement distance per second (in km/sec)
+sigmarate = 0.75*planespd
+theta3 = log(sigmarate)
+sigma.mult = 4
+sigma.t = sqrt(k)*sigmarate/planespd
+fts = seq(max(0,k-sigma.mult*sigma.t),k+sigma.mult*sigma.t,length=500)
+plot(fts,dft(fts,k,planespd,theta3),type="l")
+lines(fts,dnorm(fts,mean=k,sd=sigma.t),lty=2,col="blue")

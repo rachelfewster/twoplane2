@@ -1,0 +1,44 @@
+\begin{figure}
+
+{\centering \includegraphics[width=\maxwidth]{figs/fig_correlation_plot-1}
+
+}
+
+\caption[Correlation between detections by the two observes as a function of lag, for mean proportion of time available (\(\alpha\)) and mean dive cycle duration of \(100\) seconds (dark line)]{Correlation between detections by the two observes as a function of lag, for mean proportion of time available (\(\alpha\)) and mean dive cycle duration of \(100\) seconds (dark line). Gray lines show the correlation for mean proportions of time available of \(47\%, 52\%, 57\%, 62\%, 67\%, 77\%, 82\%, 87\%, 92\%\) and, \(97\%\) seconds. The black line is for \(\alpha=72\%\)}\label{fig:fig_correlation_plot}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+
+{\centering \includegraphics[width=\maxwidth]{figs/fig_p_avail_plot-1}
+
+}
+
+\caption[The percentage by which the probability of observer 2 detecting an animal given that observer 1 detected it, is greater than the proportion of time animals are available (\(\alpha\))]{The percentage by which the probability of observer 2 detecting an animal given that observer 1 detected it, is greater than the proportion of time animals are available (\(\alpha\)). This is shown for lags from 10 to 100 percent of the dive cycle length. The dark line is for \(\alpha=0.72\).}\label{fig:fig_p_avail_plot}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+
+{\centering \includegraphics[width=\maxwidth]{figs/fig_p_unavail_plot-1}
+
+}
+
+\caption[The percentage by which the probability of observer 2 detecting an animal given that observer 1 did not detect it, is greater than the proportion of time animals are available (\(\alpha\))]{The percentage by which the probability of observer 2 detecting an animal given that observer 1 did not detect it, is greater than the proportion of time animals are available (\(\alpha\)). This is shown for lags from 10 to 100 percent of the dive cycle length. The dark line is for \(\alpha=0.72\).}\label{fig:fig_p_unavail_plot}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\includegraphics[width = \textwidth]{figs/biascv.pdf}
+\caption{The percentage bias (first column) and percentage CV (second column) of $\hat{D}$ as a function of proportion of time available ($\alpha$) and lag ($l$), for each of the three animal speeds considered.}
+\label{fig:biascv}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}
+\includegraphics[width = \textwidth]{figs/mlepalm.pdf}
+\caption{The percentage bias (left) and percentage CV (right) of the MLE and Palm estimators of $\hat{D}$ over all simulation scenarios. Each point corresponds to one simulation scenario; scenaios with $k=80$ are marked with diamonds, those with $\alpha=0.1$ are marked with crosses. The bias and CV are the same for the two methods along the lines.}
+\label{fig:mlepalm}
+\end{figure}
+\efloatseparator
+ 

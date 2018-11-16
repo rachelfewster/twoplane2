@@ -1,0 +1,9 @@
+segmentize=function(s1,s2,dmax){
+  ss=c(s1,s2)
+  ord=order(ss)
+  ds=ss[ord]
+  diffs=diff(ds)
+  cutafter=which(diffs>dmax)
+  cuts=(ds[cutafter]+ds[cutafter+1])/2
+  return(cuts)
+}

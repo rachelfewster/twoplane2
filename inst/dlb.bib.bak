@@ -1,0 +1,2947 @@
+% Encoding: windows-1252
+
+@ARTICLE{Agresti:94,
+  author = {Agresti, A.},
+  title = {Simple capture-recapture models permitting unequal catchability and
+	variable sampling effort.},
+  journal = {Biometrics},
+  year = {1994},
+  volume = {50},
+  pages = {494-500}
+}
+
+@INPROCEEDINGS{Akaike:73,
+  author = {Akaike, H.},
+  title = {Information theory and an extension of the maximum likelihood principle},
+  booktitle = {International symposium on information theory},
+  year = {1973},
+  editor = {B. N. Petran and Cs{\`a}aki, F.},
+  pages = {267-281},
+  address = {Budapest, Hungary},
+  publisher = {Akad{\`e}emiai Kiadi}
+}
+
+@ARTICLE{Alho:90,
+  author = {Alho, J. M.},
+  title = {Logistic regression in capture-recapture models},
+  journal = {Biometrics},
+  year = {1990},
+  volume = {46},
+  pages = {623-635}
+}
+
+@PHDTHESIS{Alpizar-Jara:97,
+  author = {Alpizar-Jara, R.},
+  title = {Assessing assumption violation in line transect sampling},
+  school = {North Carolina State University},
+  year = {1997},
+  type = {Ph{D} Thesis},
+  address = {Raleigh}
+}
+
+@INPROCEEDINGS{Alpizar-Jara+Pollock:99,
+  author = {Alpizar-Jara, R. and Pollock, K.H.},
+  title = {Combining line transect and capture-recapture for mark-resightings
+	studies.},
+  booktitle = {Marine mammal survey and assessment methods.},
+  year = {1999},
+  editor = {Amstrup, G.W. and Garner, S.C. and Laake, J.L. and Manly, B.F.J.
+	and McDonald, L.L. and Robertson, D.G.},
+  pages = {99-114},
+  address = {Rotterdam},
+  publisher = {Balkema}
+}
+
+@ARTICLE{Alpizar-Jara+Pollock:96,
+  author = {Alpizar-Jara, R. and Pollock, K. H.},
+  title = {A combination of line transect and capture recapture sampling model
+	for multiple observers in aerial surveys.},
+  journal = {Environmental and Ecological Statistics},
+  year = {1996},
+  volume = {3},
+  pages = {311-327}
+}
+
+@ARTICLE{Anon2006,
+  author = {Anon},
+  title = {Scottish Sea Fisheries Statistics 2005},
+  journal = {Scottish Executive, Edinburgh},
+  year = {2006},
+  pages = {35},
+  __markedentry = {[David]},
+  owner = {joyce},
+  timestamp = {2009.11.30}
+}
+
+@ARTICLE{Anon2005,
+  author = {Anon},
+  title = {A Sustainable Framework for Scottish Sea Fisheries},
+  journal = {Scottish Executive, Edinburgh},
+  year = {2005},
+  pages = {46},
+  __markedentry = {[David]},
+  owner = {joyce},
+  timestamp = {2009.11.30}
+}
+
+@ARTICLE{Ashbridge+Goudie:00,
+  author = {Ashbridge, J. and Goudie, I. B. J.},
+  title = {Coverage-adjusted estimators for mark-recapture in heterogeneous
+	populations.},
+  journal = {Communications in Statistics: Simulation and Computation},
+  year = {2000},
+  volume = {29},
+  pages = {1215-1237}
+}
+
+@ARTICLE{Augustin+al:98b,
+  author = {Augustin, N.H. and Mugglestone, M.A. and Buckland, S.T.},
+  title = {The role of simulation in modeling spatially correlated data.},
+  journal = {Environmetrics},
+  year = {1998},
+  volume = {9},
+  pages = {175-196}
+}
+
+@ARTICLE{Augustin+al:98a,
+  author = {Augustin, N. H. and Borchers, D. L. and Clarke, E. D. and Buckland,
+	S. T. and Walsh, M.},
+  title = {Spatiotemporal modelling for the annual egg production method of
+	stock assessment using generalized additive models.},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences},
+  year = {1998},
+  volume = {55},
+  pages = {2608-2621.}
+}
+
+@ARTICLE{Augustin+al:96,
+  author = {Augustin, N. H. and Mugglestone, M. A. and Buckland, S. T.},
+  title = {An autologistic model for the spatial distribution of wildlife.},
+  journal = {Journal of Applied Ecology},
+  year = {1996},
+  volume = {33},
+  pages = {339-347}
+}
+
+@INPROCEEDINGS{Barlow:99,
+  author = {J. Barlow},
+  title = {Trackline detection probability for long-diving whales},
+  booktitle = {Marine Mammal Survey and Assessment Methods},
+  year = {1999},
+  editor = {G.W. Garner and S.C. Amstrup and J.L. Laake and B.F.J. Manly and
+	L.L. McDonald and D.G. Robertson},
+  pages = {209-221},
+  address = {Rotterdam},
+  publisher = {Balkema}
+}
+
+@ARTICLE{Barlow+al:88,
+  author = {Barlow, J. and Oliver, C.W. and Jackson, T.D. and Taylor, B.L.},
+  title = {Harbor porpoise, {\it Phocoena phoecena}, abundance estimation for
+	California, Oregon and Washington: aerial surveys.},
+  journal = {Fisheries Bulletin},
+  year = {1988},
+  volume = {86},
+  pages = {433-444}
+}
+
+@MANUAL{Bates2008,
+  title = {lme4: Linear mixed-effects models using S4 classes},
+  author = {Douglas Bates and Martin Maechler and Bin Dai},
+  year = {2008},
+  note = {R package version 0.999375-28},
+  __markedentry = {[David]},
+  owner = {Yuan Yuan},
+  timestamp = {2009.11.17},
+  url = {http://lme4.r-forge.r-project.org/}
+}
+
+@ARTICLE{Beavers+Ramsey:98,
+  author = {Beavers, S.C. and Ramsey, F.L.},
+  title = {Detectability analysis in line transect surveys},
+  journal = {Journal of Wildlife Mangement},
+  year = {1998},
+  volume = {62},
+  pages = {948-957}
+}
+
+@ARTICLE{Bonner:13,
+  author = {Bonner, S.},
+  title = {Response to: a new method for estimating animal abundance with two
+	sources of data in capture-recapture studies},
+  journal = {Methods in Ecology and Evolution},
+  year = {2013},
+  volume = {4},
+  pages = {585-588},
+  owner = {david},
+  timestamp = {2013.07.11}
+}
+
+@INPROCEEDINGS{Borchers:99,
+  author = {D.L. Borchers},
+  title = {Composite mark-recapture line transect surveys},
+  booktitle = {Marine mammal survey and assessment methods.},
+  year = {1999},
+  editor = {Garner, G.W. and Amstrup, S.C. and Laake, J.L. and Manly, B.F.J.
+	and McDonald, L.L. and Robertson, D.G.},
+  pages = {115-126},
+  address = {Rotterdam},
+  publisher = {Balkema}
+}
+
+@ARTICLE{Borchers:11,
+  author = {D.L. Borchers},
+  title = {A non-technical overview of spatially explicit capture-recapture
+	models.},
+  journal = {Journal of Ornithology},
+  year = {2011},
+  volume = {152},
+  pages = {435-444},
+  owner = {David},
+  timestamp = {2010.11.29}
+}
+
+@PHDTHESIS{Borchers:96,
+  author = {Borchers, D.L.},
+  title = {Line transect abundance estimation with uncertain detection on the
+	trackline.},
+  school = {University of Cape Town},
+  year = {1996},
+  type = {Ph{D} Thesis},
+  address = {Cape Town}
+}
+
+@ARTICLE{Borchers+al:98b,
+  author = {Borchers, D.L. and Buckland, S.T. and Goedhart, P.W. and Clarke,
+	E.D. and Hedley, S.L.},
+  title = {Horvitz-Thompson estimators for double-platform line transect surveys.},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {1221-1237}
+}
+
+@BOOK{Borchers+al:02,
+  title = {Estimating Animal Abundance: Closed Populations},
+  publisher = {Springer},
+  year = {2002},
+  author = {Borchers, D.L. and Buckland, S.T. and Zucchini, W.}
+}
+
+@UNPUBLISHED{Borchers+Cameron:95,
+  author = {Borchers, D.L. and Cameron, C.},
+  title = {Analysis of the 1992/93 IWC minke whale sightings survey in Area
+	III.},
+  note = {Paper SC/47/SH16 presented to the IWC Scientific Committee, 1995},
+  year = {unpublished}
+}
+
+@ARTICLE{Borchers+al:10,
+  author = {Borchers, D.L. and Marques, T.A. and Gunlaugsson, Th. and Jupp, P.},
+  title = {Estimating distance sampling detection functions when distances are
+	measured with errors.},
+  journal = {Journal of Agricultural, Biological and Environmental Statistics},
+  year = {2010},
+  volume = {15},
+  pages = {346--361},
+  owner = {dlb},
+  timestamp = {2009.12.28}
+}
+
+@ARTICLE{Borchers+al:09,
+  author = {Borchers, D.L. and Pike, D. and Gunlaugsson, Th. and Vikingson, G.},
+  title = {Minke whale abundance estimation from the NASS 1987 and 2001 cue
+	counting surveys taking account of distance estimation errors.},
+  journal = {North Atlantic Marine Mammal Commission Publications},
+  year = {2009},
+  volume = {7},
+  pages = {201-220},
+  owner = {dlb},
+  timestamp = {2009.12.27}
+}
+
+@ARTICLE{Borchers+al:98a,
+  author = {Borchers, D.L. and Zucchini, W. and Fewster, R.},
+  title = {Mark-recapture models for line transect surveys},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {1207-1220}
+}
+
+@ARTICLE{Borchers+al:97,
+  author = {Borchers, D. L. and Buckland, S. T. and Priede, I. G. and Ahmadi,
+	S.},
+  title = {Improving the precision of the daily egg production method using
+	generalized additive models},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences},
+  year = {1997},
+  volume = {54},
+  pages = {2727-2742.}
+}
+
+@INPROCEEDINGS{Borchers+Burnham:04,
+  author = {D. L. Borchers and K. P. Burnham},
+  title = {General formulation for Distance Sampling},
+  booktitle = {Advanced Distance Sampling.},
+  year = {2004},
+  editor = {Buckland, S. T. and Anderson, D. R. and Burnham, K. P. and Laake,
+	J. L. and Borchers, D. L. and Thomas, L. J.},
+  publisher = {Oxford University Press}
+}
+
+@ARTICLE{Borchers+Efford:08,
+  author = {Borchers, D. L. and Efford, M. G.},
+  title = {Spatially explicit maximum likelihood methods for capture-recapture
+	studies.},
+  journal = {Biometrics},
+  year = {2008},
+  volume = {64},
+  pages = {377-385.},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@ARTICLE{Borchers+al:06,
+  author = {Borchers, D. L. and Laake, J. L. and Southwell, C. and Paxton, C.
+	G. M. },
+  title = {Accommodating unmodelled heterogeneity in double-observer distance
+	sampling surveys},
+  journal = {Biometrics},
+  year = {2006},
+  pages = {372-378},
+  number = {62}
+}
+
+@UNPUBLISHED{Borchers+al:03,
+  author = {Borchers, D. L. and Pike, D. and Gunlaugsson, Th. and Vikingsson,
+	G. A.},
+  title = {Analyses of the NASS 1987 and 2001 minke whale cue counting surveys
+	taking account of distance estimation errors},
+  note = {Presented to the 55th meeting of the IWC Scientific Committee, 2003},
+  year = {2003}
+}
+
+@ARTICLE{Borcherssub.,
+  author = {Borchers, D. L. and Pike, D. and Gunnlaugsson, Th. and Vikingsson,
+	G. A.},
+  title = {Minke whale abundance estimation from the NASS 1987 and 2001 cue
+	counting surveys taking account of distance estimation errors},
+  journal = {North Atlantic Marine Mammal Commission Special Issue},
+  year = {sub.},
+  volume = {??},
+  __markedentry = {[David]},
+  owner = {David},
+  timestamp = {2010.01.25}
+}
+
+@ARTICLE{Borchers+al:sub2,
+  author = {Borchers, D. L. and Pike, D. and Gunnlaugsson, Th. and Vikingsson,
+	G. A.},
+  title = {Minke whale abundance estimation from the NASS 1987 and 2001 cue
+	counting surveys taking account of distance estimation errors},
+  journal = {North Atlantic Marine Mammal Commission Special Issue},
+  year = {2009}
+}
+
+@BOOK{Bowman+Azzalini:97,
+  title = {Applied smoothing techniques for data analysis},
+  publisher = {Clarendon Press},
+  year = {1997},
+  author = {Bowman, A.W. and Azzalini, A.},
+  address = {Oxford}
+}
+
+@ARTICLE{Branch+Butterworth:01,
+  author = {Branch, T.A. and Butterworth, D.S.},
+  title = {Southern Hemisphere minke whales: standardised abundance estimates
+	from the 1978/79 to 1997/98 IDCR-SOWER surveys.},
+  journal = {Journal of Cetacean Research and Management},
+  year = {2001},
+  volume = {3},
+  pages = {143-174},
+  number = {2}
+}
+
+@UNPUBLISHED{Bravington:00,
+  author = {Bravington, M.V.},
+  title = {Covariate models for continuous time sightings data.},
+  note = {Paper SC/52/IRMP14 presented to the International Whaling Commission
+	Scientific Committee, 2000},
+  year = {unpublished}
+}
+
+@PHDTHESIS{Bravington:94,
+  author = {Bravington, M.},
+  title = {The effects of acidification on the population dynamics of brown
+	trout in Norway.},
+  school = {Imperial College},
+  year = {1994},
+  type = {Ph{D} Thesis},
+  address = {London}
+}
+
+@UNPUBLISHED{Breiwick+al:88,
+  author = {Breiwick, J.M. and Rugh, D.J. and Withrow, D.E. and Dalheim, M.E.
+	and Buckland, S.T.},
+  title = {Preliminary population estimate of gray whales during the 1987/88
+	southward migration.},
+  note = {Paper SC/49/PS12 presented to the International Whaling Commission
+	Scientific Committee, 1998},
+  year = {unpublished}
+}
+
+@ARTICLE{Brown:82,
+  author = {Brown, P. J.},
+  title = {Multivariate calibration},
+  journal = {Journal of the Royal Statistical Society, Series B},
+  year = {1982},
+  volume = {44},
+  pages = {287-321}
+}
+
+@ARTICLE{Buckland:92,
+  author = {Buckland, S.T.},
+  title = {Fitting density functions using polynomials.},
+  journal = {Applied Statistics},
+  year = {1992},
+  volume = {41},
+  pages = {63-76}
+}
+
+@BOOK{Buckland+al:04,
+  title = {Advanced distance sampling},
+  publisher = {Oxford University Press},
+  year = {2004},
+  author = {Buckland,S.T. and Anderson,D.R. and Burnham,K.P. and Laake,J.L. and
+	Borchers,D.L. and Thomas,L.J.},
+  address = {Oxford}
+}
+
+@ARTICLE{Buckland+Breiwick:93,
+  author = {Buckland, S.T. and Breiwick, J.M.},
+  title = {Estimated trends in abundance of California gray whales from shore
+	counts, 1967/68 to 1987/88.},
+  journal = {Journal of Cetacean Research and Management},
+  year = {in press}
+}
+
+@ARTICLE{Buckland+al:93,
+  author = {Buckland, S.T. and Breiwick, J.M. and Cattanach, K.L. and Laake,
+	J.L.},
+  title = {Estimated population size of the California gray whale.},
+  journal = {Marine Mammal Science},
+  year = {1993},
+  volume = {9},
+  pages = {235-249}
+}
+
+@ARTICLE{Buckland+al:97,
+  author = {S.T. Buckland and K.P. Burnham and N.H. Augustin},
+  title = {Model selection: an integrap part of inference},
+  journal = {Biometrics},
+  year = {1997},
+  volume = {53},
+  pages = {603-618}
+}
+
+@ARTICLE{Buckland+al:09,
+  author = {Buckland,S.T. and Laake,J.L. and Borchers,D.L.},
+  title = {Double-observer line transect methods: levels of independence.},
+  journal = {Biometrics},
+  year = {2009},
+  volume = {66},
+  pages = {169-177},
+  owner = {David},
+  timestamp = {2011.08.10}
+}
+
+@ARTICLE{Buckland+Turnock:92,
+  author = {S.T. Buckland and B.J. Turnock},
+  title = {A robust line transect method},
+  journal = {Biometrics},
+  year = {1992},
+  volume = {48},
+  pages = {901-909}
+}
+
+@BOOK{Buckland+al:01,
+  title = {Introduction to distance sampling},
+  publisher = {Oxford University Press},
+  year = {2001},
+  author = {Buckland, S. T. and Anderson, D. R. and Burnham, K. P. and Laake,
+	J. L. and Borchers, D. L. and Thomas, L. J.},
+  address = {Oxford}
+}
+
+@ARTICLE{Buckland+Anganuzzi:88,
+  author = {Buckland, S. T. and Anganuzzi,A.A.},
+  title = {Comparison of smearing methods in the analysis of minke sightings
+	data from IWC/IDCR Antarctic cruises.},
+  journal = {Report of the International Whaling Commission},
+  year = {1988},
+  volume = {38},
+  pages = {257-263.},
+  owner = {dlb},
+  timestamp = {2009.02.12}
+}
+
+@BOOK{Burnham+Anderson:98,
+  title = {Model selection and inference: a practical information-theoretic
+	approach.},
+  publisher = {Springer},
+  year = {1998},
+  author = {Burnham, K.P. and Anderson, D.R.},
+  address = {New York}
+}
+
+@BOOK{Burnham+al:87,
+  title = {Design and analysis methods for fish survival experiments based on
+	release-recapture},
+  publisher = {American Fisheries Society},
+  year = {1987},
+  author = {Burnham, K.P. and Anderson, D.R. and White, G.C. and Brownie, C.
+	and Pollock,K.H.},
+  number = {5},
+  series = {American Fisheries Society Monographs}
+}
+
+@PHDTHESIS{Burnham:72,
+  author = {Burnham, K. P.},
+  title = {Estimation of population size in multinomial capture-recapture studies
+	when capture probabilities vary among animals.},
+  school = {Oregon State University},
+  year = {1972},
+  type = {Ph{D} Thesis},
+  address = {Oregon}
+}
+
+@ARTICLE{Burnham+Overton:79,
+  author = {Burnham, K. P. and Overton, W. S.},
+  title = {Robust estimation of population size when capture probabilities vary
+	among animals.},
+  journal = {Ecology},
+  year = {1979},
+  volume = {60},
+  pages = {927-936}
+}
+
+@ARTICLE{Burnham+Overton:78,
+  author = {Burnham, K. P. and Overton, W. S.},
+  title = {Estimation of the size of a closed population when capture probabilities
+	vary among animals.},
+  journal = {Biometrika},
+  year = {1978},
+  volume = {75},
+  pages = {625-633}
+}
+
+@ARTICLE{Butterworth:82,
+  author = {Butterworth, D.S.},
+  title = {On the functional form used for g(y) for minke whale sightings, and
+	bias in its estimation due to measurement inaccuracies.},
+  journal = {Report of the International Whaling Commission},
+  year = {1982},
+  volume = {32},
+  pages = {833-838},
+  owner = {dlb},
+  timestamp = {2009.02.12}
+}
+
+@ARTICLE{Butterworth+al:82,
+  author = {D.S. Butterworth and P.B. Best and M. Basson},
+  title = {Results of analyses of minke whale assessment cruise, 1980/1},
+  journal = {Report of the International Whaling Commission},
+  year = {1982},
+  volume = {32},
+  pages = {819-834}
+}
+
+@ARTICLE{Butterworth+Borchers:88,
+  author = {Butterworth, D.S. and Borchers, D.L.},
+  title = {Estimates of $g(0)$ for minke schools from the results of the independent
+	observer experiment on the 1985/86 and 1986/87 {IWC/IDCR} Antarctic
+	assessment cruises.},
+  journal = {Report of the International Whaling Commission},
+  year = {1988},
+  volume = {37},
+  pages = {301-333}
+}
+
+@ARTICLE{Canadas+al:04,
+  author = {Canadas, A. and Desportes, G. and Borchers, D.L.},
+  title = {The estimation of the detection function and g(0) for short-beaked
+	common dolphins (Delphinis delphis), using double-platform data collected
+	during the NASS-95 Faroese survey.},
+  journal = {Journal of Cetacean Research and Management },
+  year = {2004},
+  volume = {6},
+  pages = {191-198}
+}
+
+@ARTICLE{Carlin+al:92,
+  author = {Carlin,B.P., Polson,N.G. and Stoffer,D.S.},
+  title = {A Monte Carlo approach to nonnormal and nonlinear state-space modeling},
+  journal = { Journal of the American Statistical Association},
+  year = {1992},
+  volume = {87},
+  pages = {493-500}
+}
+
+@ARTICLE{Carretta+al:98,
+  author = {Carretta, J.V. and Forney, K.A. and Laake, J.L.},
+  title = {Abundance of California coastal bottlenose dolphins estimated from
+	tandem aerial surveys.},
+  journal = {Marine Mammal Science},
+  year = {1998},
+  volume = {14},
+  pages = {655-675}
+}
+
+@ARTICLE{Carter+Kohn:96,
+  author = {Carter, C.K. and Kohn, R.},
+  title = {Markov chain Monte Carlo in conditionally Gaussian state-space models},
+  journal = {Biometrika},
+  year = {1996},
+  volume = {83},
+  pages = {589-601}
+}
+
+@ARTICLE{Carter+Kohn:94,
+  author = {Carter, C.K. and Kohn, R.},
+  title = {On Gibbs sampling for state space models},
+  journal = {Biometrika},
+  year = {1994},
+  volume = {81},
+  pages = {541-553}
+}
+
+@ARTICLE{Chao:89,
+  author = {Chao, A.},
+  title = {Estimating population size for sparse data in capture-recapture experiments.},
+  journal = {Biometrics},
+  year = {1989},
+  volume = {45},
+  pages = {427-438}
+}
+
+@ARTICLE{Chao:87,
+  author = {Chao, A.},
+  title = {Estimating the population size for capture-recapture data with unequal
+	capture probabilities},
+  journal = {Biometrics},
+  year = {1987},
+  volume = {43},
+  pages = {783-791}
+}
+
+@INPROCEEDINGS{Chao+Huggins:ip,
+  author = {Chao, A. and Huggins, R.M.},
+  title = {Modern closed population models},
+  booktitle = {The handbook of capture-recapture method},
+  year = {inpress},
+  editor = {Manly, B. and McDonald, T. and Amstrup, S.},
+  address = {Princeton},
+  publisher = {Princeton University Press}
+}
+
+@ARTICLE{Chao+al:92,
+  author = {Chao, A. and Lee, S.M. and Jeng, S.L.},
+  title = {Estimating population size for capture-recapture data when capture
+	probabilities vary by time and individual animal.},
+  journal = {Biometrics},
+  year = {1992},
+  volume = {48},
+  pages = {201-216}
+}
+
+@ARTICLE{Chapman:51,
+  author = {Chapman, D.G.},
+  title = {Some properties of the hypergeometric distribution with applications
+	to zoological censuses.},
+  journal = {University of California Publications in Statistics},
+  year = {1951},
+  volume = {1},
+  pages = {131-160}
+}
+
+@ARTICLE{Chapman+Junge:56,
+  author = {Chapman, D.G. and Junge, C.O.},
+  title = {The estimation of the size of a stratified animal population.},
+  journal = {Annals of Mathematical Statistics},
+  year = {1956},
+  volume = {27},
+  pages = {375-389}
+}
+
+@ARTICLE{Chapman+Murphy:65,
+  author = {Chapman, D.G. and Murphy, G.I.},
+  title = {Estimates of mortality of the size of a stratified animal population},
+  journal = {Annals of Mathematical Statististics},
+  year = {1965},
+  volume = {27},
+  pages = {375-389}
+}
+
+@ARTICLE{Chen+al:98,
+  author = {Chen, C.L. and Pollock, K.H. and Hoenig, J.M.},
+  title = {Combining change-in-ratio, index-removal, and removal models for
+	estimating population size.},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {815-872}
+}
+
+@ARTICLE{Chen:00,
+  author = {Chen,S.X.},
+  title = {Animal abundance estimation in independent observer line transect
+	surveys.},
+  journal = {Environmental and Ecological Statistics.},
+  year = {2000},
+  volume = {7},
+  pages = {285-299}
+}
+
+@ARTICLE{Chen:99,
+  author = {Chen,S.X.},
+  title = {Estimation in independent observer line transect surveys for clustered
+	populations.},
+  journal = {Biometrics},
+  year = {1999},
+  volume = {55},
+  pages = {754-759}
+}
+
+@ARTICLE{Chen:96,
+  author = {Chen, S.X.},
+  title = {Studying school size effects in line transect sampling using the
+	kernel method.},
+  journal = {Biometrics},
+  year = {1996},
+  volume = {52},
+  pages = {1283-1294}
+}
+
+@ARTICLE{Chen+Lloyd:00,
+  author = {Chen,S.X. and Lloyd,C.J.},
+  title = {A nonparametric approach to the analysis of two-stage mark-recapture
+	experiments.},
+  journal = {Biometrika.},
+  year = {2000},
+  volume = {87},
+  pages = {633-649}
+}
+
+@ARTICLE{Chen:98,
+  author = {Chen, S. X.},
+  title = {Measurement errors in line transect surveys},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {899--908}
+}
+
+@ARTICLE{Chen+Colwing:01,
+  author = {Chen, S. X. and Cowling, A.},
+  title = {Measurement errors in line transect sampling},
+  journal = {Biometrics},
+  year = {2001},
+  volume = {54}
+}
+
+@MANUAL{Cooch+White:06,
+  title = {Program MARK: A gentle introduction. },
+  author = {Cooch, E. and White, G.},
+  edition = {4th},
+  year = {2006},
+  note = {http://www.phidot.org/software/mark/docs/book/}
+}
+
+@UNPUBLISHED{Cooke:01,
+  author = {Cooke, J.G},
+  title = {A modification of the radial distance method for dual-platform line-transect
+	analysis, to improve robustness.},
+  note = {Paper SC/53/IA31 presented to the International Whaling Commission
+	Scientific Committee, 2001},
+  year = {unpublished}
+}
+
+@ARTICLE{Cooke:97,
+  author = {Cooke, J.G.},
+  title = {An implementation of a surfacing-based approach to abundance estimation
+	of minke whales from shipborne surveys.},
+  journal = {Report of the International Whaling Commission},
+  year = {1997},
+  volume = {47},
+  pages = {513-528}
+}
+
+@UNPUBLISHED{Cooke+Leaper:98,
+  author = {Cooke, J.G. and Leaper, R.},
+  title = {A general modelling framework for the estimation of whale abundance
+	from line transect surveys.},
+  note = {Paper SC/50/RMP21 presented to the International Whaling Commission
+	Scientific Committee, 1998},
+  year = {unpublished}
+}
+
+@ARTICLE{Cormack:89,
+  author = {Cormack, R.M.},
+  title = {Log-linear models for capture-recapture},
+  journal = {Biometrics},
+  year = {1989},
+  volume = {45},
+  pages = {395-413}
+}
+
+@ARTICLE{Cormack:92,
+  author = {Cormack, R. M.},
+  title = {Interval estimation for mark-recapture studies of closed populations},
+  journal = {Biometrics},
+  year = {1992},
+  volume = {48},
+  pages = {567-576}
+}
+
+@ARTICLE{Cormack+Jupp:91,
+  author = {Cormack, R. M. and Jupp, P. E.},
+  title = {Inference for {P}oisson and multinomial models for capture-recapture
+	experiments},
+  journal = {Biometrika},
+  year = {1991},
+  volume = {78},
+  pages = {911-916}
+}
+
+@BOOK{Cox:62,
+  title = {Renewal theory},
+  publisher = {Methuen},
+  year = {1962},
+  author = {Cox, D.R.},
+  address = {London}
+}
+
+@BOOK{Cox+Hinkley:74,
+  title = {Theoretical statistics},
+  publisher = {Chapman {\&} Hall},
+  year = {1974},
+  author = {Cox, R.D. and Hinkley, D.V.},
+  address = {London}
+}
+
+@BOOK{Cressie:98,
+  title = {Statistics for spatial data.},
+  publisher = {Wiley},
+  year = {1998},
+  author = {Cressie, N.A.C.},
+  address = {New York}
+}
+
+@BOOK{Daley+VereJones:88,
+  title = {An introduction to the theory of point processes},
+  publisher = {Springer-Verlag},
+  year = {1988},
+  author = {Daley,D.J. and Vere-Jones,D.},
+  owner = {dlb},
+  timestamp = {2008.10.05}
+}
+
+@BOOK{Davison+Hinkley:97,
+  title = {Bootstrap methods and their application},
+  publisher = {Cambridge University Press},
+  year = {1997},
+  author = {Davison,A.C. and Hinkley,D.V.},
+  address = {Cambridge}
+}
+
+@ARTICLE{Dawson+Efford:09,
+  author = {Dawson, D.K. and Efford, M. G.},
+  title = {Bird population density estimated from acoustic signals.},
+  journal = {Ecology},
+  year = {2009},
+  volume = {46},
+  pages = {1201-1209},
+  owner = {dlb},
+  timestamp = {2009.12.27}
+}
+
+@MANUAL{Debord:04,
+  title = {DMath for Delphi software library},
+  author = {Debord, J.},
+  address = {http://www.unilim.fr/pages\_perso/jean.debord/tpmath/tpmath.htm.},
+  year = {2004}
+}
+
+@BOOK{Diggle:83,
+  title = {Statistical analysis of spatial point patterns.},
+  publisher = {Academic Press},
+  year = {1983},
+  author = {Diggle, P.J.},
+  address = {London}
+}
+
+@ARTICLE{Dorazio+Royle:03,
+  author = {Dorazio, R. M. and Royle, J. A.},
+  title = {Mixture models for estimating the size of a closed population when
+	capture rates vary among individuals.},
+  journal = {Biometrics},
+  year = {2003},
+  volume = {59},
+  pages = {351-364}
+}
+
+@ARTICLE{Drummer+McDonald:87,
+  author = {Drummer, T.D. and McDonald, L.L.},
+  title = {Size bias in line transect sampling.},
+  journal = {Biometrics},
+  year = {1987},
+  volume = {43},
+  pages = {13-21.}
+}
+
+@ARTICLE{Eberhardt:78,
+  author = {Eberhardt, L.L.},
+  title = {Transect methods for population studies},
+  journal = {Journal of Wildlife Management},
+  year = {1978},
+  volume = {42},
+  pages = {1-31}
+}
+
+@MANUAL{secr:10,
+  title = {secr: Spatially explicit capture-recapture, 1.5.0},
+  author = {Efford, M.G.},
+  organization = {Univeristy of Otago},
+  address = {http://www.otago.ac.nz/density},
+  edition = {1.5.0},
+  month = {October},
+  year = {2010},
+  owner = {David},
+  timestamp = {2010.12.04}
+}
+
+@ARTICLE{Efford+Dawson:09,
+  author = {M.G. Efford and D.K. Dawson},
+  title = {Bird population density estimated from acoustic signals},
+  journal = {Journal of Applied Ecology},
+  year = {2009},
+  volume = {46},
+  pages = {1201-1209},
+  owner = {David},
+  timestamp = {2010.11.29}
+}
+
+@ARTICLE{Efford+al:09b,
+  author = {Efford, M.G. and Dawson, D.K. and Borchers, D.L.},
+  title = {Population density estimated from locations of individuals on a passive
+	detector array.},
+  journal = {Ecology},
+  year = {2009},
+  volume = {90},
+  pages = {2676-2682.},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@MANUAL{Efford:07,
+  title = {{\sc Density} 4.0: software for spatially explicit capture-recapture.
+	},
+  author = {Efford, M. G.},
+  organization = {Department of Zoology},
+  address = {University of Otago, Dunedin, New Zealand. http://www.otago.ac.nz/density},
+  year = {2007}
+}
+
+@ARTICLE{Efford:04,
+  author = {Efford, M. G.},
+  title = {Density estimation in live-trapping studies},
+  journal = {Oikos},
+  year = {2004},
+  volume = {106},
+  pages = {598-610}
+}
+
+@INBOOK{Efford+al:09a,
+  chapter = {Density estimation by spatially explicit capture-recapture: likelihood-based
+	methods.},
+  pages = {255-269.},
+  title = {Modeling Demographic Processes in Marked Populations. D.L. Thompson,
+	E.G. Cooch, M.J. Conroy (eds)},
+  publisher = {Springer, New York.},
+  year = {2009},
+  author = {Efford, M. G. and Borchers, D. L. and Byrom, A.E.},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@ARTICLE{Efford+al:04,
+  author = {Efford, M. G. and Dawson, D. K. and Robbins, C. S.},
+  title = {Density: software for analysing capture-recapture data from passive
+	detector arrays},
+  journal = {Animal Biodiversity and Conservation},
+  year = {2004},
+  volume = {27},
+  pages = {217-228},
+  number = {1}
+}
+
+@ARTICLE{Efford+al:05,
+  author = {Efford, M. G. and Warburton, B. and Coleman, M. C. and Barker, R.
+	J.},
+  title = {A field test of two methods for density estimation},
+  journal = {Wildlife Society Bulletin},
+  year = {2005},
+  volume = {33},
+  pages = {731-738},
+  number = {2}
+}
+
+@BOOK{Efron+Tibshirani:93,
+  title = {An introduction to the bootstrap},
+  publisher = {Chapman {\&} Hall},
+  year = {1993},
+  author = {Efron, B. and Tibshirani, R.J.},
+  address = {New York}
+}
+
+@ARTICLE{Khorazaty+al:77,
+  author = {El Khorazaty, M.N. and Imrey, P.B. and Koch, G.O. and Wells, H.B.},
+  title = {A review of methodological stratiegies for estimating the total number
+	of events with data from multiple-record systems.},
+  journal = {International Statistical Review},
+  year = {1977},
+  volume = {45},
+  pages = {129-157},
+  el = {Khorazaty+al:77}
+}
+
+@ARTICLE{Evans+al:94,
+  author = {Evans, M.A. and Bonett, D.G. and McDonald, L.L.},
+  title = {A general theory for modeling capture-recapture data from a closed
+	population},
+  journal = {Biometrics},
+  year = {1994},
+  volume = {50},
+  pages = {396-405}
+}
+
+@ARTICLE{Evans-Mack+al:02,
+  author = {Evans-Mack, D. and Raphael, M.G. and Laake, J.L.},
+  title = {Probability of detecting marbled murrelets at sea: effects of single
+	versus paired observers},
+  journal = {Journal of Wildlife Management},
+  year = {2002},
+  volume = {66},
+  pages = {865-873}
+}
+
+@ARTICLE{Fancy:97,
+  author = {Fancy, S.G.},
+  title = {A new approach for analyzing bird densities from variable circular-plot
+	counts.},
+  journal = {Pacific Science},
+  year = {1997},
+  volume = {51},
+  pages = {107-114}
+}
+
+@BOOK{Faraway2006,
+  title = {Extending the Linear Model with R},
+  publisher = {Chapman {\&} Hall},
+  year = {2006},
+  author = {Faraway, J. J.},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.05.25}
+}
+
+@ARTICLE{Feinberg:72,
+  author = {Feinberg, S.E.},
+  title = {The multiple-recapture census for closed populations and incomplete
+	$2^k$ contingency tables.},
+  journal = {Biometrika},
+  year = {1972},
+  volume = {59},
+  pages = {591-603}
+}
+
+@ARTICLE{Fernandes2007,
+  author = {Fernandes, P. G. and Armstrong, F. and Burns, F. and Copland, P.
+	and Davis, C. and Graham, N. and Harlay, X. and O'Cuaig, M. and Penny,
+	I. and Pout, A. C. and Clarke, E. D.},
+  title = {Progress in estimating the absolute abundance of anglerfish on the
+	European northern shelf from a trawl survey},
+  journal = {ICES CM},
+  year = {2007},
+  volume = {K:12},
+  pages = {16},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2008.10.30}
+}
+
+@ARTICLE{Forcada+al:04,
+  author = {Forcada, J. and Gazo, M. and Aguilar, A and Gonzalvo, J and Fernandez-Contreras,
+	M.},
+  title = {Bottlenose dolphin abundance in the NW Mediterranean: addressing
+	heterogeneity in distribution},
+  journal = {Marine Ecology Progress Series},
+  year = {2004},
+  volume = {275},
+  pages = {275?287},
+  owner = {david},
+  timestamp = {2012.08.12}
+}
+
+@ARTICLE{Fournier+al:12,
+  author = {Fournier, D.A., H.J. Skaug and J. Ancheta and J. Ianelli and A. Magnusson
+	and M.N. Maunder and A. Nielsen and J. Sibert.},
+  title = {AD Model Builder: using automatic differentiation for statistical
+	inference of highly parameterized complex nonlinear models.},
+  journal = {Optim. Methods Softw.},
+  year = {2012},
+  volume = {27},
+  pages = {233-249},
+  owner = {david},
+  timestamp = {2013.07.07}
+}
+
+@ARTICLE{Gardner+al:09,
+  author = {Gardner, B. and Royle, J. A. and Wegan, M.T.},
+  title = {Hierarchical models for estimating density from DNA mark-recapture
+	studies.},
+  journal = {Ecology},
+  year = {2009},
+  volume = {90},
+  pages = {1106-1115},
+  owner = {dlb},
+  timestamp = {2009.12.28}
+}
+
+@ARTICLE{Genz+Malik:80,
+  author = {Genz, A. C. and Malik, A. A.},
+  title = {Remarks on algorithm 006 : An adaptive algorithm for numerical integration
+	over an N-dimensional rectangular region},
+  journal = {Journal of Computational and Applied Mathematics},
+  year = {1980},
+  volume = {6},
+  pages = {295-302}
+}
+
+@ARTICLE{Gilks+al:94,
+  author = {Gilks, W.R. and Thomas, A. and Spiegelhalter, D.J.},
+  title = {A language and program for complex Bayesian modelling.},
+  journal = {Statistician},
+  year = {1994},
+  volume = {43},
+  pages = {169-178.},
+  owner = {dlb},
+  timestamp = {2010.01.02}
+}
+
+@ARTICLE{Gimenez+al:06,
+  author = {Gimenez, O. and Crainiceanu, C. and Barbraud, C. and Jenouvrier,
+	S. and Morgan,  B.J.T.},
+  title = {Semiparametric regrssion in capture-recapture modelling},
+  journal = {Biometrics},
+  year = {2006},
+  volume = {62},
+  pages = {691-698},
+  owner = {david},
+  timestamp = {2013.12.02}
+}
+
+@ARTICLE{Godambe:85,
+  author = {Godambe, V.P.},
+  title = {The foundations of finite sample estimation in a stochastic process.},
+  journal = {Biometrika},
+  year = {1985},
+  volume = {72},
+  pages = {419-428}
+}
+
+@ARTICLE{Godo1996,
+  author = {Godo,O. R. and Totland, A.},
+  title = {A stationary acoustic system for monitoring undisturbed and vessel
+	affected fish behaviour},
+  journal = {ICES CM},
+  year = {1996},
+  volume = {B:12},
+  pages = {11},
+  number = {12},
+  __markedentry = {[David]},
+  booktitle = {ICES CM},
+  owner = {yy},
+  timestamp = {2009.08.13}
+}
+
+@ARTICLE{GdeSegura+al:06,
+  author = {Gomez de Segura, A. and Crespo, E>A. and Pedraza, S.N. and Hammond,
+	P.S. and Raga, J.A.},
+  title = {Abundance of small cetaceans in waters of the central Spanish Mediterranean},
+  journal = {Marine Biology},
+  year = {2006},
+  volume = {150},
+  pages = {149-160},
+  owner = {david},
+  timestamp = {2012.08.12}
+}
+
+@ARTICLE{Graham+Bell:89,
+  author = {Graham, A. and Bell, R.},
+  title = {Investigating observer bias in aerial survey by simultaneous double-counts.},
+  journal = {Journal of Wildlife Management},
+  year = {1989},
+  volume = {53},
+  pages = {1009-1016}
+}
+
+@BOOK{Gunderson:93,
+  title = {Surveys of fisheries resources},
+  publisher = {Wiley},
+  year = {1993},
+  author = {Gunderson, D.R.},
+  address = {New York}
+}
+
+@ARTICLE{Guttorp+Lockhart:88,
+  author = {P. Guttorp and R.A. Lockhart},
+  title = {Finding the location of a signal: a Bayesian analysis},
+  journal = {Journal of the American Statistical Association},
+  year = {1988},
+  volume = {83},
+  pages = {322-330}
+}
+
+@UNPUBLISHED{Harte:11,
+  author = {Harte, D.},
+  title = {Hidden Markov: Hidden Markov Models},
+  note = {{R package version 1.5-0}},
+  year = {2011},
+  owner = {david},
+  timestamp = {2012.07.31},
+  url = {http://cran.at.r-project.org/web/packages/HiddenMarkov}
+}
+
+@BOOK{Hastie+Tibshirani:90,
+  title = {Generalized additive models},
+  publisher = {Chapman {\&} Hall},
+  year = {1990},
+  author = {Hastie, T.J. and Tibshirani, R.J.},
+  address = {London}
+}
+
+@ARTICLE{Hayes+Buckland:83,
+  author = {Hayes, R. J. and Buckland, S. T.},
+  title = {Radial-distance models for the line-transect method},
+  journal = {Biometrics},
+  year = {1983},
+  volume = {39},
+  pages = {29-42}
+}
+
+@PHDTHESIS{Hedley:00,
+  author = {Hedley, S.L.},
+  title = {Modelling heterogeneity in cetacean surveys},
+  school = {University of St Andrews},
+  year = {2000},
+  type = {Ph{D} Thesis},
+  address = {St Andrews}
+}
+
+@ARTICLE{Hedley+Buckland:04,
+  author = {Hedley, S.L. and Buckland, S.T.},
+  title = {Spatial models for line transect sampling.},
+  journal = {Journal of Agricultural, Biological, and Environmental Statistics.},
+  year = {2004},
+  volume = {9},
+  pages = {181-199}
+}
+
+@INPROCEEDINGS{Hedley+al:04,
+  author = {Hedley, S.L. and Buckland, S.T. and Borchers, D.L.},
+  title = {Spatial distance sampling models},
+  booktitle = {Advanced Distance Sampling.},
+  year = {2004},
+  editor = {Buckland,S.T. and Anderson,D.R. and Burnham,K.P. and Laake,J.L. and
+	Borchers,D.L. and Thomas,L.J.},
+  pages = {48-70},
+  address = {Oxford},
+  publisher = {Oxford University Press}
+}
+
+@ARTICLE{Hedley+al:99,
+  author = {Hedley, S.L. and Buckland, S.T. and Borchers, D.L.},
+  title = {Spatial modelling from line transect data},
+  journal = {Journal of Cetacean Research and Management},
+  year = {1999},
+  volume = {1},
+  pages = {255-264}
+}
+
+@ARTICLE{Heide-Jorgensen+al:07,
+  author = {Heide-Jorgensen, M.P. and Laidre, K. and Borchers, D. and Samarrra,
+	F. and Stern, H},
+  title = {Increasing abundance of bowhead whales in West Greenland},
+  journal = {Biology Letters},
+  year = {2007},
+  volume = {3},
+  pages = {577-580},
+  owner = {david},
+  timestamp = {2012.07.24}
+}
+
+@ARTICLE{Heilbron1994,
+  author = {Heilbron,D. C.},
+  title = {Zero-altered and other regression models for count data with added
+	zeros},
+  journal = {Biometical J},
+  year = {1994},
+  volume = {36(5)},
+  pages = {531-547},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.08.09}
+}
+
+@ARTICLE{Hiby:85,
+  author = {Hiby, A.R.},
+  title = {An approach to estimating population densities of great whales from
+	sighting surveys},
+  journal = {IMA Journal of Mathematics Applied in Medicine and Biology},
+  year = {1985},
+  volume = {2},
+  pages = {201-220}
+}
+
+@INPROCEEDINGS{Hiby+Hammond:89,
+  author = {A.R. Hiby and P.S. Hammond},
+  title = {Survey techniques for estimating abundance of cetaceans},
+  booktitle = {The Comprehensive Assessment of Whale Stocks: The Early Years},
+  year = {1989},
+  editor = {G.P. Donovan},
+  pages = {47-80},
+  address = {Cambridge},
+  organization = {The International Whaling Commission},
+  publisher = {The International Whaling Commission}
+}
+
+@INPROCEEDINGS{Hiby:99,
+  author = {Hiby, L.},
+  title = {The objective identification of duplicate sightings in aerial surveys
+	for porpoise},
+  booktitle = {Marine Mammal Survey and Assessment Methods},
+  year = {1999},
+  editor = {Garner, G.W. and Amstrup, S.C. and Laake, J.L. and Manly, B.F.J.
+	and McDonald, L.L. and Robertson, D.G.},
+  pages = {179-189},
+  address = {Rotterdam},
+  publisher = {Balkema}
+}
+
+@ARTICLE{Hiby+Lovell:98,
+  author = {Hiby, L. and Lovell, P.},
+  title = {Using aircraft in tandem formation to estimate abundance of harbour
+	porpoise.},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {1280-1289.}
+}
+
+@ARTICLE{Hiby+al:89,
+  author = {Hiby, L. and Ward, A. and Lovell, P.},
+  title = {Analysis of the North Atlantic sightings survey 1987:aerial survey
+	results},
+  journal = {Report of the International Whaling Commission},
+  year = {1989},
+  volume = {39},
+  pages = {447-455}
+}
+
+@ARTICLE{Hilborn:90,
+  author = {Hilborn, R.},
+  title = {Determination of fish movement patterns from tag recoveries using
+	maximum likelihood estimators},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences},
+  year = {1990},
+  volume = {47},
+  pages = {635-643}
+}
+
+@ARTICLE{Hines+al:03,
+  author = {Hines, J.E. and Kendall, W. L. and Nichols, J.D.},
+  title = {On the use of the robust design with transient capture-recapture
+	models.},
+  journal = {Auk},
+  year = {2003},
+  volume = {120},
+  pages = {1151-1158.}
+}
+
+@ARTICLE{Horne+Garton:06,
+  author = {Horne, J. S. and Garton, E. O.},
+  title = {Selecting the best home-range model: an information-theoretic approach},
+  journal = {Ecology},
+  year = {2006},
+  volume = {87},
+  pages = {1146-1152},
+  number = {5}
+}
+
+@ARTICLE{Horvitz+Thompson:52,
+  author = {Horvitz,D.G. and Thompson,D.J.},
+  title = {A generalization of sampling without replacement from a finite universe},
+  journal = {Journal of the American Statistical Association},
+  year = {1952},
+  volume = {47},
+  pages = {663-685}
+}
+
+@ARTICLE{Huggins:91,
+  author = {Huggins, R.M.},
+  title = {Some practical aspects of a conditional likelihood approach to capture
+	experiments.},
+  journal = {Biometrics},
+  year = {1991},
+  volume = {47},
+  pages = {725-732}
+}
+
+@ARTICLE{Huggins:89,
+  author = {Huggins, R. M.},
+  title = {On the statistical analysis of capture experiments.},
+  journal = {Biometrika},
+  year = {1989},
+  volume = {76},
+  pages = {133-140}
+}
+
+@ARTICLE{Huggins+Yip:97,
+  author = {Huggins, R. M. and Yip, P. S. F.},
+  title = {Statistical analysis of removal experiments with the use of auxiliary
+	variables},
+  journal = {Statistica Sinica},
+  year = {1997},
+  volume = {7},
+  pages = {705-712}
+}
+
+@ARTICLE{Hunter+Lo:93,
+  author = {Hunter, J.R. and Lo, N.C.H.},
+  title = {Ichthyoplankton methods for estimating fish biomass: introduction
+	and terminology.},
+  journal = {Bulletin of Marine Science},
+  year = {1993},
+  volume = {53},
+  pages = {723-727}
+}
+
+@ARTICLE{Hurvitch+Tsai:95,
+  author = {Hurvitch, C.M. and Tsai, C.L.},
+  title = {Model selection for extended quasi-likelihood models in small samples.},
+  journal = {Biometrics},
+  year = {1995},
+  volume = {51},
+  pages = {1077-1084}
+}
+
+@ARTICLE{Hurvitch+Tsai:89,
+  author = {Hurvitch, C.M. and Tsai, C.L.},
+  title = {Regression and time series model selection in small samples.},
+  journal = {Biometrika},
+  year = {1989},
+  volume = {76},
+  pages = {297-307}
+}
+
+@ARTICLE{Innes+al:02,
+  author = {Innes,S. and Heide-Jorgensen,M.P. and Laake,J.L. and Laidre,K.L.
+	and Cleator,H.J. and Richard,P. and Stewart,R.E.A.},
+  title = {Surveys of belugas and narwhals in the Canadian High Arctic in 1996.},
+  journal = {NAMMCO Scientific Publications},
+  year = {2002},
+  volume = {4},
+  pages = {169-190}
+}
+
+@ARTICLE{Jennrich+Turner:69,
+  author = {Jennrich, R. I. and Turner, F. B.},
+  title = {Measurement of non-circular home range},
+  journal = {Journal of Theoretical Biology},
+  year = {1969},
+  volume = {22},
+  pages = {227-237}
+}
+
+@ARTICLE{Jett+Nichols:87,
+  author = {D. A. Jett and J. D. Nichols},
+  title = {A field comparison of nested grid and trapping web density estimator},
+  journal = {Journal of Mammalogy},
+  year = {1987},
+  volume = {68},
+  pages = {888-892}
+}
+
+@ARTICLE{Johnson+al:10,
+  author = {D.S. Johnson and J.L. Laake and J.M. Ver Hoef},
+  title = {A model-based approach for making ecological inference from distance
+	sampling data},
+  journal = {Biometrics},
+  year = {2010},
+  volume = {66},
+  pages = {310-318},
+  owner = {David},
+  timestamp = {2011.08.10}
+}
+
+@ARTICLE{Kalman:60,
+  author = {Kalman, R.E.},
+  title = { A new approach to linear filtering and prediction problems.},
+  journal = {Transactions of ASME Journal of Basic Engineering},
+  year = {1960},
+  volume = {82},
+  pages = {35--45.}
+}
+
+@ARTICLE{Kaplan+Meier:58,
+  author = {Kaplan, L.A. and Meier, P.},
+  title = {Nonparametric estimation from incomplete observations},
+  journal = {Journal of the Americal Statistical Association},
+  year = {1958},
+  volume = {53},
+  pages = {457-481},
+  owner = {david},
+  timestamp = {2012.07.13}
+}
+
+@INPROCEEDINGS{Kendall+al:04,
+  author = {Kendall, W.L. and Nichols, J. D. and Sauer, J. R. and Pradel, R.
+	and Hines, J. E.},
+  title = {On the use of capture recapture models in mist net studies.},
+  booktitle = {Monitoring Bird Populations with Mist Nets, Studies in Avian Biology
+	No. 29.},
+  year = {2004},
+  editor = {Ralph, C. J. and Dunn, E.H.},
+  pages = {173-181}
+}
+
+@ARTICLE{Kidney+al:13,
+  author = {Kidney, D and Rawson, B. and Borchers, D.L. and Thomas, L.J. and
+	Marques, T.A. and Stevenson, B.C.},
+  title = {An efficient acoustic density estimation method with human detectors,
+	applied to gibbons in Cambodia},
+  journal = {Ecology},
+  year = {2013},
+  pages = {submitted},
+  owner = {david},
+  timestamp = {2013.01.21}
+}
+
+@INPROCEEDINGS{Laake:99,
+  author = {Laake, J.L.},
+  title = {Distance sampling with independent observers: Reducing bias from
+	heterogeneity by weakening the conditional independence assumption.},
+  booktitle = {Marine mammal survey and assessment methods.},
+  year = {1999},
+  editor = {Amstrup, G.W. and Garner, S.C. and Laake, J.L. and Manly, B.F.J.
+	and McDonald, L.L. and Robertson, D.G.},
+  pages = {137-148},
+  address = {Rotterdam},
+  publisher = {Balkema}
+}
+
+@MASTERSTHESIS{Laake:78,
+  author = {Laake,J.L.L.},
+  title = {Line transect estimators robust to animal movement.},
+  school = {Utah State University},
+  year = {1978},
+  type = {M.S. Thesis}
+}
+
+@ARTICLE{Laake+al:97,
+  author = {Laake, J.L. and Calambokidis, J.C. and Osmek, S.D. and Rugh, D.J.},
+  title = {Probability of detecting harbor porpoise from aerial surveys: estimating
+	g(0).},
+  journal = {Journal of Wildlife Management},
+  year = {1997},
+  volume = {61},
+  pages = {63-75},
+  owner = {david},
+  timestamp = {2012.07.31}
+}
+
+@ARTICLE{Laake+al:11,
+  author = {Laake, J.L. and Collier, B.A. and Morrison, M.L. and Wilkins, R.N.},
+  title = {Point-based mark-recapture distance sampling},
+  journal = {Journal of Agricultural, Biological and Environmental Statistics},
+  year = {2011},
+  volume = {16},
+  pages = {389-408},
+  owner = {David},
+  timestamp = {2011.05.19}
+}
+
+@INPROCEEDINGS{Laake+Borchers:04,
+  author = {Laake, J. L. and Borchers, D.L.},
+  title = {Methods for incomplete detection at distance zero.},
+  booktitle = {Advanced Distance Sampling.},
+  year = {2004},
+  editor = {Buckland,S.T. and Anderson,D.R. and Burnham,K.P. and Laake,J.L. and
+	Borchers,D.L. and Thomas,L.J.},
+  pages = {108-189},
+  address = {Oxford},
+  publisher = {Oxford University Press}
+}
+
+@ARTICLE{Laidre+al:07,
+  author = {Laidre, K. and Heide-Jorgensen, M. P. and Nielsen, T.G.},
+  title = {Role of bowhead whale as a predator in West Greenland},
+  journal = {Marine Ecology Progress Series},
+  year = {2007},
+  volume = {346},
+  pages = {285-297},
+  owner = {david},
+  timestamp = {2012.07.24}
+}
+
+@ARTICLE{Langrock+King:13,
+  author = {Langrock, R. and King, R.},
+  title = {Maximum likelihood estimation of mark-recapture-recovery models in
+	the presence of continuous covariates},
+  journal = {Annals of Applied Statistics},
+  year = {2013},
+  volume = {7},
+  pages = {1709-1732},
+  owner = {david},
+  timestamp = {2013.07.09}
+}
+
+@ARTICLE{Langrock+Zucchini:11,
+  author = {Langrock, R. and Zucchini, W.},
+  title = {Hidden Markov models with arbitrary state dwell-time distributions},
+  journal = {Computational Statistics and Data Analysis},
+  year = {2011},
+  volume = {55},
+  pages = {715-724},
+  owner = {david},
+  timestamp = {2012.08.11}
+}
+
+@ARTICLE{Lee+Chao:94,
+  author = { Lee, S. M. and Chao, A.},
+  title = {Estimating population size via sample coverage for closed capture-recapture
+	models.},
+  journal = {Biometrics},
+  year = {1994},
+  volume = {50},
+  pages = {88-97}
+}
+
+@ARTICLE{Lenth:81,
+  author = {R.V. Lenth},
+  title = {On finding the source of a signal},
+  journal = {Technometrics},
+  year = {1981},
+  volume = {23},
+  pages = {149-154}
+}
+
+@ARTICLE{Link:03,
+  author = {Link, W.A.},
+  title = {Nonidentifiability of population size from capture-recapture data
+	with heterogeneous detection probabilities.},
+  journal = {Biometrics},
+  year = {2003},
+  volume = {59},
+  pages = {1123-1130},
+  number = {4},
+  month = {December}
+}
+
+@ARTICLE{Link+al:10,
+  author = {Link, W.A. and Yoshizaki, J. and Bailey, L.L. and Pollock, K.H.},
+  title = {Uncovering a latent multi-nomial: analysis of mark-recapture data
+	with misidentification},
+  journal = {Biometrics},
+  year = {2010},
+  volume = {66},
+  pages = {178-185},
+  owner = {david},
+  timestamp = {2013.01.26}
+}
+
+@ARTICLE{Lui+Chen:98,
+  author = {Liu, J.S. and Chen, R.},
+  title = {Sequential Monte Carlo methods for dynamic systems},
+  journal = {Journal of the American Statistical Association},
+  year = {1998},
+  volume = { 93},
+  pages = {1032-1044}
+}
+
+@ARTICLE{Lloyd:87,
+  author = {Lloyd, C.J.},
+  title = {Optimal maringale estimating equations in a stochastic process.},
+  journal = {Statistics and Probability Letters},
+  year = {1987},
+  volume = {5},
+  pages = {381-387}
+}
+
+@ARTICLE{Lunn2009,
+  author = {Lunn, D. and Spiegelhalter, D. and Thomas, A. and Best, N.},
+  title = {The BUGS project: Evolution, critique, and future directions},
+  journal = {Statistics in Medicine},
+  year = {2009},
+  volume = {28},
+  pages = {3049-3067},
+  owner = {tiago},
+  timestamp = {2011.04.27}
+}
+
+@BOOK{MacDonald+Zucchini:97,
+  title = {Hidden Markov and other models for discrete-valued time series},
+  publisher = {Chapman {\&} Hall/CRC},
+  year = {1997},
+  author = {I.L. MacDonald and W. Zucchini},
+  address = {London}
+}
+
+@ARTICLE{Mack+Quang:98,
+  author = {Mack, Y.P. and Quang, P.X.},
+  title = {Kernel methods in line and point transect sampling.},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {606-619}
+}
+
+@INPROCEEDINGS{Mackenzie+al:04,
+  author = {D. A. MacKenzie and J. A. Royle and J. A. Brown and J. D. Nichols},
+  title = {Occupancy estimation and modeling for rare and elusive populations},
+  booktitle = {Sampling rare or elusive species},
+  year = {2004},
+  editor = {W. M. Thompson},
+  pages = {149-172},
+  publisher = {Island Press}
+}
+
+@ARTICLE{MacLulich:51,
+  author = {MacLulich, D. A.},
+  title = {A new technique of animal census with examples.},
+  journal = {Journal of Mammalogy},
+  year = {1951},
+  volume = {32},
+  pages = {318-328}
+}
+
+@BOOK{Manly:97,
+  title = {Randomization, bootstrap and Monte Carlo methods in biology.},
+  publisher = {Chapman {\&} Hall},
+  year = {1997},
+  author = {Manly, B.F.J.},
+  address = {London},
+  edition = {2nd}
+}
+
+@ARTICLE{Manly+al:96,
+  author = {Manly, B.F.J and McDonald, L.L. and Garner, G.W.},
+  title = {Maximum likelihood estimation for the double-count method with independent
+	observers.},
+  journal = {Journal of Agricultural, Biological and Environmental Statistics},
+  year = {1996},
+  volume = {1},
+  pages = {170-189}
+}
+
+@PHDTHESIS{Marques:01,
+  author = {Marques, F.F.C.},
+  title = {Estimating wildlife distribution and abundance from line transect
+	surveys conducted from platforms of opportunity.},
+  school = {University of St Andrews},
+  year = {2001},
+  type = {Ph{D} Thesis}
+}
+
+@INPROCEEDINGS{Marques+Buckland:04,
+  author = {Marques, F. F. C. and Buckland, S. T.},
+  title = {Covariate models for detection function},
+  booktitle = {Advanced Distance Sampling},
+  year = {2004},
+  editor = {Buckland, S. T. and Anderson, D. R. and Burnham, K. P. and Laake,
+	J. L. and Borchers, D. L. and Thomas, L. J.},
+  publisher = {Oxford University Press}
+}
+
+@ARTICLE{Marques+Buckland:03,
+  author = {Marques, F. F. C. and Buckland, S. T.},
+  title = {Incorporating covariates into standard line transect analyses.},
+  journal = {Biometrics},
+  year = {2003},
+  volume = {59},
+  pages = {924-935}
+}
+
+@ARTICLE{Marques:04,
+  author = {Marques, T. A. },
+  title = {Predicting and correcting bias caused by measurement error in line
+	transect sampling using multiplicative error models},
+  journal = {Biometrics},
+  year = {2004},
+  volume = {60},
+  pages = {757-763}
+}
+
+@ARTICLE{Marques+al:10c,
+  author = {Tiago Andr? Marques and Len Thomas and Steve W Martin and David K
+	Mellinger and Susan Jarvis and Ron P Morrissey and Carol-Anne Ciminello
+	and Nancy DiMarzio},
+  title = {Spatially explicit capture recapture methods to estimate minke whale
+	abundance from data collected at bottom mounted hydrophones},
+  journal = {Journal of Ornithology},
+  year = {2010},
+  doi = {10.1007/s10336-010-0535-7},
+  timestamp = {2010.04.01}
+}
+
+@ARTICLE{Marques+al:ip,
+  author = {Marques, T.A. and Thomas, L and Royle, J. A.},
+  title = {A hierarchical model for spatial capture-recapture data: comment},
+  journal = {Ecology},
+  year = {in press},
+  owner = {David},
+  timestamp = {2010.11.30}
+}
+
+@ARTICLE{Marques+al:2011,
+  author = {Marques, T.A. and Thomas, L and Royle, J. A.},
+  title = {A hierarchical model for spatial capture-recapture data: comment},
+  journal = {Ecology},
+  year = {2011},
+  volume = {92},
+  pages = {526--528},
+  owner = {David},
+  timestamp = {2010.11.30}
+}
+
+@ARTICLE{Marsh+Sinclair:89,
+  author = {Marsh, H and Sinclair, D.F.},
+  title = {Correcting for visibility bias in strip transect aerial surveys of
+	aquatic fauna.},
+  journal = {Journal of Wildlife Management},
+  year = {1989},
+  volume = {53},
+  pages = {1017-1024},
+  owner = {david},
+  timestamp = {2012.06.21}
+}
+
+@ARTICLE{McAllister+Ianelli:97,
+  author = {McAllister, M. and Ianelli, J.N.},
+  title = {Bayesian stock assessment using catch-age data and the sampling-importance
+	resampling algorithm},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences},
+  year = {1997},
+  volume = {54},
+  pages = {284-300}
+}
+
+@ARTICLE{McClintock+al:13,
+  author = {McClintock, B.T. and Conn, P.B. and Alonso, R.S. and Crooks, K.R.},
+  title = {Integrated modeling of bilateral photo-identification data in mark-recapture
+	analyses},
+  journal = {Ecology},
+  year = {2013},
+  volume = {In press},
+  pages = {http://dx.doi.org/10.1890/12-1613.1},
+  owner = {david},
+  timestamp = {2013.07.11}
+}
+
+@BOOK{McCullagh1989,
+  title = {Generalized Linear Models},
+  publisher = {Chapman {\&} Hall},
+  year = {1989},
+  author = {McCullagh, P. and Nelder, J. A.},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.05.25}
+}
+
+@BOOK{McCullagh1989a,
+  title = {Generalized Linear Models},
+  publisher = {Chapman and Hall},
+  year = {1989},
+  author = {McCullagh, P. and Nelder, J. A.},
+  pages = {107},
+  edition = {Second},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.08.11}
+}
+
+@ARTICLE{McLaren:61,
+  author = {McLaren, I.A.},
+  title = {Methods of determining the numbers and availability of ring seals
+	in the eastern Canadian Arctic},
+  journal = {Arctic},
+  year = {1961},
+  volume = {14},
+  pages = {162-175}
+}
+
+@ARTICLE{Meyer+Millar:99a,
+  author = {Meyer, R. and Millar, R.B.},
+  title = {Bayesian stock assessment using a state-space implementation of the
+	delay difference model},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences },
+  year = {1999},
+  volume = {56},
+  pages = {37-52}
+}
+
+@ARTICLE{Meyer+Millar:99b,
+  author = {Meyer, R. and Millar, R.B.},
+  title = {BUGS in Bayesian stock assessments.},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences},
+  year = {1999},
+  volume = {56},
+  pages = {1078--1087}
+}
+
+@BOOK{Millar:11,
+  title = {Maximum Likelihood Estimation and Inference},
+  publisher = {John Wiley \& Sons},
+  year = {2011},
+  author = {Millar, RB},
+  owner = {david},
+  timestamp = {2012.10.12}
+}
+
+@ARTICLE{Millar+Meyer:00a,
+  author = {Millar, R.B. and Meyer, R. },
+  title = {Non-linear state space modelling of fisheries biomass dynamics by
+	using Metropolis-Hastings within-Gibbs sampling.},
+  journal = {Applied Statistics},
+  year = {2000},
+  volume = {49},
+  pages = {327--342.}
+}
+
+@ARTICLE{Millar+Meyer:00b,
+  author = {Millar, R.B. and Meyer, R.},
+  title = {Bayesian state-space modeling of age-structured data: fitting a model
+	is just the beginning.},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences },
+  year = {2000},
+  volume = {57},
+  pages = {43-50}
+}
+
+@ARTICLE{Millar1999,
+  author = {Millar, R. B. and Fryer, R. J.},
+  title = {Estimating the size-selection curves of towed gear, traps, nets and
+	hooks},
+  journal = {Reviews in Fish Biology and Fisheries},
+  year = {1999},
+  volume = {9},
+  pages = {89-116},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.05.20}
+}
+
+@BOOK{Mood1974,
+  title = {Introduction to the Theory of Statistics},
+  publisher = {McGRAW-HILL BOOK COMPANY},
+  year = {1974},
+  author = {Mood, A. M. and Graybil, F. A. l and Boes, D. C.},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2008.10.30}
+}
+
+@ARTICLE{Munro2001,
+  author = {Munro, P. T. and Somerton, D. A.},
+  title = {Maximum likelihood and non-parametric methods for estimating trawl
+	footrope selectivity},
+  journal = {ICES Journal of Marine Science},
+  year = {2001},
+  volume = {58},
+  pages = {220:229},
+  __markedentry = {[David]},
+  owner = {joyce},
+  timestamp = {2008.10.30}
+}
+
+@ARTICLE{Newman:00,
+  author = {Newman, K.B.},
+  title = {Heirarchic modeling of salmon harvest and migration.},
+  journal = {Journal of Agricultural, Biological and Environmental Statistics},
+  year = {2000},
+  volume = {5},
+  pages = {430-455.}
+}
+
+@ARTICLE{Newman:98,
+  author = {Newman, K.B.},
+  title = {State-space modeling of animal movement and mortality with application
+	to salmon.},
+  journal = {Biometrics},
+  year = {1998},
+  volume = {54},
+  pages = {1290--1314}
+}
+
+@ARTICLE{Neimi+Fernandez:10,
+  author = {Niemi, A. and Fernandez, C.},
+  title = {Bayesian Spatial Point Process Modeling of Line Transect Data},
+  journal = {Journal of Agricultural, Biological and Environmental Statistics},
+  year = {2010},
+  volume = {15},
+  pages = {327-345},
+  owner = {David},
+  timestamp = {2011.08.10}
+}
+
+@ARTICLE{Norris+Pollock:96,
+  author = {Norris, J. L. and Pollock, K. H.},
+  title = {Nonparametric MLE under two closed capture-recapture models with
+	heterogeneity.},
+  journal = {Biometrics},
+  year = {1996},
+  volume = {52},
+  pages = {639-649}
+}
+
+@ARTICLE{Norris+Pollock:95,
+  author = {Norris, J. L. and Pollock, K. H.},
+  title = {A capture-recapture model with heterogeneity and behavioural response.},
+  journal = {Environmental and Ecological Statistics},
+  year = {1995},
+  volume = {2},
+  pages = {305-313}
+}
+
+@ARTICLE{Okamura:03,
+  author = {Okamura, H.},
+  title = {A line transect method to estimate abundance of long-diving animals},
+  journal = {Fisheries Science},
+  year = {2003},
+  volume = {69},
+  pages = {1176-1181},
+  owner = {david},
+  timestamp = {2012.08.02}
+}
+
+@ARTICLE{Okamura+al:03,
+  author = {Okamura, H. and Kitakado, T. and Hiramatsu, K. and Mori, M.},
+  title = {Abundance estimation of diving animals by the double-platform line
+	transect method},
+  journal = {Biometrics},
+  year = {2003},
+  volume = {59},
+  pages = {512-520}
+}
+
+@ARTICLE{Okamura+al:06,
+  author = {Okamura, H. and Minamakawa, S. and Kitakado, T.},
+  title = {Effect of surfacing patterns on abundance estimates of long-diving
+	animals},
+  journal = {Fisheries Science},
+  year = {2006},
+  volume = {72},
+  pages = {631-638},
+  owner = {david},
+  timestamp = {2012.08.02}
+}
+
+@ARTICLE{Otis+al:78,
+  author = {Otis, D. L. and Burnham, K. P. and White, G. C. and Anderson, D.
+	R.},
+  title = {Statistical inference from capture data on closed animal populations},
+  journal = {Wildlife Monographs},
+  year = {1978},
+  volume = {62},
+  pages = {1-135}
+}
+
+@INPROCEEDINGS{Palka:95a,
+  author = {Palka,D.},
+  title = {Abundance estimate of the gulf of Maine harbour porpoise.},
+  booktitle = {Biology of the Phoecoenids},
+  year = {1995},
+  editor = {Bjorge, A. and Donovan,G.P.},
+  pages = {27-50},
+  publisher = {International Whaling Commission}
+}
+
+@ARTICLE{Palka:95,
+  author = {Palka, D.},
+  title = {Abundance estimate of the Gulf of Maine harbour porpoise.},
+  journal = {Report of the International Whaling Commission},
+  year = {1995},
+  volume = {Special Issue 16},
+  pages = {27-50}
+}
+
+@PHDTHESIS{Palka:93,
+  author = {Palka, D.L.},
+  title = {Estimating density of animals when assumptions of line transect survey
+	are violated.},
+  school = {University of California},
+  year = {1993},
+  type = {Ph{D} Thesis}
+}
+
+@ARTICLE{Pennington:83,
+  author = {M. Pennington},
+  title = {Efficient estimators of abundance, for fish and plankton surveys.},
+  journal = {Biometrics},
+  year = {1983},
+  volume = {39},
+  pages = {281-286}
+}
+
+@ARTICLE{Pike+al:09,
+  author = {Pike, D.G. and Paxton, C.G.M. and Gunnlaugsson, Th. and Vikingsson,
+	G.A.},
+  title = {Trends in the distribution and abundance of cetaceans from aerial
+	surveys in Icelandic coastal waters, 1986-2001.},
+  journal = {NAMMCO Scientific Publications},
+  year = {2009},
+  volume = {7},
+  pages = {117-142},
+  owner = {david},
+  timestamp = {2012.11.05}
+}
+
+@ARTICLE{Pledger:03,
+  author = {S. Pledger},
+  title = {Open capture-recapture models with heterogeneity: I Cormack-Jolly-Seber
+	model},
+  journal = {Biometrics},
+  year = {2003},
+  volume = {59},
+  pages = {786-794}
+}
+
+@ARTICLE{Pledger:00,
+  author = {Pledger, S.},
+  title = {Unified maximum likelihood estimates for closed capture-recapture
+	models using mixtures.},
+  journal = {Biometrics},
+  year = {2000},
+  volume = {56},
+  pages = {434-442}
+}
+
+@PHDTHESIS{Pollock:74,
+  author = {Pollock, K.H.},
+  title = {The assumption of equal catchability of animals in tag-recapture
+	experiments.},
+  school = {Cornell University},
+  year = {1974},
+  type = {Ph{D} Thesis},
+  address = {New York}
+}
+
+@ARTICLE{Pollock+al:84,
+  author = {Pollock, K.H. and Hines, J.E. and Nichols, J.D.},
+  title = {The use of auxiliary variables in capture-recapture and removal experiments},
+  journal = {Biometrics},
+  year = {1984},
+  volume = {40},
+  pages = {329-340}
+}
+
+@ARTICLE{Pollock+Kendall:87,
+  author = {K.H. Pollock and W.L. Kendall},
+  title = {Visibility bias in aerial surveys: a review of estimation procedures.},
+  journal = {Journal of Wildlife Management},
+  year = {1987},
+  volume = {5},
+  pages = {502-510}
+}
+
+@ARTICLE{Pollock+al:06,
+  author = {Pollock, K.H. and Marsh, H.D. and Lawler, I.R. and Alldredge, M.W.},
+  title = {Estimating Animal Abundance in Heterogeneous Environments: An Application
+	to Aerial Surveys for Dugongs},
+  journal = {Journal of Wildlife Management},
+  year = {2006},
+  volume = {70},
+  pages = {255-262},
+  owner = {david},
+  timestamp = {2012.08.11}
+}
+
+@ARTICLE{Pollock+Otto:83,
+  author = {Pollock, K.H. and Otto, M.C.},
+  title = {Robust estimation of population size in closed animal populations
+	from capture-recapture experiments.},
+  journal = {Biometrics},
+  year = {1983},
+  volume = {39},
+  pages = {1035-1050}
+}
+
+@ARTICLE{Pradel+al:97,
+  author = {Pradel, R. and Hines, J.E. and Lebreton, J.D. and Nichols, J.D.},
+  title = {Capture-recapture survival models taking account of transients.},
+  journal = {Biometrics},
+  year = {1997},
+  pages = {60-72.}
+}
+
+@ARTICLE{Pradel+al:03,
+  author = {Pradel, R. and Wintrebert, C. and Giminez. O.},
+  title = {A proposal for a goodness-of-fit test to the Arnason-Schwartz multisite
+	capture-recapture model},
+  journal = {Biometrics},
+  year = {2003},
+  volume = {59},
+  pages = {43-53}
+}
+
+@ARTICLE{Quang:91,
+  author = {Quang, P.X.},
+  title = {A nonparametric approach to size-biased line transect sampling.},
+  journal = {Biometrics},
+  year = {1991},
+  volume = {47},
+  pages = {269-279}
+}
+
+@ARTICLE{Quang+Becker:97,
+  author = {P.X. Quang and E.F. Becker},
+  title = {Combining line transect and double count sampling techniques for
+	aerial surveys},
+  journal = {Journal of Agricultural, Biological and Environmental Statistics},
+  year = {1997},
+  volume = {2},
+  pages = {230-244}
+}
+
+@MANUAL{R:13,
+  title = {R: A language and Environment for Statistical Computing},
+  author = {{R Development Core Team}},
+  organization = {{R Foundation for Statistical Computing}},
+  address = {Vienna, Austria},
+  year = {2013},
+  __markedentry = {[David]},
+  owner = {David},
+  url = {http://www.R-project.org}
+}
+
+@ARTICLE{Ramsey+al:87,
+  author = {Ramsey, F.L. and Wildman, V. and Engbring, J.},
+  title = {Covariate adjustments to effective area in variable-area wildlife
+	surveys.},
+  journal = {Biometrics},
+  year = {1987},
+  volume = {43},
+  pages = {1-11}
+}
+
+@ARTICLE{Reid2007b,
+  author = {Reid, D. G. and Allen, V. J. and Bova, D. J. and Jones, E. G. and
+	Kynoch, R. J. and Peach, K. J. and Fernandes, P. G. and Turrell,
+	W. R.},
+  title = {Anglerfish catchability for swept area abundance estimates in a new
+	survey trawl},
+  journal = {ICES Journal of Marine Science},
+  year = {2007},
+  volume = {64},
+  pages = {1503-1511},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.05.22}
+}
+
+@ARTICLE{Reid2007a,
+  author = {Reid, D. G. and Kynoch, R. J. and Penny, I. and Peach, K.},
+  title = {Estimation of catch efficiency in a new angler fish survey trawl},
+  journal = {ICES CM},
+  year = {2007},
+  volume = {Q:22},
+  __markedentry = {[David]},
+  owner = {joyce},
+  timestamp = {2009.11.16}
+}
+
+@CONFERENCE{Reid2007,
+  author = {Reid, D. G. and Kynoch, R. J. and Penny, I.and Peach, K.},
+  title = {Estimation of catch efficiency in a new angler fish survey trawl},
+  booktitle = {International Council for the Exploration of the Sea},
+  year = {2007},
+  volume = {Q},
+  number = {22},
+  __markedentry = {[David]},
+  owner = {joyce},
+  timestamp = {2009.11.16}
+}
+
+@ARTICLE{Reilly+al:83,
+  author = {Reilly, S.B. and Rice, D.W. and Wolman, A.A.},
+  title = {Population assessment of the gray whale, {\it Eschrichtius robustus},
+	from California shore censuses, 1967--80.},
+  journal = {Fishery Bulletin},
+  year = {1983},
+  volume = {81},
+  pages = {267-281}
+}
+
+@ARTICLE{Reillly+al:80,
+  author = {Reilly, S.B. and Rice, D.W. and Wolman, A.A.},
+  title = {Preliminary population estimate for the California gray whale based
+	upon Monterey shore censuses.},
+  journal = {Report of the International Whaling Commission},
+  year = {1980},
+  volume = {30},
+  pages = {359-368.}
+}
+
+@ARTICLE{Rexstad+Burnham:91,
+  author = {Rexstad, E. and Burnham, K.},
+  title = {User's guide for interactive program CAPTURE},
+  journal = {Colorado Cooperative Fish and Wildlife Research Unit, Fort Collins
+	CO},
+  year = {1991}
+}
+
+@ARTICLE{Richards1959,
+  author = {Richards, F. J.},
+  title = {A flexible growth function for empirical use},
+  journal = {J. Exp.Bot},
+  year = {1959},
+  volume = {10},
+  pages = {290-300},
+  __markedentry = {[David]},
+  owner = {Yuan Yuan},
+  timestamp = {2009.09.03}
+}
+
+@ARTICLE{Robinson+Hill:02,
+  author = {Robinson, I. and Hill, M.},
+  title = {Algorithm 816: r2d2lri: An algorithm for automatic two-dimensional
+	cubature.},
+  journal = {ACM Transactions on Mathematical Software},
+  year = {2002},
+  volume = {28},
+  pages = {75-100}
+}
+
+@ARTICLE{Royle+al:13,
+  author = {Royle, A.J. and Chandler, R.B. and Sun, C.C. and Fuller, A.K.},
+  title = {Integrating resource selection information with spatial capure-recpature},
+  journal = {Methods in Ecology and Evolution},
+  year = {2013},
+  volume = {4},
+  pages = {520-530},
+  owner = {david},
+  timestamp = {2013.07.05}
+}
+
+@ARTICLE{Royle+Nichols:03,
+  author = {J. A. Royle and J. D. Nichols},
+  title = {Estimating abundance from repeated presence-absence data or point
+	counts},
+  journal = {Ecology},
+  year = {2003},
+  volume = {84},
+  pages = {777-790},
+  number = {3}
+}
+
+@BOOK{Royle+al:13a,
+  title = {Spatial capture-recapture},
+  publisher = {Academic Press, Boston},
+  year = {2013},
+  author = {Royle, J.A. and Chandler, R.B. and Sollman, R. and Gardner, B.},
+  owner = {david},
+  timestamp = {2013.12.02}
+}
+
+@BOOK{Royle+Dorazio:08,
+  title = {Hierarchical modeling and inference in ecology},
+  publisher = {Academic Press, London},
+  year = {2008},
+  author = {Royle, J.A. and Dorazio, R.M.},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@ARTICLE{Royle+al:09b,
+  author = {Royle, J.A. and Karanth, K.U. and Gopalaswamy, A.M. and Kumar, N.S.},
+  title = {Bayesian inference in camera-trapping studies for a class of spatial
+	capture-recapture models},
+  journal = {Ecology},
+  year = {2009},
+  volume = {90},
+  pages = {3233-3244},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@ARTICLE{Royle+al:09a,
+  author = {Royle, J.A. and Nichols, J.D. and Karanth, K.U. and Gopalaswamy,
+	A.M.},
+  title = {A hierarchical model for estimating density in camera-trap studies},
+  journal = {Journal of Applied Ecology},
+  year = {2009},
+  volume = {46},
+  pages = {118-127},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@ARTICLE{Royle+Young:08,
+  author = {Royle, J.A. and Young, K.V.},
+  title = {A hierarchical model for spatial capture-recapture data.},
+  journal = {Ecology},
+  year = {2008},
+  volume = {89},
+  pages = {2281-2289},
+  owner = {dlb},
+  timestamp = {2009.12.24}
+}
+
+@ARTICLE{Ryden:94,
+  author = {Ryden, T.},
+  title = {Parameter estimation for Markov modulated Poisson processes.},
+  journal = {Communi Stat?Stoch Models},
+  year = {1994},
+  volume = {10},
+  pages = {795-829},
+  owner = {David},
+  timestamp = {2011.08.10}
+}
+
+@ARTICLE{Samuel+al:87,
+  author = {Samuel, M.D. and Garton, O.E. and Schlegel, M.W. and Carson, R.G.},
+  title = {Visibility bias during aerial surveys of elk in north central Idaho},
+  journal = {Journal of Wildlife Management},
+  year = {1987},
+  volume = {51},
+  pages = {622-630}
+}
+
+@ARTICLE{Sanathanan:72,
+  author = {Sanathanan, L.},
+  title = {Estimating the size of a multinomial population.},
+  journal = {Annals of Mathematical Statistics},
+  year = {1972},
+  volume = {43},
+  pages = {142-152.}
+}
+
+@ARTICLE{Sandland+Cormack:84,
+  author = {Sandland, R. L. and Cormack, R. M.},
+  title = {Statistical inference for {P}oisson and multinomial models for capture-recapture
+	experiments},
+  journal = {Biometrika},
+  year = {1984},
+  volume = {71},
+  pages = {27-33}
+}
+
+@ARTICLE{Schwarz+Seber:99,
+  author = {Schwarz, C.J. and Seber, G.A.F.},
+  title = {Estimating animal abundance: Review III},
+  journal = {Statistical Science},
+  year = {1999},
+  volume = {14},
+  pages = {427-456}
+}
+
+@ARTICLE{Schweder:90,
+  author = {Schweder, T.},
+  title = {Independent observer experiments to estimate the detection function
+	in line transect surveys of whales.},
+  journal = {Report of the International Whaling Commission},
+  year = {1990},
+  volume = {40},
+  pages = {349-356}
+}
+
+@PHDTHESIS{Schweder:74,
+  author = {Schweder, T.},
+  title = {Transformations of point processes: applications to animal sighting
+	and catch problems, with special emphasis on whales},
+  school = {University of California},
+  year = {1974},
+  type = {Ph{D} Thesis},
+  address = {Berkeley}
+}
+
+@ARTICLE{Schweder+al:97,
+  author = {T. Schweder and H.J. Skaug and X.K. Dimakos and M. Langaas and N.
+	Oien},
+  title = {Abundance of northeastern Atlantic minke whale, estimates for 1989
+	and 1995},
+  journal = {Report of the International Whaling Commission},
+  year = {1997},
+  volume = {47},
+  pages = {453-483}
+}
+
+@ARTICLE{Schweder+al:99,
+  author = {Schweder, T. and Skaug, H.J. and Langaas, M. and Dimakos, X.K.},
+  title = {Simulated likelihood methods for complex double-platform line transect
+	surveys.},
+  journal = {Biometrics},
+  year = {1999},
+  volume = {55},
+  pages = {678-687.}
+}
+
+@BOOK{Seber:82,
+  title = {The estimation of animal abundance and related parameters},
+  publisher = {Charles Griffin },
+  year = {1982},
+  author = {Seber, G.A.F},
+  address = {London},
+  edition = {2nd}
+}
+
+@ARTICLE{Seber:70,
+  author = {Seber, G.A.F.},
+  title = {The effects of trap response on tag-recapture estimates.},
+  journal = {Biometrika},
+  year = {1970},
+  volume = {26},
+  pages = {13-22},
+  number = {57}
+}
+
+@BOOK{Silvey:75,
+  title = {Statistical inference},
+  publisher = {Chapman {\&} Hall},
+  year = {1975},
+  author = {Silvey, S.D.},
+  address = {London}
+}
+
+@ARTICLE{Skaug:06,
+  author = {Skaug, H.J.},
+  title = {Markov modulated Poisson processes for clustered line transect data},
+  journal = {Environmental and Ecological Statistics},
+  year = {2006},
+  volume = {13},
+  pages = {199-211},
+  owner = {dlb},
+  timestamp = {2008.10.05}
+}
+
+@ARTICLE{Skaug+Schweder:99,
+  author = {Skaug, H.J. and Schweder, T.},
+  title = {Hazard models for line transect surveys with independent observers.},
+  journal = {Biometrics},
+  year = {1999},
+  volume = {55},
+  pages = {29-36.}
+}
+
+@ARTICLE{Smith+Gelfland:92,
+  author = {Smith, A.F.M. and Gelfand, A.E.},
+  title = {Bayesian statistics without tears: a sampling-resampling perspective},
+  journal = {The American Statistician},
+  year = {1992},
+  volume = {46},
+  pages = {84-88}
+}
+
+@ARTICLE{Somerton2007,
+  author = {Somerton, D. A. and Munro, P. T. and Weinberg, K. L.},
+  title = {Whole-gear efficiency of a benthic survey trawl for flatfish},
+  journal = {Fish. Bull.},
+  year = {2007},
+  volume = {105},
+  pages = {278-291},
+  __markedentry = {[David]},
+  owner = {joyce},
+  timestamp = {2008.10.30}
+}
+
+@CONFERENCE{Somerton1999,
+  author = {Somerton, D. and Ianelli, J. and Walsh, S. and Smith, S. and Godo,
+	O. R. and Ramm, D.},
+  title = {Incorporating experimentally derived estimates of survey trawl efficiency
+	into the stock assessment process: a discussion},
+  booktitle = {ICES Journal of Marine Science},
+  year = {1999},
+  series = {56},
+  pages = {299-302},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.08.13}
+}
+
+@ARTICLE{Southwell+al:ip,
+  author = {Southwell, C. and Borchers, D.L. and de la Mare, B. and Paxton, C.
+	and Burt, M.L.},
+  title = {Estimation of g(0) and detection probability on aerial surveys of
+	Antarctic pack-ice seals},
+  journal = {to be submitted to JABES},
+  year = {{in prep.}}
+}
+
+@ARTICLE{Southwell+al:02,
+  author = {Southwell, C. and de la Mare, W. and Underwood, M. and Quartararo,
+	F. and Cope, K.},
+  title = {An automated system to log and process distance sight-resight aerial
+	survey data.},
+  journal = {Wildlife Society Bulletin},
+  year = {2002},
+  volume = {30},
+  pages = {394-404}
+}
+
+@ARTICLE{Stanley+Richards:05,
+  author = {Stanley, T. R. and Richards, J. D.},
+  title = {A program for testing capture?recapture data for closure},
+  journal = {Wildlife Society Bulletin},
+  year = {2005},
+  volume = {33},
+  pages = {782--785},
+  owner = {David},
+  timestamp = {2010.11.30}
+}
+
+@ARTICLE{Steinhorst+Samuel:89,
+  author = {Steinhorst, R.K. and Samuel, M.D.},
+  title = {Sightability adjustment methods for aerial survey sof wildlife populatoins},
+  journal = {Biometrics},
+  year = {1989},
+  volume = {45},
+  pages = {415-425}
+}
+
+@ARTICLE{Swann+al:02,
+  author = {Swann, D.E. and Averill-Murray, R.C. and Schwalbe, C.R.},
+  title = {Distance sampling for Sonoran Desert tortoises},
+  journal = {Journal of Wildlife Mana},
+  year = {2002},
+  volume = {66},
+  pages = {969-975},
+  owner = {david},
+  timestamp = {2012.07.31}
+}
+
+@MANUAL{Thomas+al:05,
+  title = {Distance 5.0. Release Beta 5.0},
+  author = {Thomas, L. J. T. and Laake, J. L. and Strindberg, S. and Marques,
+	F. F. C. and Buckland, S. T. and Borchers, D. L. and Anderson, D.
+	R. and Burnham, K. P. and Hedley, S. L. and Pollard, J. H. and Bishop,
+	J. R. B. and Marques, T. A. },
+  organization = {Research Unit for Wildlife Population Assessmen, University of St
+	Andrews},
+  address = {http://www.ruwpa.st-and.ac.uk/distance/},
+  year = {2005}
+}
+
+@BOOK{Thompson:92,
+  title = {Sampling},
+  publisher = {Wiley},
+  year = {1992},
+  author = {Thompson, S.K.},
+  address = {New York}
+}
+
+@BOOK{Thomson+Seber:96,
+  title = {Adaptive sampling},
+  publisher = {Wiley},
+  year = {1996},
+  author = {Thompson, S.K. and Seber, G.A.F.},
+  address = {New York}
+}
+
+@BOOK{Thompson2002,
+  title = {Sampling},
+  publisher = {Wiley},
+  year = {2002},
+  author = {Thompson, S. K.},
+  pages = {53},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2008.10.30}
+}
+
+@ARTICLE{Trenkel+al:00,
+  author = {Trenkel, V.M. and Elston, D.A. and Buckland, S.T.},
+  title = {Fitting population dynamics models to count and cull data using sequential
+	importance sampling},
+  journal = {Journal of the Americal Statistical Association},
+  year = {2000},
+  volume = {95},
+  pages = {363--374}
+}
+
+@ARTICLE{Udevitz+Pollock:95,
+  author = {Udevitz, M.S. and Pollock, K.H.},
+  title = {Using effort information with change-in-ratio data for population
+	estimation.},
+  journal = {Biometrics},
+  year = {1995},
+  volume = {51},
+  pages = {471-481}
+}
+
+@ARTICLE{Walker+al:11,
+  author = {Walker, C.G. and Mackenzie, M.L. and Donovan, C.R. and O'Sullivan,
+	M.J.},
+  title = {SALSA - a spatially adaptive local smoothing algorithm},
+  journal = {Journal of Statsitical Computation and Simulation},
+  year = {2011},
+  volume = {81},
+  pages = {179-191},
+  owner = {David},
+  timestamp = {2011.10.07}
+}
+
+@ARTICLE{West:93,
+  author = {West, M.},
+  title = {Approximating posterior distributions by mixtures},
+  journal = {Journal of the Royal Statistical Society B},
+  year = {1993},
+  volume = {55},
+  pages = {409-422}
+}
+
+@ARTICLE{Wileman1996,
+  author = {Wileman, D. A. and Ferro, R. S. T. and Fonteyne, R. and Millar, R.
+	B.},
+  title = {Manual of methods of measuring the selectivity of towed fishing gears},
+  journal = {ICES Coop. Res. Rep. (Copenhagen)},
+  year = {1996},
+  volume = {No.125},
+  pages = {126},
+  __markedentry = {[David]},
+  owner = {Yuan Yuan},
+  timestamp = {2009.09.02}
+}
+
+@BOOK{Williams+al:02,
+  title = {Analysis and management of animal populations},
+  publisher = {Academic Press, London},
+  year = {2002},
+  author = {Williams, B.K. and Nichols, J.D. and Conroy M.J.},
+  owner = {David},
+  timestamp = {2011.05.19}
+}
+
+@ARTICLE{Wittes:72,
+  author = {Wittes, J.T.},
+  title = {On the bias and estimated variance of Chapman's two-sample capture-recapture
+	population estimate.},
+  journal = {Biometrics},
+  year = {1972},
+  volume = {28},
+  pages = {592-597}
+}
+
+@ARTICLE{Wood:01,
+  author = {Wood, S.N.},
+  title = {Partially specified ecological models.},
+  journal = {Ecological Mongraphs},
+  year = {2001},
+  volume = {71},
+  pages = {1-25}
+}
+
+@BOOK{Wood2006,
+  title = {Generalized Additive Models},
+  publisher = {Chapman {\&} Hall},
+  year = {2006},
+  author = {Wood, S. N.},
+  __markedentry = {[David]},
+  owner = {yy},
+  timestamp = {2009.05.25}
+}
+
+@BOOK{Zucchini+MacDonald:09,
+  title = {Hidden Markov Models for Time Series: An Introduction Using R},
+  publisher = {Chapman \& Hall/CRC},
+  year = {2009},
+  author = {Zucchini, W. and MacDonald, I.},
+  owner = {david},
+  timestamp = {2012.06.24}
+}
+
+@BOOK{Kotz+Johnson:82,
+  title = {Encyclopedia of statistical sciences},
+  publisher = {Wiley},
+  year = {1982},
+  editor = {Kotz,S. and Johnson,N.L.},
+  volume = {2},
+  number = {2},
+  address = {New York}
+}
+
+@Article{Stevenson+al:18,
+  author   = {Stevenson, B. C. and Borchers, D. L. and Fewster, R. M.},
+  title    = {Cluster capture-recapture to account for identification uncertainty on aerial suveys of animal populations},
+  journal  = {Biometrics},
+  year     = {2018},
+  volume   = {??},
+  pages    = {???-???},
+  keywords = {Capture-recapture, Neyman-Scott process, Palm intensity, spatial capture-recapture, Thomas process,unmanned aerial vehicles.},
+}
+
+@Book{russell-norvig-aima3,
+  title     = {Artificial Intelligence A Modern Approach, Third Edition},
+  publisher = {Pearson},
+  year      = {2014},
+  author    = {Stuart Russell and Peter Norvig},
+  isbn      = {1-292-02420-8},
+}
+
+@Article{Westgate+al:95,
+  author  = {Westgate, A. J. and Read, A.J. and Beggren, P. and Koopman, H. N. and Gaskin, D. E.},
+  title   = {Diving behaviour of harbour porpoises, \textit{Phocoena phocoena}},
+  journal = {Canadian Journal of Fisheries and Aquatic Sciences},
+  year    = {1995},
+  volume  = {52},
+  pages   = {1064-1073},
+}
+
+@Article{Stevenson+al:15,
+  author   = {Stevenson, B. C. and Borchers, D. L. and Altwegg, R. and Swift, R. J. and Gillespie, D. M. and Measey, G. J.},
+  title    = {A general framework for animal density estimation from acoustic detections across a fixed microphone array},
+  journal  = {Methods in Ecology and Evolution},
+  year     = {2015},
+  volume   = {6},
+  pages    = {38-48},
+  abstract = {1. Acoustic monitoring can be an efficient, cheap, non-invasive alternative to physical trapping of individuals.Spatially explicit capture–recapture (SECR) methods have been proposed to estimate calling animal abundanceand density from data collected by a fixed array ofmicrophones.However, thesemethodsmake some assumptionsthat areunlikely tohold inmany situations, and the consequences of violating these are yet to be investigated.
+2. We generalize existing acoustic SECRmethodology, enabling these methods to be used in a much wider varietyof situations. We incorporate time-of-arrival (TOA) data collected by the microphone array, increasing theprecision of calling animal density estimates. We use our method to estimate calling male density of the CapePeninsulaMoss Frog Arthroleptella lightfooti.
+3. Our method gives rise to an estimator of calling animal density that has negligible bias, and 95% confidenceintervals with appropriate coverage. We show that using TOA information can substantially improve estimateprecision.
+4. Our analysis of the A. lightfooti data provides the first statistically rigorous estimate of calling male densityfor an anuran population using amicrophone array. This method fills amethodological gap in themonitoring offrog populations and is applicable to acoustic monitoring of other species that call or vocalize.},
+  doi      = {10.1111/2041-210X.12291},
+  keywords = {anura, bootstrap, frog advertisement call, maximum likelihood, Pyxicephalidae, spatiallyexplicit capture–recapture, time of arrival},
+}
+
+@Article{Borchers+al:15,
+  author   = {Borchers, D. L. and Stevenson, B. C. and Kidney, D. and Thomas, L. and Marques, T. A.},
+  title    = {A Unifying Model for Capture–Recapture and Distance Sampling Surveys of Wildlife Populations},
+  journal  = {Journal of the American Statistical Association},
+  year     = {2015},
+  volume   = {110},
+  pages    = {195-204},
+  abstract = {A fundamental problem in wildlife ecology and management is estimation of population size or density. The two dominant methods in this
+area are capture–recapture (CR) and distance sampling (DS), each with its own largely separate literature. We develop a class of models that
+synthesizes them. It accommodates a spectrum of models ranging from nonspatial CR models (with no information on animal locations)
+through to DS and mark-recapture distance sampling (MRDS) models, in which animal locations are observed without error. Between
+these lie spatially explicit capture–recapture (SECR) models that include only capture locations, and a variety of models with less location
+data than are typical of DS surveys but more than are normally used on SECR surveys. In addition to unifying CR and DS models, the
+class provides a means of improving inference from SECR models by adding supplementary location data, and a means of incorporating
+measurement error into DS and MRDS models. We illustrate their utility by comparing inference on acoustic surveys of gibbons and frogs
+using only capture locations, using estimated angles (gibbons) and combinations of received signal strength and time-of-arrival data (frogs),
+and on a visual MRDS survey of whales, comparing estimates with exact and estimated distances. Supplementary materials for this article
+are available online.},
+  doi      = {10.1080/01621459.2014.893884},
+  keywords = {Abundance estimation, Acoustic survey, Closed population, Measurement error, Visual survey},
+}
+
+@Article{Loveridge+al:17,
+  author  = {Loveridge, R. and Kidney, D. and Ty S. and Eang S. and Eames, J. C. and Borchers, D. L.},
+  title   = {First systematic survey of green peafowl Pavo muticus in northeastern Cambodia reveals a population stronghold and preference for disappearing riverine habitat},
+  journal = {CambodianJournal of Natural History},
+  year    = {2017},
+  pages   = {157–167},
+}
+
+@Article{Dorzaio+Karanth:17,
+  author   = {Dorazio, R. M. and Karanth, K. U.},
+  title    = {A hierarchical model for estimating the spatial distribution and abundance of animals detected by continuous-time recorders},
+  journal  = {PlosOne},
+  year     = {2017},
+  volume   = {12},
+  abstract = {Motivation
+Several spatial capture-recapture (SCR) models have been developed to estimate animalabundance by analyzing the detections of individuals in a spatial array of traps. Most ofthese models do not use the actual dates and times of detection, even though this informationis readily available when using continuous-time recorders, such as microphones ormotion-activated cameras. Instead most SCR models either partition the period of trap operationinto a set of subjectively chosen discrete intervals and ignore multiple detections of thesame individual within each interval, or they simply use the frequency of detections duringthe period of trap operation and ignore the observed times of detection. Both practices makeinefficient use of potentially important information in the data.Model and data analysisWe developed a hierarchical SCR model to estimate the spatial distribution and abundance of animals detected with continuous-time recorders. Our model includes two kinds of pointprocesses: a spatial process to specify the distribution of latent activity centers of individualswithin the region of sampling and a temporal process to specify temporal patterns in thedetections of individuals. We illustrated this SCR model by analyzing spatial and temporalpatterns evident in the camera-trap detections of tigers living in and around the NagaraholeTiger Reserve in India. We also conducted a simulation study to examine the performanceof our model when analyzing data sets of greater complexity than the tiger data.
+Benefits
+Our approach provides three important benefits: First, it exploits all of the information inSCR data obtained using continuous-time recorders. Second, it is sufficiently versatile toallow the effects of both space use and behavior of animals to be specified as functions ofcovariates that vary over space and time. Third, it allows both the spatial distribution and abundance of individuals to be estimated, effectively providing a species distribution model, even in cases where spatial covariates of abundance are unknown or unavailable. We illustrated these benefits in the analysis of our data, which allowed us to quantify differencesbetween nocturnal and diurnal activities of tigers and to estimate their spatial distributionand abundance across the study area. Our continuous-time SCR model allows an analyst tospecify many of the ecological processes thought to be involved in the distribution, movement,and behavior of animals detected in a spatial trapping array of continuous-timerecorders. We plan to extend this model to estimate the population dynamics of animalsdetected during multiple years of SCR surveys.},
+  url      = {https://doi.org/10.1371/journal.pone.0176966},
+}
+
+@Article{Elliot+Gopalaswamy:16,
+  author   = {Elliot, N. B. and Gopalaswamy, A. M.},
+  title    = {Toward accurate and precise estimates of lion density},
+  journal  = {Conservation Biology},
+  year     = {2016},
+  volume   = {31},
+  number   = {4},
+  pages    = {934–943},
+  abstract = {Reliable estimates of animal density are fundamental to understanding ecological processes and population dynamics. Furthermore, their accuracy is vital to conservation because wildlife authorities rely on estimates to make decisions. However, it is notoriously difficult to accurately estimate density for wide-ranging carnivores that occur at low densities. In recent years, significant progress has been made in density estimation of Asian carnivores, but the methods have not been widely adapted to African carnivores, such as lions (Panthera leo). Although abundance indices for lions may produce poor inferences, they continue to be used to estimate density and inform management and policy. We used sighting data from a 3-month survey and adapted a Bayesian spatially explicit capture-recapture (SECR) model to estimate spatial lion density in the Maasai Mara National Reserve and surrounding conservancies in Kenya. Our unstructured spatial capture-recapture sampling design incorporated search effort to explicitly estimate detection probability and density on a fine spatial scale, making our approach robust in the context of varying detection probabilities. Overall posterior mean lion density was estimated to be 17.08 (posterior SD 1.310) lions >1 year old/100 km 2, and the sex ratio was estimated at 2.2 females to 1 male. Our modeling framework and narrow posterior SD demonstrate that SECR methods can produce statistically rigorous and precise estimates of population parameters, and we argue that they should be favored over less reliable abundance indices. Furthermore, our approach is flexible enough to incorporate different data types, which enables robust population estimates over relatively short survey periods in a variety of systems. Trend analyses are essential to guide conservationdecisions but are frequently based on surveys of differing reliability. We therefore call for a unified framework to assess lion numbers in key populations to improve management and policy decisions.},
+  doi      = {10.1111/cobi.12878},
+  keywords = {density, Maasai Mara, Panthera leo, precision, SECR, spatial capture-recapture},
+}
+
+@Article{Borchers+al:14,
+  author  = {Borchers, D. L. and Distiller, G. and Foster, R. abd Harmsen, B. and Milazzo, L.},
+  title   = {Continuous-time spatially explicit capture-recapture models, with an application to a jaguar camera-trap survey},
+  journal = {Methods in Ecology and Evolution},
+  year    = {2014},
+  volume  = {5},
+  pages   = {656-665},
+}
+
+@Article{Efford:11,
+  author  = {Efford, M.G.},
+  title   = {Estimation of population density by spatially explicit capture-recapture analysis of data from area searches},
+  journal = {Ecology},
+  year    = {2011},
+  volume  = {92},
+  pages   = {2202–2207},
+}
+
+@Manual{Efford2007,
+  title        = {{\sc Density}: software for spatially explicit capture-recapture. Version 4.0},
+  author       = {Efford, M. G.},
+  organization = {Department of Zoology},
+  address      = {University of Otago, Dunedin, New Zealand. http://www.otago.ac.nz/density},
+  year         = {2007},
+}
+
+@Article{Ivan+al:13,
+  author  = {Ivan, J.S. and White, G.C. and Shenk, T.M.},
+  title   = {Using simulation to compare methods for estimating density from capture-recapture data},
+  journal = {Ecology},
+  year    = {2013},
+  volume  = {94},
+  pages   = {817-826},
+}
+
+@Article{Sollman+al:12,
+  author  = {Sollmann, R. and Gardner, B. and Belant, J. L.},
+  title   = {How does spatial study design influence density estimates from spatial capture-recapture models?},
+  journal = {PLoS ONE},
+  year    = {2012},
+  volume  = {7},
+  pages   = {e34575},
+  url     = {https://doi.org/10.1371/journal.pone.0034575},
+}
+
+@Article{Sun+al:14,
+  author  = {Sun, C. C. and Fuller, A. K. and Royle, J. A.},
+  title   = {Trap Configuration and Spacing Influences Parameter Estimates in Spatial Capture-Recapture Models},
+  journal = {PloS ONE},
+  year    = {2014},
+  volume  = {9},
+  pages   = {e88025},
+  url     = {https://doi.org/10.1371/journal.pone.0088025},
+}
+
+@Article{Wilton+al:14,
+  author  = {Wilton, C. M. and Puckett, E. E. and Beringer, J. and Gardner, B. and Eggert, L. S. and Belant, J. L.},
+  title   = {Trap Array Configuration Influences Estimates and Precision of Black Bear Density and Abundance},
+  journal = {PloS ONE},
+  year    = {2014},
+  volume  = {9},
+  pages   = {e111257},
+  url     = {https://doi.org/10.1371/journal.pone.0111257},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

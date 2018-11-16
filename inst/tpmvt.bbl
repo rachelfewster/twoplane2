@@ -1,0 +1,28 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Hayes and Buckland}{Hayes and
+  Buckland}{1983}]{Hayes+Buckland:83}
+Hayes, R.~J. and Buckland, S.~T. (1983).
+\newblock Radial-distance models for the line-transect method.
+\newblock {\em Biometrics} {\bf 39,} 29--42.
+
+\bibitem[\protect\citeauthoryear{Hiby and Lovell}{Hiby and
+  Lovell}{1998}]{Hiby+Lovell:98}
+Hiby, L. and Lovell, P. (1998).
+\newblock Using aircraft in tandem formation to estimate abundance of harbour
+  porpoise.
+\newblock {\em Biometrics} {\bf 54,} 1280--1289.
+
+\bibitem[\protect\citeauthoryear{Russell and Norvig}{Russell and
+  Norvig}{2014}]{russell-norvig-aima3}
+Russell, S. and Norvig, P. (2014).
+\newblock {\em Artificial Intelligence A Modern Approach, Third Edition}.
+\newblock Pearson.
+
+\bibitem[\protect\citeauthoryear{Zucchini and MacDonald}{Zucchini and
+  MacDonald}{2009}]{Zucchini+MacDonald:09}
+Zucchini, W. and MacDonald, I. (2009).
+\newblock {\em Hidden Markov Models for Time Series: An Introduction Using R}.
+\newblock Chapman \& Hall/CRC.
+
+\end{thebibliography}

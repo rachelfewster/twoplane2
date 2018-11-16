@@ -1,0 +1,37 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Hayes and Buckland}{Hayes and
+  Buckland}{1983}]{Hayes+Buckland:83}
+Hayes, R.~J. and Buckland, S.~T. (1983).
+\newblock Radial-distance models for the line-transect method.
+\newblock {\em Biometrics} {\bf 39,} 29--42.
+
+\bibitem[\protect\citeauthoryear{Hiby and Lovell}{Hiby and
+  Lovell}{1998}]{Hiby+Lovell:98}
+Hiby, L. and Lovell, P. (1998).
+\newblock Using aircraft in tandem formation to estimate abundance of harbour
+  porpoise.
+\newblock {\em Biometrics} {\bf 54,} 1280--1289.
+
+\bibitem[\protect\citeauthoryear{Russell and Norvig}{Russell and
+  Norvig}{2014}]{russell-norvig-aima3}
+Russell, S. and Norvig, P. (2014).
+\newblock {\em Artificial Intelligence A Modern Approach, Third Edition}.
+\newblock Pearson.
+
+\bibitem[\protect\citeauthoryear{Stevenson, Borchers, and Fewster}{Stevenson
+  et~al.}{2018}]{Stevenson+al:18}
+Stevenson, B.~C., Borchers, D.~L., and Fewster, R.~M. (2018).
+\newblock Cluster capture-recapture to account for identification uncertainty
+  on aerial suveys of animal populations.
+\newblock {\em Biometrics} {\bf ??,} ???--???
+
+\bibitem[\protect\citeauthoryear{Westgate, Read, Beggren, Koopman, and
+  Gaskin}{Westgate et~al.}{1995}]{Westgate+al:95}
+Westgate, A.~J., Read, A., Beggren, P., Koopman, H.~N., and Gaskin, D.~E.
+  (1995).
+\newblock Diving behaviour of harbour porpoises, \textit{Phocoena phocoena}.
+\newblock {\em Canadian Journal of Fisheries and Aquatic Sciences} {\bf 52,}
+  1064--1073.
+
+\end{thebibliography}
