@@ -130,7 +130,7 @@ p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
 #' @param k time lag between observers
 #' @param dmax.t maximum distance can move (in plane-seconds)
 #' @param planespd speed observers move along transect
-#' @param halfw.dist half-width of strip
+#' @param halfw.dist half-width of searched strip
 #' @param adj.norm if TRUE, uses correct mvt dbn (Brownian hitting time) in place of normal (not yet impelmented).
 #' 
 #' @examples 
@@ -205,7 +205,7 @@ p.o2i = function(sigma,dmax,w,nx=500) {
   xs=seq(w,dmax+w,length=(nx+1))
   ws = rep(w,length(xs))
   xs = xs + dx/100000 # so that all starting points are outside strip
-  F.rs = pnorm(xs-ws,mean=0,sd=sigma) - pnorm(-xs-ws,mean=0,sd=sigma)
+  F.rs = pnorm(ws-xs,mean=0,sd=sigma) - pnorm(-ws-xs,mean=0,sd=sigma)
   p = (F.rs[1]/2 + sum(F.rs[2:nx]) + F.rs[nx+1]/2)*dx/(dmax)
   return(p)
 }
@@ -236,7 +236,7 @@ p.o2i = function(sigma,dmax,w,nx=500) {
 #' p.i2o(sigma,dmax=dmax,w)
 #p.i2o = function(sigma,dmax,w,nx=500) return(1-p.i2i(sigma,dmax,w,nx))
 p.i2o = function(sigma,dmax,w,nx=500) {
-  xs=seq(0,w,length=(nx+1))
+  xs=seq(-w,w,length=(nx+1))
   dx = w/nx
   ws = rep(w,length(xs))
   F.rs = pnorm(xs-ws,mean=0,sd=sigma) + pnorm(-xs-ws,mean=0,sd=sigma)

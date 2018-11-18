@@ -19,11 +19,11 @@ w=0.125*2 # width of strip in km from porpoise data
 D = 1.24
 En = 100
 
-Nsim=50
+Nsim=30
 
 alpha = alphas[2]
 k = ks[4]
-sigmarate = sigmarates[3]
+sigmarate = sigmarates[2]
 #sigmarate = 0.01/(sqrt(2)*gamma(1)/gamma(0.5))
 sigma.mult=5
 dmax.km=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
@@ -43,7 +43,7 @@ harvestsim(alpha,k,sigmarate,D,En=En,Nsim=10,simresults=testsim)
 harvestsim(alpha,k,sigmarate,D,En=En,Nsim=10,simresults=testsimvt)
 
 # Then do a bunch
-start.a=3; start.k=1; start.s=1
+start.a=1; start.k=1; start.s=1
 end.a=4; end.k=4; end.s=3
 startime=date()
 for(na in start.a:end.a) {
@@ -66,8 +66,9 @@ simtab =  data.frame(Nsim=NAs,alpha=NAs,k=NAs,speed=NAs,D=NAs,
                      sehat.Dhat=NAs,
                      nbadD=NAs,nbadse=NAs)
 ns = 0
-for(i in 1:length(alphas)) {
-  for(j in 1:length(ks)) {
+#for(i in 1:length(alphas)) {
+for(i in 3:length(alphas)) {
+    for(j in 1:length(ks)) {
     for(l in 1:length(sigmarates)) {
       ns = ns+1
       simtab[ns,] = harvestsim(alphas[i],ks[j],sigmarates[l],D,En,Nsim)

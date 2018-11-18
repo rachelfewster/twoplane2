@@ -7,7 +7,7 @@ segfit=function(dat,D.line.t,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,cont
   s1=dat$s1;s2=dat$s2
   tL=dat$tL
   halfw=dat$tw/2
-  
+
   #  Test the C++ likelihood function using known recaptures.   
   #  This had to be commented out because in compare-palm we do not have the recaptures. 
   # I THINK THERE ARE ERRORS IN THIS LIKELIHOOD NOW - CHECK BEFORE USING!
@@ -127,7 +127,8 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
   
   if(is.element("D",estimate)) {
     if(io) {
-      est$D=exp(optout$par[1])
+      # Scale up because rcpp_compute_likelihood assumes strip width is 2*halfw
+      est$D=exp(optout$par[1])*halfw/(halfw+dmax.t)
     } else {
       est$D=exp(optout$par[1])
     }
@@ -211,9 +212,9 @@ segnegllik.cpp.mix.io=function(theta,s1,s2,dmax.t,p1,p2,k,planespd,adj.norm=FALS
   sigmarate = exp(theta_new[3]) # theta_new[3] is log of sigmarate
   
   halfw.dist = halfw*planespd # convert from observer seconds to km
-  # Error trap: if sigma more than 100 times halfw.dist, warn and return bad negative log likelihood:
-  if(sigmarate*sqrt(k)>(halfw.dist)) {
-    warning("sigma > halfw.dist: returning -Inf log-likelihood")
+  # Error trap: if sigma more than 100 times dmax.t*planespd, warn and return bad negative log likelihood:
+  if(sigmarate*sqrt(k)>dmax.t*planespd) {
+    warning("sigma > dmax.t*planespd: returning -Inf log-likelihood")
     sigmaerror=TRUE
   }
   # Error trap: if E1 > Ec:
