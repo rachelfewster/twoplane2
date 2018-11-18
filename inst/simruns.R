@@ -6,7 +6,7 @@ library(palm)
 Ec = 100 # mean dive cycle length
 alphas = c(10,20,50,80)/100
 ks = c(10,20,50,80)
-animalspeeds = c(0.65, 0.95, 1.5)/1000 # mean speed in km/h
+animalspeeds = c(0.65, 0.95, 1.5)/1000 # mean speed in km/sec
 # Convert using fact that E(U)=sqrt(2)*gamma(1)/gamma(0.5), if U~Chi(1)
 # (See here: https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable)
 sigmarates = animalspeeds/(sqrt(2)*gamma(1)/gamma(0.5))

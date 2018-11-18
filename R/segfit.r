@@ -127,8 +127,9 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
   
   if(is.element("D",estimate)) {
     if(io) {
-      # Scale up because rcpp_compute_likelihood assumes strip width is 2*halfw
-      est$D=exp(optout$par[1])*halfw/(halfw+dmax.t)
+##      # Scale up because rcpp_compute_likelihood assumes strip width is 2*halfw
+##      est$D=exp(optout$par[1])*halfw/(halfw+dmax.t)
+      est$D=exp(optout$par[1])
     } else {
       est$D=exp(optout$par[1])
     }

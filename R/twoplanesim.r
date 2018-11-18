@@ -1,17 +1,3 @@
-# Left- and Right-truncated normal random variable generator
-rtnorm = function(n,mean=0,sd=1,xtrunc=50) {
-  xtrunc = abs(xtrunc)
-  inflate = (0.5-pnorm(mean-xtrunc,mean,sd))/0.5 # expected ppn within xtrunc
-  nx = 0
-  x = NULL
-  while(nx<n) {
-    x = c(x,rnorm(round(2*n/inflate),mean,sd)) # generate too many xs and add to existing ones
-    x = x[(mean-xtrunc < x) & (x < mean+xtrunc)] # keep those within xtrunc
-    nx = length(x) # update number of xs within xtrunc
-  }
-  return(x[1:n])
-}
-
 sim.2plane=function(N,L,w,sigmarate,k,planespd,p.up,E.c,p=c(1,1),
                     sigma.mult=6,movement=list(forward=TRUE,sideways=TRUE)){
   
@@ -31,31 +17,31 @@ sim.2plane=function(N,L,w,sigmarate,k,planespd,p.up,E.c,p=c(1,1),
   
   
   if(!movement$sideways) { # Here for no sideways movement.
-    NumSimAnimals=N
-    l=sort(runif(N,0,tL)) # generate animal locations (in plane seconds)
-    #    lhoriz=rep(0,N)  #  Place animals in centre of strip if there is no horizontal movement.
-    lhoriz=runif(N,-tw/2,tw/2)  #  Place animals uniformly in strip.
+    NumSimAnimals=round(N)
+    l=sort(runif(NumSimAnimals,0,tL)) # generate animal locations (in plane seconds)
+    #    lhoriz=rep(0,NumSimAnimals)  #  Place animals in centre of strip if there is no horizontal movement.
+    lhoriz=runif(NumSimAnimals,-tw/2,tw/2)  #  Place animals uniformly in strip.
     if(movement$forward) {
-      simt = rft(N,k,planespd,log(sigmarate)) -k # deviation from lag of k
+      simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) -k # deviation from lag of k
     } else { # no forward movement
-      simt=rep(0,N)
+      simt=rep(0,NumSimAnimals)
     }
     l2=l+simt # locations of animals (in plane time since start of transect, time measured in plane seconds) when 2nd observer passes
     l2horiz=lhoriz  #  Horizontal position when second plane passes. 
   }  # here for sideways movement
   else {
     #  Horizontal movement. Need to simulate more animals, within a wider strip with width w+2*dmax.km
-    Nhoriz=round(N*btw/tw)
-    NumSimAnimals=Nhoriz
-    l=sort(runif(Nhoriz,0,tL)) # generate animal locations (in plane seconds)
-    lhoriz=runif(Nhoriz,-btw/2, btw/2)  #  Horizontal animal locations in plane seconds
+#    Nhoriz=round(N*btw/tw)
+    NumSimAnimals=round(N)
+    l=sort(runif(NumSimAnimals,0,tL)) # generate animal locations (in plane seconds)
+    lhoriz=runif(NumSimAnimals,-btw/2, btw/2)  #  Horizontal animal locations in plane seconds
     if(movement$forward) {
-      simt = rft(Nhoriz,k,planespd,log(sigmarate)) -k # deviation from lag of k
+      simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) -k # deviation from lag of k
     } else { # no forward movement
-      simt=rep(0,Nhoriz)
+      simt=rep(0,NumSimAnimals)
     }
-    simthoriz=rtnorm(Nhoriz,mean=0,sd=sqrt(k)*sigmarate/planespd,xtrunc=btw/2)
-#    simthoriz=rnorm(Nhoriz, 0, sqrt(k)*sigmarate)/planespd
+#    simthoriz=rtnorm(NumSimAnimals,mean=0,sd=sqrt(k)*sigmarate/planespd,xtrunc=btw/2)
+    simthoriz=rnorm(NumSimAnimals, 0, sqrt(k)*sigmarate/planespd)
     l2=l+simt
     l2horiz=lhoriz+simthoriz
   }
