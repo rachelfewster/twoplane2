@@ -134,7 +134,7 @@ p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
 #' @param adj.norm if TRUE, uses correct mvt dbn (Brownian hitting time) in place of normal (not yet impelmented).
 #' 
 #' @examples 
-p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.norm=FALSE,io=TRUE) {
+p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.norm=FALSE,io=TRUE,idbn=NULL) {
   Qmat=matrix(c(-1/E1,1/(Ec-E1),1/E1,-1/(Ec-E1)),nrow=2)
   # deal with in-out movement:
 #  TPM = make.inout.tpm(sigma=sigmarate*sqrt(k)*planespd,dmax=dmax.t*planespd,w=halfw.dist) # in-out transition probability matrix
@@ -142,17 +142,25 @@ p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.norm=FALS
     if(is.null(halfw.dist)) stop("Need halfw.dist if io=TRUE.")
     TPM = make.inout.tpm(sigma=sigmarate*sqrt(k),dmax=dmax.t*planespd,w=halfw.dist) # in-out transition probability matrix
     p.in = halfw.dist/(halfw.dist+dmax.t*planespd) # unconditional probability is in strip, given within dmax.t*planespd of strip
-    stdbn = c((E1/Ec)*p.in,(E1/Ec)*(1-p.in),(1-E1/Ec)*p.in,(1-E1/Ec)*(1-p.in))
+    if(!is.null(idbn)) {
+      if(length(idbn)!=4) stop ("idbn must be of length 4")
+    } else {
+      idbn = c((E1/Ec)*p.in,(E1/Ec)*(1-p.in),(1-E1/Ec)*p.in,(1-E1/Ec)*(1-p.in))
+    }
   } else {
     TPM = NULL
-    stdbn = c((E1/Ec),(1-(E1/Ec)))
+    if(!is.null(idbn)) {
+      if(length(idbn)!=2) stop ("idbn must be of length 2")
+    } else {
+      idbn = c((E1/Ec),(1-(E1/Ec)))
+    }
   }
   if(adj.norm) {
     stop("Not yet added movement with adj.norm option.")
   } else {
-    p01.k=p.omega.t(k,stdbn,p[1],p[2],Qmat,omega=01,TPM)
-    p10.k=p.omega.t(k,stdbn,p[1],p[2],Qmat,omega=10,TPM)
-    p11.k=p.omega.t(k,stdbn,p[1],p[2],Qmat,omega=11,TPM)
+    p01.k=p.omega.t(k,idbn,p[1],p[2],Qmat,omega=01,TPM)
+    p10.k=p.omega.t(k,idbn,p[1],p[2],Qmat,omega=10,TPM)
+    p11.k=p.omega.t(k,idbn,p[1],p[2],Qmat,omega=11,TPM)
   }
   return(data.frame(ch01=p01.k,ch10=p10.k,ch11=p11.k))
 }
