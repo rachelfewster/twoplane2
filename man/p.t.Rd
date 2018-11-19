@@ -5,7 +5,7 @@
 \title{Calculates the observable capture histories}
 \usage{
 p.t(E1, Ec, p, sigmarate, k, dmax.t, planespd, halfw.dist = NULL,
-  adj.norm = FALSE, io = TRUE)
+  adj.norm = FALSE, io = TRUE, idbn = NULL)
 }
 \arguments{
 \item{E1}{expected time available per dive cycle}
