@@ -1,5 +1,5 @@
 
-dosim = function(alpha,Ec,k,w,sigmarate,planespd,D,En=100,Nsim=100,writeout=TRUE,seed=1,iomvt=FALSE,sigma.mult=5) {
+dosim = function(alpha,Ec,k,w,sigmarate,planespd,D,En=100,Nsim=100,writeout=TRUE,seed=1,iomvt=FALSE,sigma.mult=5,L=NULL) {
   
   p.up = alpha # proportion of time up
   E1 = alpha*Ec
@@ -13,7 +13,7 @@ dosim = function(alpha,Ec,k,w,sigmarate,planespd,D,En=100,Nsim=100,writeout=TRUE
   if(iomvt) b = w + 2*dmax.d
   #  L=1100  # length in km from porpoise data
   #  L=En/(D*w*alpha) # set L to get desired sample size
-  L=En/(D*b*p.) # set L to get desired sample size
+  if(is.null(L)) L=En/(D*b*p.) # set L to get desired sample size
   
   p.see.up=c(1,1) # Prob see if up and in
   

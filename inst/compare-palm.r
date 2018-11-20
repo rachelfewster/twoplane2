@@ -10,124 +10,170 @@ data("porpoise")
 
 nm2km=1.852 # multiplier to convert nautical miles to kilometres
 
-E2=14
-E1=86
-E=c(E1,E2)
-Ec=sum(E) # mean dive cycle length in seconds
-p.up=E1/Ec # proportion of time up
+tau = Ec = 400
+p.up = 86/110
+kappa = E1 = p.up*tau
 
 L=porpoise.data$d
 w=porpoise.data$w*2 # length and width of strip in km
+halfw.dist = porpoise.data$w
 
 planeknots=100 # observer speed in knots   CHECK THIS
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
 k=248 # time separation of observers in seconds
 
-sigma=0.15   #  Value for 248s separation.
-sigmarate=sigma/sqrt(k)
-sigma.mult=8 # multiplier to set bound for maximum distance moved
+animalspeed = 0.95/1000 # mean speed in km/sec
+# Convert using fact that E(U)=sqrt(2)*gamma(1)/gamma(0.5), if U~Chi(1)
+# (See here: https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable)
+sigmarate = animalspeed/(sqrt(2)*gamma(1)/gamma(0.5))
+
+#sigma=0.15   #  Value for 248s separation.
+sigma = sigmarate*sqrt(k)
+sigma.mult=25 # multiplier to set bound for maximum distance moved
+dmax.km = sigma*sigma.mult
+dmax.time = dmax.km/planespd
+b = w+2*dmax.km
+
+sigma.ben = 0.15
+sigmarate.ben2david = sigma.ben/sqrt(2)/sqrt(k)
+sigmarate.ben2david
+sigma.ben2david = sigmarate.ben2david*sqrt(k)
+sigma.ben2david
+sigma.ben2david/sigma
 
 p.see.up=c(1,1)
 #p.see.up=c(0.8,0.8) # prob(see|up) for each observer
 
+D = 1.05
+
+
 # prob up in k seconds, given up now:
-p.k=calc.p.avail(k,E1,Ec,p=c(1,1),sigma,planespd);p.k
+#p.k=calc.p.avail(k,E1,Ec,p=c(1,1),sigma,planespd);p.k
+idbn = c(1,0,0,0)
+p.k = p.t(kappa,tau,p.see.up,sigmarate,k,dmax.time,planespd,halfw.dist=halfw.dist,idbn=idbn)$ch11
 round(p.k/p.up*100,1)-100 # % inflation in detection prob due to recent availability
+p.k.nomvt = p.t(kappa,tau,p.see.up,sigmarate,k,dmax.time,planespd,halfw.dist=halfw.dist,idbn=c(1,0),io=FALSE)$ch11
+round(p.k.nomvt/p.up*100,1)-100 # % inflation in detection prob due to recent availability
 
 N=1.05*(L*w)
 
 Dstrip=N/(L*w) # density in number per sq km
 Dstrip.t=Dstrip*(planespd^2) # density in planespd units
 D.line.t=Dstrip.t*w/planespd # density in planespd along LINE units (1-dimensional)
-Dbound=list(lower=-5*abs(log(D.line.t)),upper=5*abs(log(D.line.t))) # need bounds only if doing 1-dim estimation
 method="Nelder-Mead" # this is ignored if doing 1-dim estimation
 control.opt=list(trace=0,maxit=1000)
+estimate=c("D","sigma","E1") # parameters to estimate
 
 
 #  Split into camera 1 and camera 2 and convert from km to plane seconds. 
-s1=porpoise.data$points[porpoise.data$cameras==1]/planespd
-s2=porpoise.data$points[porpoise.data$cameras==2]/planespd
+y1 = porpoise.data$points[porpoise.data$cameras==1]
+s1=y1/planespd
+y2 = porpoise.data$points[porpoise.data$cameras==2]
+s2=y2/planespd
 
+n1 = length(y1)
+n2 = length(y2)
+dists = as.matrix(dist(c(y1,y2)))[1:n1,(n1+1):(n1+n2)]
+mins = apply(dists,1,min)
+hist(mins[mins<70/1000])
 
-Nsim=1
+sdat = list(s1=s1,s2=s2,k=k,dmax.t=dmax.time,tL=L,tw=w/planespd/2)
+#k=dat$k
+#dmax.t=sigma.mult*(sigmarate*sqrt(k))/planespd # max time apart (in seconds) observations could be considered duplicates
+#s1=dat$s1;s2=dat$s2
+#tL=dat$tL
+#halfw=dat$tw/2
 
+fitio<-segfit(sdat,D.line.t,E1=E1,Ec=Ec,sigmarate=sigmarate,planespd=planespd,p=c(1,1),sigma.mult=sigma.mult,
+              control.opt=control.opt,method="BFGS",estimate=estimate,set.parscale=TRUE,
+              io=TRUE,Dbound=NULL,hessian=TRUE)
+estsio=data.frame(Dhat=0,E1=0,E2=0,sigma=0,n1=0,n2=0,mu_c=0,se=0,lcl=0,ucl=0)
 
-estsio=ests=data.frame(Dhat=rep(0,Nsim),E1=rep(0,Nsim),E2=rep(0,Nsim),sigma=rep(0,Nsim),
-                       n1=rep(0,Nsim),n2=rep(0,Nsim),m=rep(0,Nsim),mu_c=rep(0,Nsim),
-                       se=rep(0,Nsim),inci=rep(0,Nsim))
-estsnspp=estsna=data.frame(Dhat=rep(0,Nsim),n1=rep(0,Nsim),n2=rep(0,Nsim),sigma=rep(0,Nsim))
+estsio$n1=length(sdat$s1)
+estsio$n2=length(sdat$s2)
 
-ests.kd=ests
-plot.sample=FALSE
-plot.displacement=FALSE
-plot.cuts=FALSE
-checkdists=FALSE
-fromfile=FALSE
-segiotime=segtime=nspptime=rep(NA,Nsim)
-
-estimate=c("D","sigma","E1") # parameters to estimate
-true=list(D=Dstrip,sigma=sigmarate,E1=E1) # parameters to use in simulation
-
-# Comment out one of the two lines below
-iomvt = TRUE # allow in-out movement in simulation and estimation
-#iomvt = FALSE # do not allow in-out movement in simulation and estimation
-
-seed=654321 # arbitrary fixed seed - for generation of exactly same set of data on separate occasions
-set.seed(seed) # initialise random number sequence (for repeatability)
-
-sdat=list()
-sdat$s1=s1
-sdat$s2=s2
-sdat$k=k
-sdat$tL=L/planespd
-sdat$tw=w/planespd
-
-sim=1
-# fit accounting for leakage of animals in and out of strip
-segiotime[1]=system.time(fitio<-segfit(sdat,D.line.t,E1=E1,Ec=Ec,sigmarate=sigmarate,planespd=planespd,p=p.see.up,sigma.mult=sigma.mult,
-                                         control.opt=control.opt,method="BFGS",estimate=estimate,set.parscale=TRUE,
-                                         io=iomvt,Dbound=NULL,hessian=TRUE,krtest=FALSE))[3]
-vcv.io = solve(fitio$hessian)
-corr.io = cov2cor(vcv.io)
-ses = sqrt(diag(vcv.io))
-cvio = data.frame(D=ses[1]/(fitio$D/(w*planespd)),E1=fitio$E[2]/ses[2],sigmarate=fitio$sigmarate/ses[3])
-
-#nspptime[sim]=system.time(est.nspp<-twoplane.fit(sdat,planespd,Ec,sigma,sigma.mult=sigma.mult,trace=FALSE,all=TRUE))[3]
-pdat = format4palm(sdat,planespd,Ec,sigma,sigma.mult=sigma.mult)
-nspptime[sim]=system.time(palmfit<-fit.twocamera(pdat$points,pdat$cameras,pdat$d,pdat$w,pdat$b,pdat$l,pdat$tau,pdat$R,trace=FALSE))[3]
-est.palm=coef(palmfit)
-#  Convert 'activity centre' sigma of Palm into our sigma by *sqrt(2)  and convert to sigmarate.
-est.palm[3]=est.palm[3]*sqrt(2)/sqrt(sdat$k)
-# Get palm bootstrap estimates
-bootest.palm = boot.palm(palmfit,100)
-bsum.palm = summary(bootest.palm)
-cv.palm =  bsum.palm[[2]]/ bsum.palm[[1]]
-
-Dhat=fitio$D/(w*planespd)
-E1=fitio$E[1]
-sigma=fitio$sigmarate
-survey.mle = data.frame(est=c(Dhat,E1,sigma),
-                 lo=exp(c(log(Dhat),log(E1),log(sigma))-1.96*ses),
-                 hi=exp(c(log(Dhat),log(E1),log(sigma))+1.96*ses),
-                 cv = rep(NA,3))
-survey.mle$cv = (survey.mle$hi-survey.mle$lo)/(2*1.96)/survey.mle$est
-row.names(survey.mle) = c("D","mu1","sigma")
-# convert from sigmarate to sigma:
-survey.mle["sigma",c("est","lo","hi")] = survey.mle["sigma",c("est","lo","hi")] *sqrt(k)
-survey.mle
-saveRDS(survey.mle,file="./inst/results/survey.mle.Rds")
-
-estsnspp$Dhat[sim]=est.palm[1]
-estsnspp$sigma[sim]=est.palm[3]
+infmat=try(solve(fitio$hessian),silent=TRUE)
+if(!inherits(infmat, "try-error")) {
+  intest=logn.seci(log(fitio$D),sqrt(infmat[1,1]))
+  estsio$se=intest$se/(b*planespd)
+  estsio$lcl=intest$lower/(b*planespd)
+  estsio$ucl=intest$upper/(b*planespd)
+} else skip=c(skip,sim)
+estsio$Dhat=fitio$D/(b*planespd)
+estsio$E1=fitio$E[1]
+estsio$E2=fitio$E[2]
+estsio$sigma=fitio$sigmarate
+estsio$mu_c=fitio$mu_c
 
 estsio
-estsnspp
-true
 
 
 
-#######################
+
+# Try some simulation:
+# ====================
+
+tau = Ec = 110
+gamma = p.up = 86/110
+kappa = E1 = p.up*tau
+
+L=porpoise.data$d
+w=porpoise.data$w*2 # length and width of strip in km
+halfw.dist = porpoise.data$w
+
+planeknots=100 # observer speed in knots   CHECK THIS
+planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
+
+k=248 # time separation of observers in seconds
+
+#animalspeed = 0.95/1000 # mean speed in km/sec
+## Convert using fact that E(U)=sqrt(2)*gamma(1)/gamma(0.5), if U~Chi(1)
+## (See here: https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable)
+#sigmarate = animalspeed/(sqrt(2)*gamma(1)/gamma(0.5))
+sigmarate = sigmarate.ben2david
+sigma = sigmarate*sqrt(k)
+sigma.mult=15 # multiplier to set bound for maximum distance moved
+dmax.km = sigma*sigma.mult
+dmax.time = dmax.km/planespd
+b = w+2*dmax.km
+b/w
+
+planeknots=100 # observer speed in knots
+nm2km=1.852 # multiplier to convert nautical miles to kilometres
+planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
+
+D = 1.05
+
+ps = p.t(kappa,tau,p.see.up,sigmarate,k,dmax.time,planespd,halfw.dist=halfw.dist)
+p1 = ps$ch10 + ps$ch11
+
+En = round(mean(n1,n2))
+EN = round(En/p1)
+EN/(L*b) # Expected density according to parameters passed to p.t() above
+N = round(D*L*b)
+EN;N
+
+Nsim=100
+
+
+seed = 1
+#tm   = system.time(testsim   <- dosim(gamma,Ec,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
+#                                      seed=seed,Nsim=Nsim,writeout=FALSE,iomvt=FALSE,L=L))
+tmvt = system.time(testsimvt <- dosim(gamma,Ec,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
+                                      seed=seed,Nsim=Nsim,writeout=FALSE,iomvt=TRUE,L=L))
+#harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsim)
+harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsimvt)
+
+hist(testsimvt$sim$mle$Dhat/testsimvt$sim$palm$Dhat,xlab="MLE/Palm",main="Ratio of MLE to Palm Dhat")
+plot(testsimvt$sim$mle$Dhat,testsimvt$sim$palm$Dhat,xlab="MLE Dhat",ylab="Palm Dhat")
+xylim = range(testsimvt$sim$mle$Dhat,testsimvt$sim$palm$Dhat)
+lines(xylim,xylim,lty=2)
+points(D,D,pch=19,col="red")
+lines(rep(D,2),xylim,lty=2,col="red")
+lines(xylim,rep(D,2),lty=2,col="red")
+
+f#######################
 #
 #   Compare ..
 library(binhf)

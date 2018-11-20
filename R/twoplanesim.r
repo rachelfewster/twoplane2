@@ -56,24 +56,28 @@ sim.2plane=function(N,L,w,sigmarate,k,planespd,p.up,E.c,p=c(1,1),
   q11=-1/E1
   q22=-1/E2
   Qmat=matrix(c(q11,-q22,-q11,q22),nrow=2)
-  if(!movement$sideways) { # no movement in/out of stip
-    for(i in 1:NumSimAnimals) {
-      p.01.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=01)  # Prob(2nd sees | state when 1st passes)
-      p.11.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=11)  # Prob(2nd sees | state when 1st passes)
-    }
-  } else { # movement in/out of stip
-## For debugging, just use k as time. Later remove line below and uncomment 2 lines down TPM = ...
-#        TPM = make.inout.tpm(sigma=sigmarate*sqrt(k),dmax=dmax.km,w=w) # in-out transition probability matrix
-    for(i in 1:NumSimAnimals) {
-      TPM = make.inout.tpm(sigma=sigmarate*sqrt(k+simt[i]),dmax=dmax.km,w=w) # in-out transition probability matrix
-      idbn = c(up.1[i]*in.1[i],up.1[i]*(1-in.1[i]),(1-up.1[i])*in.1[i],(1-up.1[i])*(1-in.1[i]))
-      p.01.2[i]=p.omega.t(t12[i], idbn=idbn, p1, p2, Qmat, omega=01,IO=TPM)  # Prob(2nd sees | state when 1st passes)
-      p.11.2[i]=p.omega.t(t12[i], idbn=idbn, p1, p2, Qmat, omega=11,IO=TPM)  # Prob(2nd sees | state when 1st passes)
-    }
+  for(i in 1:NumSimAnimals) {
+    p.01.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=01)  # Prob(2nd sees | state when 1st passes)
+    p.11.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=11)  # Prob(2nd sees | state when 1st passes)
   }
+##  if(!movement$sideways) { # no movement in/out of stip
+##    for(i in 1:NumSimAnimals) {
+##      p.01.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=01)  # Prob(2nd sees | state when 1st passes)
+##      p.11.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=11)  # Prob(2nd sees | state when 1st passes)
+##    }
+##  } else { # movement in/out of stip
+#### For debugging, just use k as time. Later remove line below and uncomment 2 lines down TPM = ...
+###        TPM = make.inout.tpm(sigma=sigmarate*sqrt(k),dmax=dmax.km,w=w) # in-out transition probability matrix
+##    for(i in 1:NumSimAnimals) {
+##      TPM = make.inout.tpm(sigma=sigmarate*sqrt(k+simt[i]),dmax=dmax.km,w=w) # in-out transition probability matrix
+##      idbn = c(up.1[i]*in.1[i],up.1[i]*(1-in.1[i]),(1-up.1[i])*in.1[i],(1-up.1[i])*(1-in.1[i]))
+##      p.01.2[i]=p.omega.t(t12[i], idbn=idbn, p1, p2, Qmat, omega=01,IO=TPM)  # Prob(2nd sees | state when 1st passes)
+##      p.11.2[i]=p.omega.t(t12[i], idbn=idbn, p1, p2, Qmat, omega=11,IO=TPM)  # Prob(2nd sees | state when 1st passes)
+##    }
+##  }
   
-  p.see.2=p.01.2+p.11.2
-  see.2=(runif(NumSimAnimals)<=p.see.2)*in.2 # binary variable indicating whether or not plane 2 sees
+  p.see.2.given.in = (p.01.2+p.11.2)
+  see.2=(runif(NumSimAnimals)<=p.see.2.given.in)*in.2 # binary variable indicating whether or not plane 2 sees
   n1=sum(see.1)
   n2=sum(see.2)
   dups=(see.1*see.2==1)
