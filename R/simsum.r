@@ -7,7 +7,8 @@ dosim = function(alpha,Ec,k,w,sigmarate,planespd,D,En=100,Nsim=100,writeout=TRUE
   dmax.t=sigma.mult*(sigmarate*sqrt(k))/planespd # max time apart (in seconds) observations could be considered duplicates
   dmax.d = dmax.t*planespd # max distance apart observations could be considered duplicates
   ps = p.t(E1,Ec,p,sigmarate,k,dmax.t,planespd,w/2,io=iomvt) # capture history probabilities
-  p. = sum(ps) # prob detect
+  p. = sum(ps) # prob at least one observer detects
+  p. = mean((ps$ch01+ps$ch11) + (ps$ch10+ps$ch11)) # mean prob single observer detects
   
   b = w
   if(iomvt) b = w + 2*dmax.d
@@ -19,7 +20,7 @@ dosim = function(alpha,Ec,k,w,sigmarate,planespd,D,En=100,Nsim=100,writeout=TRUE
   
   N=D*(L*b)
   
-  Dstrip=N/(L*b) # density in number per sq km
+  Dstrip=D # density in number per sq km
   Dstrip.t=D*(planespd^2) # density in planespd units
   D.line.t=Dstrip.t*b/planespd # density in planespd along LINE units (1-dimensional)
   control.opt=list(trace=0,maxit=1000)

@@ -670,8 +670,22 @@ f_{T} (t)
 \section{Relationship between $\sigma$ and mean animal speed}
 \label{appx:sigmaspd}
 
-We're considering 1-dimensional movement here. Let $X(t)$ be the location of the animal relative to its starting position after time $t$. Then, assuming it starts at $X(0)=0$, $X(t)\sim N(0,\sigma\sqrt{t})$ and $Z(t)=X(t)/[\sigma\sqrt{t}]\sim N(0,1)$. Let $U(t)=\sqrt{Z(t)^2}$. Then\footnote{See \texttt{https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable}} $U(t)\sim\chi(1)$, with expected value $E[U(t)]=\sqrt{2}\Gamma(1)/\Gamma(1/2)=0.7978846$. Hence an animal moving according to Brownian motion, with parameter $\sigma$, is expected to move a distance $0.7978846\sigma$ per unit time, i.e. have an average speed of $0.7978846\sigma$. Conversely, to model Brownian animal movement in which animals have an average speed of $v$, we need $\sigma=v/0.7978846$. For example, to model animal movement with average speed of 0.95m/s, as in \cite{Stevenson+al:18}, we require $\sigma=0.95/0.7978846$m/s, or $0.95/797.8846\approx 0.00119$km/s.
+\todo[inline]{Mostly notes to myself - should trim/remove later.}
 
+We're considering 1-dimensional movement here. Let $X(t)$ be the location of the animal relative to its starting position after time $t$. Then, assuming it starts at $X(0)=0$, $X(t)\sim N(0,\sigma^2 t)$ and $Z(t)=X(t)/(\sigma\sqrt{t})\sim N(0,1)$. Let $U(t)=\sqrt{Z(t)^2}$. Then\footnote{See \texttt{https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable}} $U(t)\sim\chi(1)$. And since the expected value of a $\chi(n)$ random variable is $\sqrt{2}\Gamma((n-1)/2)/\Gamma(1/2)$, $E[U(t)]=\sqrt{2}\Gamma(1)/\Gamma(1/2)=0.7978846$. 
+
+Let  $v(t)=\sqrt{X(t)^2}/t$ be the speed of movement away from the initial postion, at time $t$. then $E(v(t))=E(\sqrt{X(t)^2}/t)=E(\sqrt{Z(t)^2}\sigma\sqrt{t}/t)$$=0.7978846\times\sigma/\sqrt{t}$. If we want to model Brownian animal movement in which animals have an average speed of $v(t)$ at time $t$, we need $\sigma=v(t)\sqrt{t}/0.7978846$. For example, to model animal movement with average speed of 0.95m/s, as in \cite{Stevenson+al:18}, at time $t$, we require $\sigma=0.95/0.7978846\sqrt{t}$ m/s, or $0.95/797.8846\approx 0.00119\sqrt{t}$ km/s. With a lag of 248 seconds, this is $\sigma\approx 0.00119\sqrt{248}=0.01874$ km/s, while with a lag of 20 seconds it is $\sigma\approx 0.00119\sqrt{20}=0.00532$ km/s.
+
+This seems a weird way of calculating $\sigma$, because we would like $\sigma$ to be a property of the animals, and not depend on the time lag is between the first and second observers passing over them! It would be better to assume that the standard deviation of $X(t)$ is proportional to $t$, so that $X(t)\sim N(0,\sigma^2 t^2)$ instead. In this case, $E(v(t))=0.7978846\times\sigma$, which does not depend on $t$.
+
+\cite{Hiby+Lovell:98} model movement using a gamma distribution. They say (p. 1282) ``\textit{The displacement in pod position over the interval $t$ was assumed to follow a gamma distribution, i.e.,}
+\be
+r(t)\sim\frac{e^{-r/(t\beta)}(t\beta)^{-\alpha}r^{\alpha-1}}{\Gamma(\alpha)}.
+\ee
+\noindent
+\textit{As the scale parameter was made proportional to the interval $t$, the standard deviation of the displacement, rather than its variance, increased in proportion to the elapsed time. We thus assumed continuous movement in one direction, as would result from the pod transiting or moving with a water current rather than a milling movement with frequent changes in direction over $t$.}''
+
+If we have $X(t)\sim N(0,\sigma^2 t)$, we should have $\sigma=v/0.7978846$, where $v$ is the expected animal movement speed (e.g. for $v=9.5$ m/s, we have $\sigma=9.5/0.7978846\approx 11.9$ m/s, or 0.0119 km/s). This results in a speed  of movement away from the initial postion after 1 second, of 9.5 m/s, reducing with $t$ in inverse proportion to $\sqrt{t}$.
 
 \bibliographystyle{biom} 
 \bibliography{dlb}

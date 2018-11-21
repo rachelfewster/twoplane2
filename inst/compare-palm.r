@@ -35,13 +35,6 @@ dmax.km = sigma*sigma.mult
 dmax.time = dmax.km/planespd
 b = w+2*dmax.km
 
-sigma.ben = 0.15
-sigmarate.ben2david = sigma.ben/sqrt(2)/sqrt(k)
-sigmarate.ben2david
-sigma.ben2david = sigmarate.ben2david*sqrt(k)
-sigma.ben2david
-sigma.ben2david/sigma
-
 p.see.up=c(1,1)
 #p.see.up=c(0.8,0.8) # prob(see|up) for each observer
 
@@ -114,6 +107,8 @@ estsio
 # Try some simulation:
 # ====================
 
+k=20 # time separation of observers in seconds
+
 tau = Ec = 110
 gamma = p.up = 86/110
 kappa = E1 = p.up*tau
@@ -127,13 +122,18 @@ planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
 k=248 # time separation of observers in seconds
 
-#animalspeed = 0.95/1000 # mean speed in km/sec
-## Convert using fact that E(U)=sqrt(2)*gamma(1)/gamma(0.5), if U~Chi(1)
-## (See here: https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable)
-#sigmarate = animalspeed/(sqrt(2)*gamma(1)/gamma(0.5))
-sigmarate = sigmarate.ben2david
+# Choose Ben's sigma or a sigma
+#bens.sigma = FALSE
+bens.sigma = TRUE
+if(bens.sigma) {
+  sigma.ben = sqrt(((0.95*k/1000)^2)/2)/2 * sqrt(2) # Ben's sigma * sqrt(2)
+  sigmarate = sigma.ben/sqrt(k)
+} else {
+  animalspeed = 0.95/1000 # mean speed in km/sec
+  sigmarate = animalspeed/(sqrt(2)*gamma(1)/gamma(0.5))
+}
 sigma = sigmarate*sqrt(k)
-sigma.mult=15 # multiplier to set bound for maximum distance moved
+sigma.mult=5 # multiplier to set bound for maximum distance moved
 dmax.km = sigma*sigma.mult
 dmax.time = dmax.km/planespd
 b = w+2*dmax.km
@@ -144,6 +144,7 @@ nm2km=1.852 # multiplier to convert nautical miles to kilometres
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
 D = 1.05
+#D = 0.5
 
 ps = p.t(kappa,tau,p.see.up,sigmarate,k,dmax.time,planespd,halfw.dist=halfw.dist)
 p1 = ps$ch10 + ps$ch11
@@ -165,9 +166,25 @@ tmvt = system.time(testsimvt <- dosim(gamma,Ec,k,w,sigmarate,planespd,D,En=En,si
 #harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsim)
 harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsimvt)
 
-hist(testsimvt$sim$mle$Dhat/testsimvt$sim$palm$Dhat,xlab="MLE/Palm",main="Ratio of MLE to Palm Dhat")
-plot(testsimvt$sim$mle$Dhat,testsimvt$sim$palm$Dhat,xlab="MLE Dhat",ylab="Palm Dhat")
-xylim = range(testsimvt$sim$mle$Dhat,testsimvt$sim$palm$Dhat)
+
+sims = list()
+simno = 3
+sims[[simno]]=testsimvt
+
+harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=sims[[1]])
+harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=sims[[2]])
+
+hist(sims[[1]]$sim$mle$Dhat/sims[[simno]]$sim$palm$Dhat,xlab="MLE/Palm",main="Ratio of MLE to Palm Dhat")
+hist(sims[[1]]$sim$mle$Dhat,xlab="Dhat",main="MLE")
+points(mean(sims[[1]]$sim$mle$Dhat),0,pch="+",col="black",cex=2)
+D=as.numeric(strsplit(strsplit(sims[[1]]$fn,"-")[[1]][5],"_")[[1]][2])
+points(D,0,pch="+",col="red",cex=2)
+
+hist(sims[[2]]$sim$mle$Dhat/sims[[simno]]$sim$palm$Dhat,xlab="MLE/Palm",main="Ratio of MLE to Palm Dhat")
+
+D=as.numeric(strsplit(strsplit(sims[[simno]]$fn,"-")[[1]][5],"_")[[1]][2])
+plot(sims[[simno]]$sim$mle$Dhat,sims[[simno]]$sim$palm$Dhat,xlab="MLE Dhat",ylab="Palm Dhat")
+xylim = range(sims[[simno]]$sim$mle$Dhat,sims[[simno]]$sim$palm$Dhat)
 lines(xylim,xylim,lty=2)
 points(D,D,pch=19,col="red")
 lines(rep(D,2),xylim,lty=2,col="red")
