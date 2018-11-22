@@ -2,51 +2,68 @@ library(twoplane)
 library(palm)
 
 #names(sigmas)=c("Hiby","Westgate","mle","palm")
-
-tau = 100 # mean dive cycle length
-gammas = c(10,20,50,80)/100
-ks = c(10,20,50,80)
-animalspeeds = c(0.65, 0.95, 1.5)/1000 # mean speed in km/sec
-# Convert using fact that E(U)=sqrt(2)*gamma(1)/gamma(0.5), if U~Chi(1)
-# (See here: https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable)
-sigmarates = animalspeeds/(sqrt(2)*gamma(1)/gamma(0.5))
-planeknots=100 # observer speed in knots
 nm2km=1.852 # multiplier to convert nautical miles to kilometres
+planeknots=100 # observer speed in knots   CHECK THIS
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
+D = D.2D <- 1.05
+## Time between cameras (seconds).
+k = l <- 20
+## Mean dive-cycle duration (seconds).
+tau <- 100
+## Mean duration of surface phase (seconds).
+kappa <- 84
+## Animal movement (roughly based on 0.95 m per s).
+sigma <- gamma(0.5)*sqrt(((0.95*l/1000)^2)/2)/2
+sigmarate = sigma*sqrt(2)/sqrt(k)
+sigma.mult=5 # multiplier to set bound for maximum distance moved
 
-w=0.125 # half-width of strip in km from porpoise data
-D = 1.24
-En = 100
+p=c(1,1)
 
-Nsim=30
+## Transect half-width.
+halfw.dist = w <- 0.125
+## Buffer distance
+b <- w + sigma.mult*sigma
+## Transect length.
+L = d <- 1100
 
-gamma = gammas[2]
-k = ks[4]
-sigmarate = sigmarates[3]
-sigma.mult=5
-dmax.dist=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
-b = w + dmax.dist
-w/b
+control.opt=list(trace=0,maxit=1000)
+estimate=c("D","sigma","E1") # parameters to estimate
+movement = list(forward=TRUE,sideways=TRUE)
 
-
-seed = 1
+seed = 123
 # Do one scenaio with a few simulations to check it works:
-tm   = system.time(testsim   <- dosim(gamma,tau,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
-                                      seed=seed,Nsim=30,writeout=FALSE,iomvt=FALSE))
-tmvt = system.time(testsimvt <- dosim(gamma,tau,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
-                                      seed=seed,Nsim=30,writeout=FALSE,iomvt=TRUE))
-harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsim)
-harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsimvt)
+palmtmvt = system.time(testpalmvt <- dosim(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=p,movement=movement,
+                                          fix.N=TRUE,En=NULL,Nsim=3,writeout=TRUE,seed=seed,simethod="Palm",
+                                          control.opt=control.opt))
+                       
+harvestsim(testpalmvt$file)
+mletmvt = system.time(testmlemvt <- dosim(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=p,movement=movement,
+                                          fix.N=TRUE,En=NULL,Nsim=3,writeout=TRUE,seed=seed,simethod="MLE",
+                                          control.opt=control.opt))
+harvestsim(testmlemvt$file)
+
+
+sigmarates = c(0.65, 0.95, 1.5)/1000
+kappas = c(0.2, 0.5, 0.8)*tau
+ks = c(10, 20, 50, 80)
 
 # Then do a bunch
+fns = c(rep("",length(sigmarates)*length(kappas)*length(ks)))
+Nsim = 30
 start.a=1; start.k=1; start.s=1
-end.a=4; end.k=4; end.s=3
+end.a=length(kappas); end.k=length(ks); end.s=length(sigmarates)
+simnum = 0
 startime=date()
 for(na in start.a:end.a) {
   for(nk in start.k:end.k) {
     for(ns in start.s:end.s) {
-      dosim(gammas[na],tau,ks[nk],w,sigmarates[ns],planespd,D,En=En,Nsim,seed=12345)
+      sigma = sigmarate/(sqrt(2)/sqrt(ks[nk]))
+      b <- w + sigma.mult*sigma
+      simnum = simnum+1
+      fns[simnum] = dosim(D.2D,L,w,b,sigmarates[ns],ks[nk],planespd,kappas[na],tau,p=p,movement=movement,
+            fix.N=TRUE,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod="MLE",
+            control.opt=control.opt)
     }
   }
 }
@@ -64,11 +81,11 @@ simtab =  data.frame(Nsim=NAs,gamma=NAs,k=NAs,speed=NAs,D=NAs,
                      nbadD=NAs,nbadse=NAs)
 ns = 0
 #for(i in 1:length(gammas)) {
-for(i in 1:length(gammas)) {
+for(i in 1:length(kappas)) {
     for(j in 1:length(ks)) {
     for(l in 1:length(sigmarates)) {
       ns = ns+1
-      simtab[ns,] = harvestsim(gammas[i],ks[j],sigmarates[l],D,En,Nsim)
+      simtab[ns,] = harvestsim(fns[ns])
     }
   }
 }
