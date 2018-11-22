@@ -1,83 +1,55 @@
-sim.2plane=function(N,L,w,sigmarate,k,planespd,p.up,E.c,p=c(1,1),
-                    sigma.mult=6,movement=list(forward=TRUE,sideways=TRUE)){
+sim.2plane=function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),
+                    movement=list(forward=TRUE,sideways=TRUE),fix.N=FALSE){
   
-  E1=p.up*E.c # expected time up
-  E2=E.c-E1   # expected time down
+  if(!movement$sideways) b = w
+  E.N = D.2D * 2*b*L
+  if(fix.N) {
+    NumSimAnimals = round(E.N) # Set N to expected number
+  } else {
+    NumSimAnimals = rpois(1,E.N) # Draw N from Poisson
+  }
   p1=p[1]
   p2=p[2]
   
-  dmax.km=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
+#  b=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
   # Also width of buffer around strip.
   # Brownian mvt has sd of sigmarate*sqrt(time passed)
-  dmax.time=(dmax.km/planespd)   # max time apart (in seconds) observations could be considered duplicates
+  tb=b/planespd   # max time apart (in seconds) observations could be considered duplicates
 
   tL=L/planespd # transect length, in plane seconds
-  tw=w/planespd # width of searched stip, in plane seconds
-  btw = tw+2*dmax.time # width of stip with buffer, in plane seconds
+  tw=w/planespd # half-width of searched stip, in plane seconds
+
   
-  
-  if(!movement$sideways) { # Here for no sideways movement.
-    NumSimAnimals=round(N)
-    l=sort(runif(NumSimAnimals,0,tL)) # generate animal locations (in plane seconds)
-    #    lhoriz=rep(0,NumSimAnimals)  #  Place animals in centre of strip if there is no horizontal movement.
-    lhoriz=runif(NumSimAnimals,-tw/2,tw/2)  #  Place animals uniformly in strip.
-    if(movement$forward) {
-      simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) -k # deviation from lag of k
-    } else { # no forward movement
-      simt=rep(0,NumSimAnimals)
-    }
-    l2=l+simt # locations of animals (in plane time since start of transect, time measured in plane seconds) when 2nd observer passes
-    l2horiz=lhoriz  #  Horizontal position when second plane passes. 
-  }  # here for sideways movement
-  else {
-    #  Horizontal movement. Need to simulate more animals, within a wider strip with width w+2*dmax.km
-#    Nhoriz=round(N*btw/tw)
-    NumSimAnimals=round(N)
-    l=sort(runif(NumSimAnimals,0,tL)) # generate animal locations (in plane seconds)
-    lhoriz=runif(NumSimAnimals,-btw/2, btw/2)  #  Horizontal animal locations in plane seconds
-    if(movement$forward) {
-      simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) -k # deviation from lag of k
-    } else { # no forward movement
-      simt=rep(0,NumSimAnimals)
-    }
-#    simthoriz=rtnorm(NumSimAnimals,mean=0,sd=sqrt(k)*sigmarate/planespd,xtrunc=btw/2)
-    simthoriz=rnorm(NumSimAnimals, 0, sqrt(k)*sigmarate/planespd)
-    l2=l+simt
-    l2horiz=lhoriz+simthoriz
+  l=sort(runif(NumSimAnimals,0,tL)) # generate animal locations along line (in plane seconds)
+  lhoriz=runif(NumSimAnimals,-tb,tb)  #  Place animals uniformly in buffered strip.
+  if(movement$forward) {
+    simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) - k # deviation from lag of k
+  } else { # no forward movement
+    simt=rep(0,NumSimAnimals)
+  }
+  l2=l+simt # locations of animals (in plane time since start of transect, time measured in plane seconds) when 2nd observer passes
+  l2horiz=lhoriz  #  Horizontal position when second plane passes. 
+  if(movement$sideways) {
+    simthoriz=rnorm(NumSimAnimals, 0, sqrt(k+simt)*sigmarate/planespd) # horizontal movement (in plane seconds)
+    l2horiz=l2horiz+simthoriz
   }
   # simulate detection by leading observer:
-  up.1=1*(runif(NumSimAnimals)<=(E1/E.c)) # random variable with 1=available, 0=unavailable; E1/E.c is stationary dbn prob of being up
-  in.1=(lhoriz<=tw/2)*(lhoriz>=-tw/2)   #  Is it in the strip?
+  up.1=1*(runif(NumSimAnimals)<=(kappa/tau)) # random variable with 1=available, 0=unavailable; kappa/tau is stationary dbn prob of being up
+  in.1=(lhoriz<=tw)*(lhoriz>=-tw)   #  Is it in the strip?
   see.1=(runif(NumSimAnimals)<=p[1])*up.1*in.1 # binary variable indicating whether or not plane 1 sees
   
-  in.2=(l2horiz<=tw/2)*(l2horiz>=-tw/2)   #  Is it in the strip.
+  in.2=(l2horiz<=tw)*(l2horiz>=-tw)   #  Is it in the strip.
   p.01.2=p.11.2=rep(0,NumSimAnimals)
   t12=k+simt    # seconds elapsing between 1st and 2nd observer passing animals
-  q11=-1/E1
-  q22=-1/E2
+  q11=-1/kappa
+  q22=-1/(tau-kappa)
   Qmat=matrix(c(q11,-q22,-q11,q22),nrow=2)
   for(i in 1:NumSimAnimals) {
-    p.01.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=01)  # Prob(2nd sees | state when 1st passes)
-    p.11.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=11)  # Prob(2nd sees | state when 1st passes)
+    p.01.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=01)  # Prob(01 | in and up/down state when 1st passes)
+    p.11.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=11)  # Prob(11 | in and up/down state when 1st passes)
   }
-##  if(!movement$sideways) { # no movement in/out of stip
-##    for(i in 1:NumSimAnimals) {
-##      p.01.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=01)  # Prob(2nd sees | state when 1st passes)
-##      p.11.2[i]=p.omega.t(t12[i], idbn=c(up.1[i],(1-up.1[i])), p1, p2, Qmat, omega=11)  # Prob(2nd sees | state when 1st passes)
-##    }
-##  } else { # movement in/out of stip
-#### For debugging, just use k as time. Later remove line below and uncomment 2 lines down TPM = ...
-###        TPM = make.inout.tpm(sigma=sigmarate*sqrt(k),dmax=dmax.km,w=w) # in-out transition probability matrix
-##    for(i in 1:NumSimAnimals) {
-##      TPM = make.inout.tpm(sigma=sigmarate*sqrt(k+simt[i]),dmax=dmax.km,w=w) # in-out transition probability matrix
-##      idbn = c(up.1[i]*in.1[i],up.1[i]*(1-in.1[i]),(1-up.1[i])*in.1[i],(1-up.1[i])*(1-in.1[i]))
-##      p.01.2[i]=p.omega.t(t12[i], idbn=idbn, p1, p2, Qmat, omega=01,IO=TPM)  # Prob(2nd sees | state when 1st passes)
-##      p.11.2[i]=p.omega.t(t12[i], idbn=idbn, p1, p2, Qmat, omega=11,IO=TPM)  # Prob(2nd sees | state when 1st passes)
-##    }
-##  }
-  
-  p.see.2.given.in = (p.01.2+p.11.2)
-  see.2=(runif(NumSimAnimals)<=p.see.2.given.in)*in.2 # binary variable indicating whether or not plane 2 sees
+  p.see.2.given.in = (p.01.2+p.11.2) # prob 2nd sees, given in for first
+  see.2=(runif(NumSimAnimals)<=p.see.2.given.in*in.2) # binary variable indicating whether or not plane 2 sees
   n1=sum(see.1)
   n2=sum(see.2)
   dups=(see.1*see.2==1)
@@ -90,21 +62,26 @@ sim.2plane=function(N,L,w,sigmarate,k,planespd,p.up,E.c,p=c(1,1),
   
   s1=l[sno1]
   s2=l2[sno2]
-  x1=lhoriz[sno1]
-  x2=l2horiz[sno2]
+  sh1=lhoriz[sno1]
+  sh2=l2horiz[sno2]
+  # convert from times to distances
+  x1 = sh1*planespd
+  x2 = sh2*planespd
+  y1 = s1*planespd
+  y2 = s2*planespd
   # mark duplicates:
   d1=which(is.element(sno1,dno))
   d2=which(is.element(sno2,dno))
   n1=length(s1)
   n2=length(s2)
   
-  sim.t.area=tL*btw
-  sim.t.D=N/sim.t.area
+  sim.t.area=tL*2*tb
+  sim.t.D=NumSimAnimals/sim.t.area
   sim.area=sim.t.area*planespd
-  sim.D=N/sim.area
+  sim.D=NumSimAnimals/sim.area
   
-  simdat=list(s1=s1,s2=s2,x1=x1,x2=x2,tL=tL,tw=tw,btw=btw,k=k,
-              sno1=sno1,sno2=sno2,d1=d1,d2=d2,n1=n1,n2=n2,n11=m,n=n1+n2-m,alls1=l,allx1=lhoriz,alls2=l2,allx2=l2horiz,dups=dups,
+  simdat=list(s1=s1,s2=s2,sh1=sh1,sh2=sh2,x1=x1,x2=x2,y1=y1,y2=y2,tL=tL,tw=tw,tb=tb,k=k,L=L,w=w,b=b,
+              sno1=sno1,sno2=sno2,d1=d1,d2=d2,n1=n1,n2=n2,n11=m,n=n1+n2-m,alls1=l,allsh1=lhoriz,alls2=l2,allsh2=l2horiz,dups=dups,
               sim.t.area=sim.t.area,sim.t.D=sim.t.D,sim.area=sim.area,sim.D=sim.D,
               p.01.2=p.01.2,p.11.2=p.11.2
               ,see.1=see.1, see.2=see.2)
@@ -157,7 +134,7 @@ plotsimloc=function(l,l2,dups,tm=range(l,l2),newindow=FALSE){
 
 
 
-plot.ests=function(ests,D,E1,sigma, mu_c, sigma.est=TRUE,nclass=20,keep=NULL)
+plot.ests=function(ests,D,kappa,sigma, mu_c, sigma.est=TRUE,nclass=20,keep=NULL)
 #-------------------------------------------------------------------------------
 # NB: Not sure this is an up-to-date function.
 # Plots histograms of simulated estimates and parameters and prints bias, CV
@@ -167,7 +144,7 @@ plot.ests=function(ests,D,E1,sigma, mu_c, sigma.est=TRUE,nclass=20,keep=NULL)
 # ------
 #  ests: dataframe with columns 
 #        Dhat : Density estimate 
-#        E1   : Estimated expected time available
+#        kappa   : Estimated expected time available
 #        E2   : Estimated expected time UNavailable
 #        sigma: std. err. of (normal) animal movement (dispersion) model
 #        n1   : number of observer 1 detections
@@ -194,15 +171,15 @@ plot.ests=function(ests,D,E1,sigma, mu_c, sigma.est=TRUE,nclass=20,keep=NULL)
   pcbias.Dhat=100*(E.Dhat-D)/D
   pcbias.Dhat.CI=pcbias.Dhat+100*c(-2,2)*se.Dhat/sqrt(nest)
   
-  counts=hist(ests$E1[keep],plot=FALSE)$counts
-  hist(ests$E1[keep],main="(b)",xlab=expression(paste(hat(E),"[up]",sep="")),xlim=range(E1,ests$E1[keep]),nclass=nclass)
-  lines(rep(mean(ests$E1[keep]),2),range(c(0,counts)),col="blue",lwd=2)
-  lines(rep(E1,2),range(c(0,counts)),lty=2,col="red")
-  E.E1=mean(ests$E1[keep])
-  se.E1=sqrt(var(ests$E1[keep]))
-  RMSE.E1=sqrt(mean((ests$E1[keep]-E1)^2))
-  cv.E1=se.E1/E.E1
-  pcbias.E1=100*(E.E1-E1)/E1
+  counts=hist(ests$kappa[keep],plot=FALSE)$counts
+  hist(ests$kappa[keep],main="(b)",xlab=expression(paste(hat(E),"[up]",sep="")),xlim=range(kappa,ests$kappa[keep]),nclass=nclass)
+  lines(rep(mean(ests$kappa[keep]),2),range(c(0,counts)),col="blue",lwd=2)
+  lines(rep(kappa,2),range(c(0,counts)),lty=2,col="red")
+  E.kappa=mean(ests$kappa[keep])
+  se.kappa=sqrt(var(ests$kappa[keep]))
+  RMSE.kappa=sqrt(mean((ests$kappa[keep]-kappa)^2))
+  cv.kappa=se.kappa/E.kappa
+  pcbias.kappa=100*(E.kappa-kappa)/kappa
   
   pcbias.sigma=NA
   cv.sigma=NA
@@ -249,18 +226,18 @@ plot.ests=function(ests,D,E1,sigma, mu_c, sigma.est=TRUE,nclass=20,keep=NULL)
   lines(rep(mean(ests$m[keep]),2),range(c(0,counts)),col="blue",lwd=2)
   mean(ests$m[keep])
   
-  if(var(ests$sigma[keep])==0 & var(ests$E1[keep])==0) cormat=cov2cor(cov(ests[keep,c("Dhat","n2","n1","m")]))
-  else if(var(ests$sigma[keep])==0 & var(ests$E1[keep])>0) cormat=cov2cor(cov(ests[keep,c("Dhat","E1","n2","n1","m")]))
-  else if(var(ests$sigma[keep])>0 & var(ests$E1[keep])==0) cormat=cov2cor(cov(ests[keep,c("Dhat","sigma","n2","n1","m")]))
-  else cormat=cov2cor(cov(ests[keep,c("Dhat","E1","sigma","n2","n1","m")]))
+  if(var(ests$sigma[keep])==0 & var(ests$kappa[keep])==0) cormat=cov2cor(cov(ests[keep,c("Dhat","n2","n1","m")]))
+  else if(var(ests$sigma[keep])==0 & var(ests$kappa[keep])>0) cormat=cov2cor(cov(ests[keep,c("Dhat","kappa","n2","n1","m")]))
+  else if(var(ests$sigma[keep])>0 & var(ests$kappa[keep])==0) cormat=cov2cor(cov(ests[keep,c("Dhat","sigma","n2","n1","m")]))
+  else cormat=cov2cor(cov(ests[keep,c("Dhat","kappa","sigma","n2","n1","m")]))
   #windows()
   #pairs(ests[,c("n1","n2","m")])
   return(list(
     pcbias.Dhat=pcbias.Dhat,
     cv.Dhat=cv.Dhat,
     pcbias.Dhat.CI=pcbias.Dhat.CI,
-    pcbias.E1=pcbias.E1,
-    cv.E1=cv.E1,
+    pcbias.kappa=pcbias.kappa,
+    cv.kappa=cv.kappa,
     pcbias.sigma=pcbias.sigma,
     cv.sigma=cv.sigma,
     cor=cormat

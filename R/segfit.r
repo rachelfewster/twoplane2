@@ -1,13 +1,17 @@
 
-segfit=function(dat,D.line.t,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.opt=NULL,
+segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.opt=NULL,
                 method="BFGS",estimate=c("D","sigma","E1"),set.parscale=TRUE,
                 io=FALSE,Dbound=NULL,hessian=TRUE,adj.norm=FALSE,cutstretch=1,krtest=FALSE) {
+  
   k=dat$k
-  dmax.t=sigma.mult*(sigmarate*sqrt(k))/planespd # max time apart (in seconds) observations could be considered duplicates
-  s1=dat$s1;s2=dat$s2
-  tL=dat$tL
-  halfw=dat$tw/2
-
+  s1 = dat$y1/planespd
+  s2 = dat$y2/planespd
+  tL = dat$L/planespd
+  tw = dat$w/planespd
+  tb = dat$b/planespd
+  
+  D.line.t=D.2D*2*dat$b*planespd # density in planespd along LINE units (1-dimensional)
+  
   #  Test the C++ likelihood function using known recaptures.   
   #  This had to be commented out because in compare-palm we do not have the recaptures. 
   # I THINK THERE ARE ERRORS IN THIS LIKELIHOOD NOW - CHECK BEFORE USING!
@@ -16,16 +20,37 @@ segfit=function(dat,D.line.t,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,cont
     test.cpp.likelihood(s1, s2, dmax.t, dat$alls1, dat$alls2, dat$see.1, dat$see.2, E1, Ec-E1, Ec, D.line.t, sigma, planespd, 1, 1, tL, dat$dups, dat$n1, dat$n2, dat$n11)
   }
   
-  est=segfit.cpp(D=D.line.t,E1=E1,sigmarate=sigmarate,dmax.t=dmax.t,s1=s1,s2=s2,tL=tL,planespd=planespd,k=k,
+  fit=segfit.cpp(D=D.line.t,E1=E1,sigmarate=sigmarate,tw=tw,tb=tb,s1=s1,s2=s2,tL=tL,planespd=planespd,k=k,
                  p1=p[1],p2=p[2],Ec=Ec,hessian=hessian,control.opt=control.opt,method=method,estimate=estimate,
-                 set.parscale-set.parscale,Dbound=Dbound,halfw=halfw,io=io,adj.norm=adj.norm,cutstretch=cutstretch)
+                 set.parscale-set.parscale,Dbound=Dbound,io=io,adj.norm=adj.norm,cutstretch=cutstretch)
+
+  Dhat=fit$D/(2*dat$b*planespd)
+  kappa=fit$E[1]
+  sigmarate=fit$sigmarate
+  tau=fit$mu_c
   
+  Dhat.se = NA
+  Dhat.cv = NA
+  Dhat.lcl = NA
+  Dhat.ucl = NA
+  if(hessian) {
+    infmat=try(solve(fit$hessian),silent=TRUE)
+    if(!inherits(infmat, "try-error")) {
+      intest=logn.seci(log(fit$D),sqrt(infmat[1,1]))
+      Dhat.se=intest$se/(2*dat$b*planespd)
+      Dhat.cv=Dhat.se/Dhat
+      Dhat.lcl=intest$lower/(2*dat$b*planespd)
+      Dhat.ucl=intest$upper/(2*dat$b*planespd)
+    } 
+  }
+  
+  est = c(Dhat=Dhat,Dhat.se=Dhat.se,Dhat.cv=Dhat.cv,Dhat.lcl=Dhat.lcl,Dhat.ucl=Dhat.ucl,kappa=kappa,sigmarate=sigmarate,tau=tau)
   return(est)
 }
 
 
-segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=FALSE,control.opt=NULL,method="BFGS",
-                    estimate=c("D","E1","sigma"),set.parscale=TRUE,Dbound=NULL,io=FALSE,halfw=0,adj.norm=FALSE,
+segfit.cpp=function(D,E1,sigmarate,tw,tb,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=FALSE,control.opt=NULL,method="BFGS",
+                    estimate=c("D","E1","sigma"),set.parscale=TRUE,Dbound=NULL,io=FALSE,adj.norm=FALSE,
                     cutstretch=1)
   #-------------------------------------------------------------------------------
   # Just calls optim to maximise function rcpp_compute_likelihood() with respect 
@@ -55,7 +80,7 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
 # set.parscale: if TRUE sets parscale element of control list for optim
 # Dbound: list with elements $lower and $upper, specifying bounds for log(D) if estimating only D
 # io: if TRUE, accommodates in-out movement, else assumes no horizontal movement
-# halfw: strip half-width, in observer-seconds (only needed if io==TRUE)
+# tw: strip half-width, in observer-seconds (only needed if io==TRUE)
 #
 # Outputs:
 # -------
@@ -76,6 +101,7 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
   # set stuff up for returning:
   est=list(D=D,sigmarate=sigmarate,E=c(E1,Ec-E1),mu_c=Ec)
   # find segmentation cuts:
+  dmax.t = tb-tw # max dist animal can move (in plane seconds)
   cuts=sort(unique(c(0,tL,segmentize(s1,s2,dmax.t*cutstretch))))
 #  cuts=sort(unique(c(0,tL,segmentize(s1,s2,dmax.t))))
   
@@ -108,11 +134,11 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
   
   if(length(estimate)==1) {
     optout=optim(par=theta,fn=segnegllik.cpp.mix.io,s1=s1,s2=s2,dmax.t=dmax.t,p1=p1,p2=p2,k=k,planespd=planespd,theta_1=theta_1,
-                 theta_2=theta_2,theta_3=theta_3,theta_4=theta_4,cuts=cuts,estimate=estimate,halfw=halfw,
+                 theta_2=theta_2,theta_3=theta_3,theta_4=theta_4,cuts=cuts,estimate=estimate,tw=tw,
                  control=control.opt,method="Brent",lower=log(D)-1,upper=log(D)+1,hessian=hessian,adj.norm=adj.norm,io=io)
   } else {
     optout=optim(par=theta,fn=segnegllik.cpp.mix.io,s1=s1,s2=s2,dmax.t=dmax.t,p1=p1,p2=p2,k=k,planespd=planespd,theta_1=theta_1,
-                 theta_2=theta_2,theta_3=theta_3,theta_4=theta_4,cuts=cuts,estimate=estimate,halfw=halfw,
+                 theta_2=theta_2,theta_3=theta_3,theta_4=theta_4,cuts=cuts,estimate=estimate,tw=tw,
                  control=control.opt,method=method,hessian=hessian,adj.norm=adj.norm,io=io)
   }
   
@@ -127,8 +153,6 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
   
   if(is.element("D",estimate)) {
     if(io) {
-##      # Scale up because rcpp_compute_likelihood assumes strip width is 2*halfw
-##      est$D=exp(optout$par[1])*halfw/(halfw+dmax.t)
       est$D=exp(optout$par[1])
     } else {
       est$D=exp(optout$par[1])
@@ -161,10 +185,10 @@ segfit.cpp=function(D,E1,sigmarate,dmax.t,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=F
 
 
 segnegllik.cpp.mix.io=function(theta,s1,s2,dmax.t,p1,p2,k,planespd,adj.norm=FALSE,
-                               theta_1,theta_2,theta_3,theta_4,cuts,estimate,halfw=0,io=TRUE) {
+                               theta_1,theta_2,theta_3,theta_4,cuts,estimate,tw=0,io=TRUE) {
   #-----------------------------------------------------------------------------------------
   # This is segnegllik.cpp.mix modified to deal with in-out movement
-  # halfw is strip half-width in observer-seconds
+  # tw is strip half-width in observer-seconds
   # All of theta[1]=log(D), theta[2]=log(E1) and theta[3]=log(sigmarate) 
   # and theta[4]=log(Ec) are treated as parameters.
   # Unpack and compute likelihood given the parameters in 'estimate'
@@ -212,7 +236,7 @@ segnegllik.cpp.mix.io=function(theta,s1,s2,dmax.t,p1,p2,k,planespd,adj.norm=FALS
   E1 = inv.logit(theta_new[2])*Ec # theta_new[2] is logit of propotion of time available
   sigmarate = exp(theta_new[3]) # theta_new[3] is log of sigmarate
   
-  halfw.dist = halfw*planespd # convert from observer seconds to km
+  halfw.dist = tw*planespd # convert from observer seconds to km
   # Error trap: if sigma more than 100 times dmax.t*planespd, warn and return bad negative log likelihood:
   if(sigmarate*sqrt(k)>dmax.t*planespd) {
     warning("sigma > dmax.t*planespd: returning -Inf log-likelihood")

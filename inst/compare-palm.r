@@ -10,13 +10,12 @@ data("porpoise")
 
 nm2km=1.852 # multiplier to convert nautical miles to kilometres
 
-tau = Ec = 400
+tau = Ec = 110
 p.up = 86/110
 kappa = E1 = p.up*tau
 
 L=porpoise.data$d
 w=porpoise.data$w*2 # length and width of strip in km
-halfw.dist = porpoise.data$w
 
 planeknots=100 # observer speed in knots   CHECK THIS
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
@@ -71,14 +70,14 @@ dists = as.matrix(dist(c(y1,y2)))[1:n1,(n1+1):(n1+n2)]
 mins = apply(dists,1,min)
 hist(mins[mins<70/1000])
 
-sdat = list(s1=s1,s2=s2,k=k,dmax.t=dmax.time,tL=L,tw=w/planespd/2)
+sdat = list(s1=s1,s2=s2,k=k,dmax.t=dmax.time,tL=L/planespd,tw=w/planespd)
 #k=dat$k
 #dmax.t=sigma.mult*(sigmarate*sqrt(k))/planespd # max time apart (in seconds) observations could be considered duplicates
 #s1=dat$s1;s2=dat$s2
 #tL=dat$tL
 #halfw=dat$tw/2
 
-fitio<-segfit(sdat,D.line.t,E1=E1,Ec=Ec,sigmarate=sigmarate,planespd=planespd,p=c(1,1),sigma.mult=sigma.mult,
+fitio<-segfit(sdat,D.line.t,E1=kappa,Ec=tau,sigmarate=sigmarate,planespd=planespd,p=c(1,1),sigma.mult=sigma.mult,
               control.opt=control.opt,method="BFGS",estimate=estimate,set.parscale=TRUE,
               io=TRUE,Dbound=NULL,hessian=TRUE)
 estsio=data.frame(Dhat=0,E1=0,E2=0,sigma=0,n1=0,n2=0,mu_c=0,se=0,lcl=0,ucl=0)
@@ -89,11 +88,11 @@ estsio$n2=length(sdat$s2)
 infmat=try(solve(fitio$hessian),silent=TRUE)
 if(!inherits(infmat, "try-error")) {
   intest=logn.seci(log(fitio$D),sqrt(infmat[1,1]))
-  estsio$se=intest$se/(b*planespd)
-  estsio$lcl=intest$lower/(b*planespd)
-  estsio$ucl=intest$upper/(b*planespd)
+  estsio$se=intest$se/(2*b*planespd)
+  estsio$lcl=intest$lower/(2*b*planespd)
+  estsio$ucl=intest$upper/(2*b*planespd)
 } else skip=c(skip,sim)
-estsio$Dhat=fitio$D/(b*planespd)
+estsio$Dhat=fitio$D/(2*b*planespd)
 estsio$E1=fitio$E[1]
 estsio$E2=fitio$E[2]
 estsio$sigma=fitio$sigmarate

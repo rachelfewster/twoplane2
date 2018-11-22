@@ -3,7 +3,7 @@ library(palm)
 
 #names(sigmas)=c("Hiby","Westgate","mle","palm")
 
-Ec = 100 # mean dive cycle length
+tau = 100 # mean dive cycle length
 gammas = c(10,20,50,80)/100
 ks = c(10,20,50,80)
 animalspeeds = c(0.65, 0.95, 1.5)/1000 # mean speed in km/sec
@@ -15,7 +15,7 @@ nm2km=1.852 # multiplier to convert nautical miles to kilometres
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
 
-w=0.125*2 # width of strip in km from porpoise data
+w=0.125 # half-width of strip in km from porpoise data
 D = 1.24
 En = 100
 
@@ -24,20 +24,17 @@ Nsim=30
 gamma = gammas[2]
 k = ks[4]
 sigmarate = sigmarates[3]
-#sigmarate = 0.01/(sqrt(2)*gamma(1)/gamma(0.5))
 sigma.mult=5
-dmax.km=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
-dmax.time=(dmax.km/planespd)   # max time apart (in seconds) observations could be considered duplicates
-tw=w/planespd # width of searched stip, in plane seconds
-btw = tw+2*dmax.time # width of stip with buffer, in plane seconds
-tw/btw
+dmax.dist=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
+b = w + dmax.dist
+w/b
 
 
 seed = 1
 # Do one scenaio with a few simulations to check it works:
-tm   = system.time(testsim   <- dosim(gamma,Ec,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
+tm   = system.time(testsim   <- dosim(gamma,tau,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
                                       seed=seed,Nsim=30,writeout=FALSE,iomvt=FALSE))
-tmvt = system.time(testsimvt <- dosim(gamma,Ec,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
+tmvt = system.time(testsimvt <- dosim(gamma,tau,k,w,sigmarate,planespd,D,En=En,sigma.mult=sigma.mult,
                                       seed=seed,Nsim=30,writeout=FALSE,iomvt=TRUE))
 harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsim)
 harvestsim(gamma,k,sigmarate,D,En=En,Nsim=10,simresults=testsimvt)
@@ -49,7 +46,7 @@ startime=date()
 for(na in start.a:end.a) {
   for(nk in start.k:end.k) {
     for(ns in start.s:end.s) {
-      dosim(gammas[na],Ec,ks[nk],w,sigmarates[ns],planespd,D,En=En,Nsim,seed=12345)
+      dosim(gammas[na],tau,ks[nk],w,sigmarates[ns],planespd,D,En=En,Nsim,seed=12345)
     }
   }
 }
@@ -61,7 +58,7 @@ simtab =  data.frame(Nsim=NAs,gamma=NAs,k=NAs,speed=NAs,D=NAs,
                      pc.bias.mle=NAs,pc.cv.mle=NAs,cover.mle=NAs,
                      pc.bias.palm=NAs,pc.cv.palm=NAs,
                      n1=NAs,n2=NAs,m=NAs,
-                     E1=NAs,
+                     kappa=NAs,
                      sigmarate=NAs,
                      sehat.Dhat=NAs,
                      nbadD=NAs,nbadse=NAs)
