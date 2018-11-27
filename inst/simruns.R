@@ -54,6 +54,7 @@ Nsim = 30
 start.a=1; start.k=1; start.s=1
 end.a=length(kappas); end.k=length(ks); end.s=length(sigmarates)
 simnum = 0
+simethod = "Palm"
 startime=date()
 for(na in start.a:end.a) {
   for(nk in start.k:end.k) {
@@ -61,15 +62,18 @@ for(na in start.a:end.a) {
       sigma = sigmarate/(sqrt(2)/sqrt(ks[nk]))
       b <- w + sigma.mult*sigma
       simnum = simnum+1
+#      fns[simnum] = dosim(D.2D,L,w,b,sigmarates[ns],ks[nk],planespd,kappas[na],tau,p=p,movement=movement,
+#                          fix.N=TRUE,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod="MLE",
+#                          control.opt=control.opt)
       fns[simnum] = dosim(D.2D,L,w,b,sigmarates[ns],ks[nk],planespd,kappas[na],tau,p=p,movement=movement,
-            fix.N=TRUE,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod="MLE",
-            control.opt=control.opt)
+                          fix.N=TRUE,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod=simethod,
+                          control.opt=control.opt)
     }
   }
 }
 endtime=date()
 
-nscenarios = length(gammas)*length(ks)*length(sigmarates)
+nscenarios = length(kappas)*length(ks)*length(sigmarates)
 NAs = rep(NA,nscenarios)
 simtab =  data.frame(Nsim=NAs,gamma=NAs,k=NAs,speed=NAs,D=NAs,
                      pc.bias.mle=NAs,pc.cv.mle=NAs,cover.mle=NAs,
@@ -85,12 +89,14 @@ for(i in 1:length(kappas)) {
     for(j in 1:length(ks)) {
     for(l in 1:length(sigmarates)) {
       ns = ns+1
-      simtab[ns,] = harvestsim(fns[ns])
+      simtab[ns,] = harvestsim(fns[[ns]])
     }
   }
 }
 
-saveRDS(simtab,file=paste("./inst/results/simtab_En",En,"_",Nsim,".Rds",sep=""))
+simID = paste("-D_",signif(D.2D,3),"-",Ltype,"-",Ntype,"-simethod_",simethod,"-Nsim_",Nsim,sep="")
+saveRDS(fns,file=paste("./inst/results/filenames",simID,".Rds",sep=""))
+saveRDS(simtab,file=paste("./inst/results/simdab",simID,".Rds",sep=""))
 
 
 require(plot3D)
@@ -132,21 +138,39 @@ make3Dplot(simtab,0.65,"covererr","Coverage error","speed=0.65",zlim=zlimCover)
 make3Dplot(simtab,0.95,"covererr","Coverage error","speed=0.95",zlim=zlimCover)
 make3Dplot(simtab,1.5,"covererr","Coverage error","speed=1.5",zlim=zlimCover)
 
-
+# Bias plot with sign
 scenario = as.character(1:length(simtab$pc.bias.mle))
-xylim.bias = c(0,max(abs(simtab$pc.bias.mle),abs(simtab$pc.bias.palm)))
+xylim.bias = range(simtab$pc.bias.mle,simtab$pc.bias.palm)
+pdf(h=3,w=9,file="./inst/figs/mlepalmbias.pdf")
+par(mfrow=c(1,3))
+plot((simtab$pc.bias.palm),(simtab$pc.bias.mle),xlab="%Bias Palm",ylab="%Bias MLE",main="",
+     pch=scenario,col="white",cex=0.5,xlim=xylim.bias,ylim=xylim.bias)
+lines(xylim.bias,xylim.bias,col="gray")
+text((simtab$pc.bias.palm),(simtab$pc.bias.mle),labels=scenario,cex=0.5)
+hist(simtab$pc.bias.mle,nclass=15,xlab="%Bias MLE",main="")
+hist(simtab$pc.bias.palm,nclass=15,xlab="%Bias Palm",main="")
+dev.off()
+
+# Abs bias and CV plot
+scenario = as.character(1:length(simtab$pc.bias.mle))
+
+badone = which(simtab$pc.bias.mle>10)
+xylim.abias = c(0,max(abs(simtab$pc.bias.mle[-badone]),abs(simtab$pc.bias.palm[-badone])))
+xylim.cv = c(0,max(abs(simtab$pc.cv.mle[-badone]),abs(simtab$pc.cv.palm[-badone])))
+
+xylim.abias = c(0,max(abs(simtab$pc.bias.mle),abs(simtab$pc.bias.palm)))
 xylim.cv = c(0,max(abs(simtab$pc.cv.mle),abs(simtab$pc.cv.palm)))
 
 pdf(h=4,w=8,file="./inst/figs/mlepalm.pdf")
 par(mfrow=c(1,2))
 plot(abs(simtab$pc.bias.palm),abs(simtab$pc.bias.mle),xlab="Abs %Bias Palm",ylab="Abs %Bias MLE",main="",
-     pch=scenario,col="white",cex=0.5,xlim=xylim.bias,ylim=xylim.bias)
+     pch=scenario,col="white",cex=0.5,xlim=xylim.abias,ylim=xylim.abias)
+lines(xylim.abias,xylim.abias,col="gray")
 text(abs(simtab$pc.bias.palm),abs(simtab$pc.bias.mle),labels=scenario,cex=0.5)
-lines(xylim.bias,xylim.bias)
 plot(abs(simtab$pc.cv.palm),abs(simtab$pc.cv.mle),xlab="%CV Palm",ylab="%CV MLE",main="",
      pch=scenario,col="white",cex=0.,xlim=xylim.cv,ylim=xylim.cv)
+lines(xylim.cv,xylim.cv,col="gray")
 text(abs(simtab$pc.cv.palm),abs(simtab$pc.cv.mle),labels=scenario,cex=0.5)
-lines(xylim.cv,xylim.cv)
 dev.off()
 
 simtab[4:6,c("gamma","k","speed","n1","n2","m")]

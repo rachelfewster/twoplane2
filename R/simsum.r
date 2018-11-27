@@ -38,6 +38,9 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
   estimate=c("D","sigma","E1") # parameters to estimate
 #  true=list(D=D.2D,sigma=sigmarate,E1=kappa) # parameters to use in simulation
   
+# Convert from sigmarate to Ben's sigma
+  sigma = sigmarate/(sqrt(2)/sqrt(sdat$k))
+  
   set.seed(seed) # initialise random number sequence (for repeatability)
 #  skip=c()
   startime=date()
@@ -46,7 +49,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
       sdat = sim.2plane(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=movement,fix.N=fix.N)
     } else if(simethod=="Palm") {
       Ntype = "RandomN"
-      palmdat <- sim.twocamera(c(D.2D=D.2D, kappa=kappa, sigma=sigma),d=d, w=w, b=b, l=l, tau=tau)
+      palmdat <- sim.twocamera(c(D.2D=D.2D, kappa=kappa, sigma=sigma),d=L, w=w, b=b, l=k, tau=tau)
       sdat = Palm2mleSimData(palmdat)
     } else stop("simethod must be 'MLE' or 'Palm'.")
     
@@ -83,7 +86,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
   dir = "./inst/results/"
   gamma = kappa/tau
   fn = paste("sim-gamma_",signif(gamma,3),"-k_",k,"-sigmarate_",signif(sigmarate,3),"-D_",signif(D.2D,3),
-             "-En_",signif(En,3),"-",Ltype,"-",Ntype,"-simethod",simethod,"-Nsim_",Nsim,".Rds",sep="")
+             "-En_",signif(En,3),"-",Ltype,"-",Ntype,"-simethod_",simethod,"-Nsim_",Nsim,".Rds",sep="")
   dirfn = paste(dir,fn,sep="")
   if(writeout) {
     saveRDS(results,file=dirfn)
