@@ -173,8 +173,14 @@ lines(xylim.cv,xylim.cv,col="gray")
 text(abs(simtab$pc.cv.palm),abs(simtab$pc.cv.mle),labels=scenario,cex=0.5)
 dev.off()
 
-simtab[4:6,c("gamma","k","speed","n1","n2","m")]
-simtab[7:9,c("gamma","k","speed","n1","n2","m")]
+plot(simtab$pc.cv.mle,100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle)
+hist(100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle)
+mean(100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle)
+
+
+
+
+
 
 
 pc.down = 1-pc.up

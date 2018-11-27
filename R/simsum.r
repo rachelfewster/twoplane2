@@ -85,7 +85,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
   results = list(mle=mlests,palm=palmests)
   dir = "./inst/results/"
   gamma = kappa/tau
-  fn = paste("sim-gamma_",signif(gamma,3),"-k_",k,"-sigmarate_",signif(sigmarate,3),"-D_",signif(D.2D,3),
+  fn = paste("sim-gamma_",signif(gamma,3),"tau_",signif(tau,3),"-k_",k,"-sigmarate_",signif(sigmarate,3),"-D_",signif(D.2D,3),
              "-En_",signif(En,3),"-",Ltype,"-",Ntype,"-simethod_",simethod,"-Nsim_",Nsim,".Rds",sep="")
   dirfn = paste(dir,fn,sep="")
   if(writeout) {
@@ -101,15 +101,18 @@ harvestsim = function(fn,badcut=100) {
   sim = readRDS(fn)
 
   gamma = as.numeric(strsplit(strsplit(fn,"gamma_")[[1]][2],"-")[[1]][1])
+  tau = as.numeric(strsplit(strsplit(fn,"tau_")[[1]][2],"-")[[1]][1])
   k = as.numeric(strsplit(strsplit(fn,"k_")[[1]][2],"-")[[1]][1])
   sigmarate = as.numeric(strsplit(strsplit(fn,"sigmarate_")[[1]][2],"-")[[1]][1])
   D.2D = as.numeric(strsplit(strsplit(fn,"D_")[[1]][2],"-")[[1]][1])
   En = as.numeric(strsplit(strsplit(fn,"En_")[[1]][2],"-")[[1]][1])
   Nsim = as.numeric(strsplit(strsplit(fn,"Nsim_")[[1]][2],".Rds")[[1]][1])
   
-  badD = abs(sim[[1]]$Dhat-D.2D)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut *D.2D
+  kappa = gamma*tau
+  
+  badD = abs(sim[[1]]$Dhat)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D
   nbadD = sum(badD)
-  bad = abs(sim[[1]]$Dhat-D.2D)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D | is.na(sim[[1]]$se)
+  bad = abs(sim[[1]]$Dhat)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D | is.na(sim[[1]]$se)
   nbad = sum(bad)
   nbadse = nbad - nbadD
   
