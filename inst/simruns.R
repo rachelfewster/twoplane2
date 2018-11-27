@@ -49,8 +49,8 @@ kappas = c(0.2, 0.5, 0.8)*tau
 ks = c(10, 20, 50, 80)
 
 # Then do a bunch
-fns = c(rep("",length(sigmarates)*length(kappas)*length(ks)))
-Nsim = 30
+fns = c(rep("",length(sigmarates)*length(kappas)*length(ks))) # filenames
+Nsim = 3
 start.a=1; start.k=1; start.s=1
 end.a=length(kappas); end.k=length(ks); end.s=length(sigmarates)
 simnum = 0

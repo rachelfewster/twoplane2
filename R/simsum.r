@@ -85,7 +85,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
   results = list(mle=mlests,palm=palmests)
   dir = "./inst/results/"
   gamma = kappa/tau
-  fn = paste("sim-gamma_",signif(gamma,3),"tau_",signif(tau,3),"-k_",k,"-sigmarate_",signif(sigmarate,3),"-D_",signif(D.2D,3),
+  fn = paste("sim-gamma_",signif(gamma,3),"-tau_",signif(tau,3),"-k_",k,"-sigmarate_",signif(sigmarate,3),"-D_",signif(D.2D,3),
              "-En_",signif(En,3),"-",Ltype,"-",Ntype,"-simethod_",simethod,"-Nsim_",Nsim,".Rds",sep="")
   dirfn = paste(dir,fn,sep="")
   if(writeout) {
@@ -107,8 +107,6 @@ harvestsim = function(fn,badcut=100) {
   D.2D = as.numeric(strsplit(strsplit(fn,"D_")[[1]][2],"-")[[1]][1])
   En = as.numeric(strsplit(strsplit(fn,"En_")[[1]][2],"-")[[1]][1])
   Nsim = as.numeric(strsplit(strsplit(fn,"Nsim_")[[1]][2],".Rds")[[1]][1])
-  
-  kappa = gamma*tau
   
   badD = abs(sim[[1]]$Dhat)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D
   nbadD = sum(badD)
@@ -137,7 +135,7 @@ harvestsim = function(fn,badcut=100) {
                    pc.bias.mle=pc.bias.mle,pc.cv.mle=pc.cv.mle,cover.mle=cover.mle,
                    pc.bias.palm=pc.bias.palm,pc.cv.palm=pc.cv.palm,
                    n1=n1,n2=n2,m=m,
-                   E1=E1,
+                   kappa=kappa,
                    sigmarate=sigmarate,
                    sehat.Dhat=sehat.Dhat,
                    nbadD=nbadD,nbadse=nbadse)
