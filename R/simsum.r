@@ -5,7 +5,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
   dmax.t = (b-w)/planespd
   ps = p.t(kappa,tau,p,sigmarate,k,dmax.t,planespd,w,io=movement$sideways) # capture history probabilities
 #  p. = sum(ps) # prob at least one observer detects
-  p1 = mean((ps$ch01+ps$ch11) + (ps$ch10+ps$ch11)) # mean prob single observer detects
+  p1 = mean((ps$ch01+ps$ch11),(ps$ch10+ps$ch11)) # mean prob single observer detects
   
   N=D.2D*(L*2*b)
   
@@ -50,7 +50,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
     } else if(simethod=="Palm") {
       Ntype = "RandomN"
       palmdat <- sim.twocamera(c(D.2D=D.2D, kappa=kappa, sigma=sigma),d=L, w=w, b=b, l=k, tau=tau)
-      sdat = Palm2mleSimData(palmdat)
+      sdat = Palm2mleData(palmdat$points,palmdat$sibling.list$cameras,d=L,l=k,w=w,b=b)
     } else stop("simethod must be 'MLE' or 'Palm'.")
     
     # MLE
@@ -121,6 +121,8 @@ harvestsim = function(fn,badcut=100) {
   pc.bias.palm = 100*(mean(sim[[2]]$Dhat[!bad])-D.2D)/D.2D
   pc.cv.palm = 100*sqrt(var(sim[[2]]$Dhat[!bad]))/mean(sim[[1]]$Dhat[!bad])
   
+  Dhat.cor = cor(sim[[1]]$Dhat[!bad],sim[[2]]$Dhat[!bad])
+  
   n1 = mean(sim[[1]]$n1[!bad])
   n2 = mean(sim[[1]]$n2[!bad])
   m = mean(sim[[1]]$m[!bad])
@@ -134,6 +136,7 @@ harvestsim = function(fn,badcut=100) {
   out = data.frame(Nsim=Nsim,gamma=gamma,k=k,speed=getspeed(sigmarate),D.2D=D.2D,
                    pc.bias.mle=pc.bias.mle,pc.cv.mle=pc.cv.mle,cover.mle=cover.mle,
                    pc.bias.palm=pc.bias.palm,pc.cv.palm=pc.cv.palm,
+                   Dhat.cor=Dhat.cor,
                    n1=n1,n2=n2,m=m,
                    kappa=kappa,
                    sigmarate=sigmarate,

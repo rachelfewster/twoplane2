@@ -1,7 +1,7 @@
 
 segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.opt=NULL,
                 method="BFGS",estimate=c("D","sigma","E1"),set.parscale=TRUE,
-                io=FALSE,Dbound=NULL,hessian=TRUE,adj.norm=FALSE,cutstretch=1,krtest=FALSE) {
+                io=TRUE,Dbound=NULL,hessian=TRUE,adj.norm=FALSE,cutstretch=1,krtest=FALSE) {
   
   k=dat$k
   s1 = dat$y1/planespd

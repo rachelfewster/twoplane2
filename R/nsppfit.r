@@ -13,11 +13,9 @@ twoplane.fit=function(sdat,tau,R,all=TRUE){
   if(all) return(est) else return(params)
 }
 
-Palm2mleSimData = function(palmsimdata) {
-  ys = palmsimdata$points
-  obs = palmsimdata$sibling.list$cameras
-  y1 = ys[obs==1]
-  y2 = ys[obs==2]
-  sdat = list(y1=y1,y2=y2,k=k,L=L,w=w,b=b)
+Palm2mleData = function(points,cameras,d,l,w,b) {
+  y1 = points[cameras==1]
+  y2 = points[cameras==2]
+  sdat = list(y1=y1,y2=y2,k=l,L=d,w=w,b=b)
   return(sdat)
 }

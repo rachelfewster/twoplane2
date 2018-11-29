@@ -10,34 +10,47 @@ data("porpoise")
 
 nm2km=1.852 # multiplier to convert nautical miles to kilometres
 
-tau = Ec = 110
-p.up = 86/110
-kappa = E1 = p.up*tau
-
-L=porpoise.data$d
-w=porpoise.data$w*2 # length and width of strip in km
+tau = 110
+gamma = 86/110
+kappa = gamma*tau
 
 planeknots=100 # observer speed in knots   CHECK THIS
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
-k=248 # time separation of observers in seconds
+sigma=0.15*sqrt(2)   #  sigma from Ben's paper * sqrt(2).
+b = 2
+sigma.mult = (b-sdat$w)/sigma
 
-animalspeed = 0.95/1000 # mean speed in km/sec
-# Convert using fact that E(U)=sqrt(2)*gamma(1)/gamma(0.5), if U~Chi(1)
-# (See here: https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable)
-sigmarate = animalspeed/(sqrt(2)*gamma(1)/gamma(0.5))
+sdat = Palm2mleData(porpoise.data$points,porpoise.data$cameras,porpoise.data$d,porpoise.data$l,porpoise.data$w,b)
 
-#sigma=0.15   #  Value for 248s separation.
-sigma = sigmarate*sqrt(k)
-sigma.mult=25 # multiplier to set bound for maximum distance moved
-dmax.km = sigma*sigma.mult
-dmax.time = dmax.km/planespd
-b = w+2*dmax.km
+control.opt=list(trace=0,maxit=1000)
+estimate=c("D","sigma","E1") # parameters to estimate
 
-p.see.up=c(1,1)
-#p.see.up=c(0.8,0.8) # prob(see|up) for each observer
+mlefit<-segfit(sdat,D.2D,E1=kappa,Ec=tau,sigmarate=sigmarate,planespd=planespd,p=c(1,1),
+               sigma.mult=sigma.mult,control.opt=control.opt,method="BFGS",estimate=estimate,
+               set.parscale=TRUE,io=TRUE,Dbound=NULL,hessian=TRUE)
 
-D = 1.05
+mlefit
+
+
+# Try with a range of taus:
+taus = c(80,90,100,110,120,130,140)
+mles = taus*0
+for(i in 1:length(mles)) {
+  mlefit<-segfit(sdat,D.2D,E1=gamma*taus[i],Ec=taus[i],sigmarate=sigmarate,planespd=planespd,p=c(1,1),
+                 sigma.mult=sigma.mult,control.opt=control.opt,method="BFGS",estimate=estimate,
+                 set.parscale=TRUE,io=TRUE,Dbound=NULL,hessian=TRUE)
+  
+  mles[i] = mlefit["Dhat"]
+}
+plot(taus,100*(mles-mles[4])/mles[4])
+
+#=============== Not sure of stuff below here; might be redundant ==============
+
+
+
+
+
 
 
 # prob up in k seconds, given up now:

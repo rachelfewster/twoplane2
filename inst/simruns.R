@@ -31,7 +31,7 @@ control.opt=list(trace=0,maxit=1000)
 estimate=c("D","sigma","E1") # parameters to estimate
 movement = list(forward=TRUE,sideways=TRUE)
 
-seed = 123
+seed = 12345
 # Do one scenaio with a few simulations to check it works:
 palmtmvt = system.time(testpalmvt <- dosim(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=p,movement=movement,
                                           fix.N=TRUE,En=NULL,Nsim=3,writeout=TRUE,seed=seed,simethod="Palm",
@@ -50,7 +50,7 @@ ks = c(10, 20, 50, 80)
 
 # Then do a bunch
 fns = c(rep("",length(sigmarates)*length(kappas)*length(ks))) # filenames
-Nsim = 3
+Nsim = 200
 start.a=1; start.k=1; start.s=1
 end.a=length(kappas); end.k=length(ks); end.s=length(sigmarates)
 simnum = 0
@@ -78,6 +78,7 @@ NAs = rep(NA,nscenarios)
 simtab =  data.frame(Nsim=NAs,gamma=NAs,k=NAs,speed=NAs,D=NAs,
                      pc.bias.mle=NAs,pc.cv.mle=NAs,cover.mle=NAs,
                      pc.bias.palm=NAs,pc.cv.palm=NAs,
+                     Dhat.cor=NAs,
                      n1=NAs,n2=NAs,m=NAs,
                      kappa=NAs,
                      sigmarate=NAs,
@@ -173,9 +174,18 @@ lines(xylim.cv,xylim.cv,col="gray")
 text(abs(simtab$pc.cv.palm),abs(simtab$pc.cv.mle),labels=scenario,cex=0.5)
 dev.off()
 
-plot(simtab$pc.cv.mle,100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle)
-hist(100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle)
-mean(100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle)
+pccvdiff = 100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle
+plot(simtab$pc.cv.mle,pccvdiff)
+lines(c(0,max(simtab$pc.cv.mle)),c(0,0),lty=2)
+plot(simtab$n1,pccvdiff)
+difflm = lm(pccvdiff~n1,data.frame(pccvdiff=pccvdiff,n1=simtab$n1))
+predf = data.frame(n1=seq(min(simtab$n1),max(simtab$n1),length=100))
+diffy = predict(difflm,type="response",newdata=predf)
+lines(predf$n1,diffy)
+coefficients(difflm)
+lines(c(0,max(simtab$pc.cv.mle)),c(0,0),lty=2)
+hist(pccvdiff)
+mean(pccvdiff)
 
 
 
