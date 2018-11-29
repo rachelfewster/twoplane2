@@ -3,6 +3,8 @@ segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.
                 method="BFGS",estimate=c("D","sigma","E1"),set.parscale=TRUE,
                 io=TRUE,Dbound=NULL,hessian=TRUE,adj.norm=FALSE,cutstretch=1,krtest=FALSE) {
   
+  require(car) # Needed for delta method se and cv of gamma
+  
   k=dat$k
   s1 = dat$y1/planespd
   s2 = dat$y2/planespd
@@ -25,26 +27,43 @@ segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.
                  set.parscale-set.parscale,Dbound=Dbound,io=io,adj.norm=adj.norm,cutstretch=cutstretch)
 
   Dhat=fit$D/(2*dat$b*planespd)
-  kappa=fit$E[1]
-  sigmarate=fit$sigmarate
   tau=fit$mu_c
+  gamma=fit$E[1]/tau
+  sigmarate=fit$sigmarate
   
-  Dhat.se = NA
-  Dhat.cv = NA
-  Dhat.lcl = NA
-  Dhat.ucl = NA
+  Dhat.se = gamma.se = sigmarate.se = NA
+  Dhat.cv = gamma.cv = sigmarate.cv = NA
+  Dhat.lcl = gamma.lcl = sigmarate.lcl = NA
+  Dhat.ucl = gamma.ucl = sigmarate.ucl = NA
+  vcv = NA
   if(hessian) {
-    infmat=try(solve(fit$hessian),silent=TRUE)
-    if(!inherits(infmat, "try-error")) {
-      intest=logn.seci(log(fit$D),sqrt(infmat[1,1]))
-      Dhat.se=intest$se/(2*dat$b*planespd)
+    vcv=try(solve(fit$hessian),silent=TRUE)
+    if(!inherits(vcv, "try-error")) {
+      # Density
+      Dhat.intest=logn.seci(log(fit$D),sqrt(vcv[1,1]))
+      Dhat.se=Dhat.intest$se/(2*dat$b*planespd)
       Dhat.cv=Dhat.se/Dhat
-      Dhat.lcl=intest$lower/(2*dat$b*planespd)
-      Dhat.ucl=intest$upper/(2*dat$b*planespd)
+      Dhat.lcl=Dhat.intest$lower/(2*dat$b*planespd)
+      Dhat.ucl=Dhat.intest$upper/(2*dat$b*planespd)
+      # gamma (need logit because it is logit(gamma), not gamma, that is actually estimated)
+      gamma.intest=deltaMethod(c(x=logit(gamma)),"exp(x)/(1+exp(x))",vcov.=vcv[2,2])
+      gamma.se=as.numeric(gamma.intest["SE"])
+      gamma.cv=gamma.se/as.numeric(gamma.intest["Estimate"])
+      gamma.lcl=as.numeric(gamma.intest[3])
+      gamma.ucl=as.numeric(gamma.intest[4])
+      # sigmarate
+      sigmarate.intest=logn.seci(log(sigmarate),sqrt(vcv[3,3]))
+      sigmarate.se=sigmarate.intest$se
+      sigmarate.cv=sigmarate.se/sigmarate
+      sigmarate.lcl=sigmarate.intest$lower
+      sigmarate.ucl=sigmarate.intest$upper
     } 
   }
   
-  est = c(Dhat=Dhat,Dhat.se=Dhat.se,Dhat.cv=Dhat.cv,Dhat.lcl=Dhat.lcl,Dhat.ucl=Dhat.ucl,kappa=kappa,sigmarate=sigmarate,tau=tau)
+  Dhat=c(est=Dhat,se=Dhat.se,cv=Dhat.cv,lcl=Dhat.lcl,ucl=Dhat.ucl)
+  gamma=c(est=gamma,se=gamma.se,cv=gamma.cv,lcl=gamma.lcl,ucl=gamma.ucl)
+  sigmarate=c(est=sigmarate,se=sigmarate.se,cv=sigmarate.cv,lcl=sigmarate.lcl,ucl=sigmarate.ucl)
+  est = list(Dhat=Dhat, gamma=gamma, sigmarate=sigmarate, tau=tau,vcv=vcv)
   return(est)
 }
 
