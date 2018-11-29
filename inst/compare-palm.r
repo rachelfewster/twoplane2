@@ -31,7 +31,7 @@ mlefit<-segfit(sdat,D.2D,E1=kappa,Ec=tau,sigmarate=sigmarate,planespd=planespd,p
                set.parscale=TRUE,io=TRUE,Dbound=NULL,hessian=TRUE)
 
 mlefit
-
+cov2cor(mlefit$vcv)
 
 # Try with a range of taus:
 taus = c(80,90,100,110,120,130,140)

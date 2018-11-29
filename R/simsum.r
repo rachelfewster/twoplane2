@@ -22,8 +22,9 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
     En = round(N*p1)
   } 
   
-  mlests=data.frame(Dhat=rep(0,Nsim),se=rep(0,Nsim),cv=rep(0,Nsim),inci=rep(0,Nsim),
-                    kappa=rep(0,Nsim),sigmarate=rep(0,Nsim),
+  mlests=data.frame(D.est=rep(0,Nsim),D.se=rep(0,Nsim),D.cv=rep(0,Nsim),D.inci=rep(0,Nsim),
+                    gamma.est=rep(0,Nsim),gamma.se=rep(0,Nsim),gamma.cv=rep(0,Nsim),gamma.inci=rep(0,Nsim),
+                    sigmarate.est=rep(0,Nsim),sigmarate.se=rep(0,Nsim),sigmarate.cv=rep(0,Nsim),sigmarate.inci=rep(0,Nsim),
                     n1=rep(0,Nsim),n2=rep(0,Nsim),m=rep(0,Nsim),tau=rep(0,Nsim))
   palmests=data.frame(Dhat=rep(0,Nsim),kappa=rep(0,Nsim),sigmarate=rep(0,Nsim),n1=rep(0,Nsim),n2=rep(0,Nsim))
   
@@ -39,7 +40,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
 #  true=list(D=D.2D,sigma=sigmarate,E1=kappa) # parameters to use in simulation
   
 # Convert from sigmarate to Ben's sigma
-  sigma = sigmarate/(sqrt(2)/sqrt(sdat$k))
+  sigma = sigmarate/(sqrt(2)/sqrt(k))
   
   set.seed(seed) # initialise random number sequence (for repeatability)
 #  skip=c()
@@ -58,13 +59,23 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
                    sigma.mult=sigma.mult,control.opt=control.opt,method="BFGS",estimate=estimate,
                    set.parscale=TRUE,io=TRUE,Dbound=NULL,hessian=hessian)
     if(hessian) {
-      mlests$se[sim]=mlefit["Dhat.se"]
-      mlests$cv[sim]=mlefit["Dhat.cv"]
-      mlests$inci[sim]=(mlefit["Dhat.lcl"]<=D.2D & D.2D<=mlefit["Dhat.ucl"])
+      # Density
+      mlests$D.se[sim]=mlefit$D["est"]
+      mlests$D.cv[sim]=mlefit$D["cv"]
+      mlests$D.inci[sim]=(mlefit$D["lcl"]<=D.2D & D.2D<=mlefit$D["ucl"])
+      # gamma
+      gamma = kappa/tau
+      mlests$gamma.se[sim]=mlefit$gamma["est"]
+      mlests$gamma.cv[sim]=mlefit$gamma["cv"]
+      mlests$gamma.inci[sim]=(mlefit$gamma["lcl"]<=gamma & gamma<=mlefit$gamma["ucl"])
+      # sigmarate
+      mlests$sigmarate.se[sim]=mlefit$sigmarate["est"]
+      mlests$sigmarate.cv[sim]=mlefit$sigmarate["cv"]
+      mlests$sigmarate.inci[sim]=(mlefit$sigmarate["lcl"]<=sigmarate & sigmarate<=mlefit$sigmarate["ucl"])
     } #else skip=c(skip,sim)
-    mlests$Dhat[sim]=mlefit["Dhat"]
-    mlests$kappa[sim]=mlefit["kappa"]
-    mlests$sigmarate[sim]=mlefit["sigmarate"]
+    mlests$D.est[sim]=mlefit$D["est"]
+    mlests$gamma.est[sim]=mlefit$gamma["est"]
+    mlests$sigmarate.est[sim]=mlefit$sigmarate["est"]
     mlests$tau[sim]=mlefit["tau"]
 
     # Palm
@@ -84,7 +95,6 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
   
   results = list(mle=mlests,palm=palmests)
   dir = "./inst/results/"
-  gamma = kappa/tau
   fn = paste("sim-gamma_",signif(gamma,3),"-tau_",signif(tau,3),"-k_",k,"-sigmarate_",signif(sigmarate,3),"-D_",signif(D.2D,3),
              "-En_",signif(En,3),"-",Ltype,"-",Ntype,"-simethod_",simethod,"-Nsim_",Nsim,".Rds",sep="")
   dirfn = paste(dir,fn,sep="")
@@ -108,37 +118,37 @@ harvestsim = function(fn,badcut=100) {
   En = as.numeric(strsplit(strsplit(fn,"En_")[[1]][2],"-")[[1]][1])
   Nsim = as.numeric(strsplit(strsplit(fn,"Nsim_")[[1]][2],".Rds")[[1]][1])
   
-  badD = abs(sim[[1]]$Dhat)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D
+  badD = abs(sim[[1]]$D.est)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D
   nbadD = sum(badD)
-  bad = abs(sim[[1]]$Dhat)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D | is.na(sim[[1]]$se)
+  bad = abs(sim[[1]]$D.est)>=badcut*D.2D | abs(sim[[2]]$Dhat)>=badcut*D.2D | is.na(sim[[1]]$D.se)
   nbad = sum(bad)
   nbadse = nbad - nbadD
   
-  pc.bias.mle = 100*(mean(sim[[1]]$Dhat[!bad])-D.2D)/D.2D
-  pc.cv.mle = 100*sqrt(var(sim[[1]]$Dhat[!bad]))/mean(sim[[1]]$Dhat[!bad])
+  pc.bias.mle = 100*(mean(sim[[1]]$D.est[!bad])-D.2D)/D.2D
+  pc.cv.mle = 100*sqrt(var(sim[[1]]$D.est[!bad]))/mean(sim[[1]]$D.est[!bad])
   cover.mle = sum(sim[[1]]$inci[!bad])/Nsim
   
   pc.bias.palm = 100*(mean(sim[[2]]$Dhat[!bad])-D.2D)/D.2D
-  pc.cv.palm = 100*sqrt(var(sim[[2]]$Dhat[!bad]))/mean(sim[[1]]$Dhat[!bad])
+  pc.cv.palm = 100*sqrt(var(sim[[2]]$Dhat[!bad]))/mean(sim[[2]]$Dhat[!bad])
   
-  Dhat.cor = cor(sim[[1]]$Dhat[!bad],sim[[2]]$Dhat[!bad])
+  Dhat.cor = cor(sim[[1]]$D.est[!bad],sim[[2]]$Dhat[!bad])
   
   n1 = mean(sim[[1]]$n1[!bad])
   n2 = mean(sim[[1]]$n2[!bad])
   m = mean(sim[[1]]$m[!bad])
   
-  kappa = mean(sim[[1]]$kappa[!bad])
+  gamma = mean(sim[[1]]$gamma.est[!bad])
   
-  sigmrate = mean(sim[[1]]$sigmarate[!bad])
+  sigmrate = mean(sim[[1]]$sigmarate.est[!bad])
   
-  sehat.Dhat = mean(sim[[1]]$se[!bad])
+  sehat.Dhat = mean(sim[[1]]$D.se[!bad])
   
   out = data.frame(Nsim=Nsim,gamma=gamma,k=k,speed=getspeed(sigmarate),D.2D=D.2D,
                    pc.bias.mle=pc.bias.mle,pc.cv.mle=pc.cv.mle,cover.mle=cover.mle,
                    pc.bias.palm=pc.bias.palm,pc.cv.palm=pc.cv.palm,
                    Dhat.cor=Dhat.cor,
                    n1=n1,n2=n2,m=m,
-                   kappa=kappa,
+                   gamma=gamma,
                    sigmarate=sigmarate,
                    sehat.Dhat=sehat.Dhat,
                    nbadD=nbadD,nbadse=nbadse)

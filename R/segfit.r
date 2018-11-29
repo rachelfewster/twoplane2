@@ -60,10 +60,11 @@ segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.
     } 
   }
   
-  Dhat=c(est=Dhat,se=Dhat.se,cv=Dhat.cv,lcl=Dhat.lcl,ucl=Dhat.ucl)
+  D=c(est=Dhat,se=Dhat.se,cv=Dhat.cv,lcl=Dhat.lcl,ucl=Dhat.ucl)
   gamma=c(est=gamma,se=gamma.se,cv=gamma.cv,lcl=gamma.lcl,ucl=gamma.ucl)
   sigmarate=c(est=sigmarate,se=sigmarate.se,cv=sigmarate.cv,lcl=sigmarate.lcl,ucl=sigmarate.ucl)
-  est = list(Dhat=Dhat, gamma=gamma, sigmarate=sigmarate, tau=tau,vcv=vcv)
+  colnames(vcv) = row.names(vcv) = c("D","gamma","sigmarate")
+  est = list(D=D, gamma=gamma, sigmarate=sigmarate, tau=tau,vcv=vcv)
   return(est)
 }
 
