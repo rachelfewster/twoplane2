@@ -68,7 +68,7 @@ rft = function(n,k,spd,theta3,prop.mult=1.5) {
 
 
 
-#' @title Calculates an observable capture histories
+#' @title Calculates observable capture histories
 #'
 #' @description
 #'  Calculates an observable capture history \code{omega}, given an initial state
@@ -116,10 +116,10 @@ p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
 
 
 
-#' @title Calculates the observable capture histories
+#' @title Calculates the probabilitis of the observable capture histories
 #'
 #' @description
-#'  Calculates the three observable capture histories for animals available 
+#'  Calculates the probabilitis of the three observable capture histories for animals available 
 #'  according to Markov process and allowed to move in and out of searched
 #'  strip according to Brownian motion. 
 #'  
@@ -209,10 +209,11 @@ p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.norm=FALS
 #}
 
 p.o2i = function(sigma,dmax,w,nx=500) {
+  if(sigma==0) sigma = 1e-15
   dx=dmax/nx
   xs=seq(w,dmax+w,length=(nx+1))
   ws = rep(w,length(xs))
-  xs = xs + dx/100000 # so that all starting points are outside strip
+#  xs = xs + dx/100000 # so that all starting points are outside strip
   F.rs = pnorm(ws-xs,mean=0,sd=sigma) - pnorm(-ws-xs,mean=0,sd=sigma)
   p = (F.rs[1]/2 + sum(F.rs[2:nx]) + F.rs[nx+1]/2)*dx/(dmax)
   return(p)
@@ -244,7 +245,8 @@ p.o2i = function(sigma,dmax,w,nx=500) {
 #' p.i2o(sigma,dmax=dmax,w)
 #p.i2o = function(sigma,dmax,w,nx=500) return(1-p.i2i(sigma,dmax,w,nx))
 p.i2o = function(sigma,dmax,w,nx=500) {
-  xs=seq(-w,w,length=(nx+1))
+  if(sigma==0) sigma = 1e-15
+  xs=seq(0,w,length=(nx+1))
   dx = w/nx
   ws = rep(w,length(xs))
   F.rs = pnorm(xs-ws,mean=0,sd=sigma) + pnorm(-xs-ws,mean=0,sd=sigma)
@@ -344,12 +346,16 @@ p.o2o = function(sigma,dmax,w,nx=500) return(1-p.o2i(sigma,dmax,w,nx))
 #' 
 #TPM = make.inout.tpm(sigma=exp(theta_new[3])*sqrt(k),dmax=dmax*planespd,w=w) 
 make.inout.tpm=function(sigma,dmax,w,nx=500){
-  inout=matrix(c(
-    p.i2i(sigma,dmax,w,nx),
-    p.o2i(sigma,dmax,w,nx),
-    p.i2o(sigma,dmax,w,nx),
-    p.o2o(sigma,dmax,w,nx)
-  ),ncol=2)
+  if(sigma==0) {
+  inout = diag(c(1,1))  
+  } else {
+    inout=matrix(c(
+      p.i2i(sigma,dmax,w,nx),
+      p.o2i(sigma,dmax,w,nx),
+      p.i2o(sigma,dmax,w,nx),
+      p.o2o(sigma,dmax,w,nx)
+    ),ncol=2)
+  }
   colnames(inout)=row.names(inout)=c("in","out")
   return(inout)
 }
