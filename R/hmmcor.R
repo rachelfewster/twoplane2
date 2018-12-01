@@ -1,6 +1,6 @@
 rm(list=ls())
 
-w=0.125;sigma.mult=8;tau=100; k=20
+w=0.125;sigma.mult=10;tau=100; k=20
 
 mle <- readRDS("./inst/results/survey.mle.Rds") 
 sigmarate=mle$sigmarate["est"]
@@ -12,29 +12,28 @@ planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 nts = 300
 ts = seq(0.01,100,length=nts) 
 idbn = c(1,0)
-gamas = c(round(mle$gamma["est"],2),(1:9)/10)
+gamas = c(round(mle$gamma["est"],2),(2:9)/10)
 ngamas = length(gamas)
 hmm.cor = hmm.cor0 = pcbias = matrix(rep(NA,ngamas*nts),nrow=ngamas)
 for(i in 1:ngamas) {
-  kappa = gamas[i] * tau
-  Qmat=matrix(c(-1/kappa,1/(tau-kappa),1/kappa,-1/(tau-kappa)),nrow=2)
-  pcbias[i,] = 100*(p.omega.t(ts,idbn,p1=1,p2=1,Qmat,omega=11,IO=NULL)-gamas[i])/gamas[i]
+  pcbias[i,] = calc.pcbias(ts,gamas[i],tau,sigmarate,sigma.mult,w)
   hmm.cor[i,] = hmmcor(ts,gamas[i],tau,sigmarate,planespd,sigma.mult,io=TRUE,p=c(1,1))
   hmm.cor0[i,] = hmmcor(ts,gamas[i],tau,sigmarate,planespd,sigma.mult,io=FALSE,p=c(1,1))
 }
 for(i in 1:ngamas) {
   if(i==1) plot(ts,hmm.cor[1,],ylim=c(0,1),type="l",ylab="Correlatoin",xlab="Lag as % of dive cycle length",lwd=2)
-  else lines(ts,hmm.cor[i,],ylim=c(0,max(pcbias)),lty=i)
+  else lines(ts,hmm.cor[i,],lty=i)
   lines(range(ts),c(0,0))
 }
 for(i in 1:ngamas) {
   if(i==1) plot(ts,hmm.cor0[1,],ylim=c(0,1),type="l",ylab="Correlatoin",xlab="Lag as % of dive cycle length",lwd=2)
-  else lines(ts,hmm.cor0[i,],ylim=c(0,max(pcbias)),lty=i)
+  else lines(ts,hmm.cor0[i,],lty=i)
   lines(range(ts),c(0,0))
 }
 for(i in 1:ngamas) {
-  if(i==1) plot(ts,pcbias[1,],ylim=c(0,max(pcbias)),type="l",ylab="%bias",xlab="Lag as % of dive cycle length",lwd=2)
-  else lines(ts,pcbias[i,],ylim=c(0,max(pcbias)),lty=i)
+  if(i==1) plot(ts,pcbias[1,],ylim=range(pcbias),type="l",ylab="%bias",xlab="Lag as % of dive cycle length",lwd=2)
+  else lines(ts,pcbias[i,],lty=i)
+  lines(range(ts),c(0,0))
 }
 
 
@@ -86,8 +85,27 @@ hmmcor = function(ts,gamma,tau,sigmarate,planespd,sigma.mult=5,io=TRUE,p=c(1,1))
 hmmcor(k,gama,tau,sigmarate,planespd,sigma.mult=5,io=FALSE,p=c(1,1))
 hmmcor(k,gama,tau,sigmarate,planespd,sigma.mult=5,io=TRUE,p=c(1,1))
 hmmcor(k,gama,tau,0,planespd,sigma.mult=5,io=TRUE,p=c(1,1))
-
-
 hmmcor(ts,gama,tau,sigmarate,planespd,sigma.mult=5,io=FALSE,p=c(1,1))
+
+
+calc.pcbias = function(ts,gamma,tau,sigmarate,sigma.mult,w) {
+  nts = length(ts)
+  pcbias = rep(NA,nts)
+  kappa = gamma * tau
+  for(i in 1:nts) {
+    dmax = sigma.mult*sigmarate*sqrt(ts[i])
+    b = w + dmax
+    p = gama*w/b
+#    idbn4 = c(gamma*w/b, gamma*(1-w/b), (1-gamma)*w/b, (1-gamma)*(1-w/b))
+    idbn1. = c(1,0,0,0)
+    Qmat=matrix(c(-1/kappa,1/(tau-kappa),1/kappa,-1/(tau-kappa)),nrow=2)
+    TPM = make.inout.tpm(sigma=sigmarate*sqrt(ts[i]),dmax=dmax,w=w)
+    pcbias[i] = 100*(p/p.omega.t(ts[i],idbn1.,p1=1,p2=1,Qmat,omega=11,IO=TPM)-1)
+  }
+  return(pcbias)
+}
+
+calc.pcbias(ts,gama,tau,sigmarate,sigma.mult,w)
+
 
 
