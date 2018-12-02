@@ -21,6 +21,7 @@ sigma=0.15*sqrt(2)   #  sigma from Ben's paper * sqrt(2).
 b = 2
 sigma.mult = (b-sdat$w)/sigma
 
+# Convert data to format required by segfit:
 sdat = Palm2mleData(porpoise.data$points,porpoise.data$cameras,porpoise.data$d,porpoise.data$l,porpoise.data$w,b)
 
 control.opt=list(trace=0,maxit=1000)
@@ -32,6 +33,11 @@ mlefit<-segfit(sdat,D.2D,E1=kappa,Ec=tau,sigmarate=sigmarate,planespd=planespd,p
 
 mlefit
 cov2cor(mlefit$vcv)
+
+# Save for use in paper:
+saveRDS(mlefit,file="./inst/results/survey.mle.Rds")
+
+spds = readRDS("./inst/results/speeds.Rds")
 
 # Try with a range of taus:
 taus = c(80,90,100,110,120,130,140)
