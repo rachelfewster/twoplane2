@@ -240,11 +240,10 @@ Conditional on $t_{i}$, the probability of observing $(x_{i1},x_{i2})$, is
 \be
 p(x_{i1},x_{i2}|t_{i})&=&
 \bm{\delta}\bm{P}(x_{i1})\bm{\Gamma}(t_{i})\bm{P}(x_{i2})\bm{1}
+\label{eq:p_omga}
 \ee
 \noindent
-where $\bm{1}$ is a column vector of ones. The joint probability of the second observer passing animal $i$ at $t_{i}$ and observing $(x_{i1},x_{i2})$ is $p(x_{i1},x_{i2}|t_{i})f_{T}(t_{i})$. 
-
-For brevity, we now write $p(x_{i1}=0,x_{i2}=1|t_{i})$ as $p_{01}(t_{i})$, we write $p(x_{i1}=1,x_{i2}=0|t_{i})$ as $p_{10}(t_{i})$, and we write $p(x_{i1}=1,x_{i2}=1|t_{i})$ as $p_{11}(t_{i})$.
+where $\bm{1}$ is a column vector of ones. The joint probability of the second observer passing animal $i$ at $t_{i}$ and observing $(x_{i1},x_{i2})$ is $p(x_{i1},x_{i2}|t_{i})f_{T}(t_{i})$. For brevity, we now write $p(x_{i1}=0,x_{i2}=1|t_{i})$ as $p_{01}(t_{i})$, we write $p(x_{i1}=1,x_{i2}=0|t_{i})$ as $p_{10}(t_{i})$, and we write $p(x_{i1}=1,x_{i2}=1|t_{i})$ as $p_{11}(t_{i})$.
 
 Writing the three observable capture histories as $\omega_1=(01), \omega_2=(10), \omega_3=(11)\}$, we can write the probability of observing each of these as
 \be
@@ -397,7 +396,16 @@ We would like to survey with two video cameras on a single aircraft (manned or n
 
 Here we investigate the performance of our density estimator for short lags. We start by looking at the correlation between detections as a function of lag, and the extent to which short lags inflate the detection pobability of the second observer given detection/non-detection by the first observer. In all simulation scenarios we set $D=\Sexpr{round(mle$D["est"],2)}$ $w=0.125$ km, $b=2$ km, and total transect length the same as that in the application above, namely $L=1,100$ km.
 
-Our data consist of observations of Bernoulli random variables $X_1$ and $X_2$, each of which is 1 when animals are available and zero when they are not. The correlation between these variables when availability is governed by a four-state hidden Markov model with transition probability matrix $\bm{\Gamma}(k)=\exp(\bm{Q}k)$ with off-diagonal elements $\Gamma_{12}(k)$ and $\Gamma_{21}(k)$, is $\text{corr}(X_1X_2)=(1-\Gamma_{12}(1)-\Gamma_{21}(1))^k$, while $\mathbb{P}(X_2=1|X_1=1,k)=\Gamma_{11}(k)$ and $\mathbb{P}(X_2=1|X_1=0)=\Gamma_{21}(k)$.
+Our data consist of observations of Bernoulli random variables $X_1$ and $X_2$, each of which is 1 when animals are available and zero when they are not. The correlation between these variables at lag $k$ between the first and second observe passing over the abimalsis
+\be
+\rho(k)&=&
+\sum_{x_1=0}^1\sum_{x_2=0}^1
+\left(\gamma\frac{w}{b}\right)^{x_1}\left(1-\gamma\frac{w}{b}\right)^{1-x_1}
+\left(\gamma\frac{w}{b}\right)^{x_2}\left(1-\gamma\frac{w}{b}\right)^{1-x_2}
+p_{x_1x_2}(k),
+\ee
+\noindent
+where $p_{x_1x_2}(k)$ is as defined below \eqref{eq:p_omga} for $x_1x_2\in\{01,10,11\}$ and $p_{00}(k)=1-p_{01}(k)-p_{10}(k)-p_{11}(k)$.
 
 Figure~\ref{fig_correlation_plot} shows the correlation between the observers' detections, as a function of the lag ($l$) when $\gamma=\Sexpr{round(mle$gamma["est"]/100,2)}$, $\tau=100$ and $\sigma=\Sexpr{round(mle$sigmarate["est"]/(sqrt(2)/sqrt(248)),2)}/\sqrt{248}$. This is a scenario consistent with the estimates we obtained in the previous section, although for convenience we have standardised dive cycle length to be 100.. Figures~\ref{fig_p_avail_plot} and \ref{fig_p_avail_plot} show the percentages by which $\mathbb{P}(X_2=1|X_1=1,k)$ and $\mathbb{P}(X_2=1|X_1=0)$ are greater than $\gamma$ for $\gamma=(20\%,30\%,40\%,50\%,60\%,70\%,80\%)$.
 
@@ -425,7 +433,7 @@ mu1 = 72
 tau = 100
 mus = sort(c(mu1-(5:1)*5,mu1+(1:5)*5))
 k=0:120
-plot(k,mpcov(mu1,tau,k),type="l",xlab="lag as % of dive cycle length",ylab="correlation")
+plot(k,mpcov(mu1,tau,k),type="l",xlab="lag as % of dive cycle length",ylab="Correlation")
 for(i in 1:length(mus)) lines(k,mpcov(mus[i],tau,k),col="gray")
 lines(k,mpcov(mu1,tau,k))
 lines(k,rep(0,length(k)),lty=2)
