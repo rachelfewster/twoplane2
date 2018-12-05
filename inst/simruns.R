@@ -6,16 +6,18 @@ nm2km=1.852 # multiplier to convert nautical miles to kilometres
 planeknots=100 # observer speed in knots   CHECK THIS
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
-D = D.2D <- 1.05
+D = D.2D <- 1.24
 ## Time between cameras (seconds).
 k = l <- 20
 ## Mean dive-cycle duration (seconds).
-tau <- 100
+tau <- 110
 ## Mean duration of surface phase (seconds).
-kappa <- 84
+kappa <- 80
 ## Animal movement (roughly based on 0.95 m per s).
-sigma <- gamma(0.5)*sqrt(((0.95*l/1000)^2)/2)/2
-sigmarate = sigma*sqrt(2)/sqrt(k)
+#sigma <- gamma(0.5)*sqrt(((0.95*l/1000)^2)/2)/2
+#sigmarate = sigma*sqrt(2)/sqrt(k)
+sigma = 0.13 # estimatd from porpoise data
+sigmarate = sigma*sqrt(2)/sqrt(248)
 sigma.mult=5 # multiplier to set bound for maximum distance moved
 
 p=c(1,1)
@@ -50,11 +52,23 @@ ks = c(10, 20, 50, 80)
 
 # Then do a bunch
 fns = c(rep("",length(sigmarates)*length(kappas)*length(ks))) # filenames
-Nsim = 200
+Nsim = 150
 start.a=1; start.k=1; start.s=1
 end.a=length(kappas); end.k=length(ks); end.s=length(sigmarates)
 simnum = 0
 simethod = "Palm"
+simethod = "MLE"
+Ltype = "RandomL"
+fix.N=TRUE
+Ntype = "FixedN"
+if(!fix.N) Ntype = "RandomN"
+En = NULL
+if(!is.null(En)) {
+  if(!is.null(L)) warning("Ignoring L because En was specified; L has been calculated to give En with given D.2D.")
+  L=En/(D.2D*b*p.) # set L to get desired sample size
+  Ltype = "RandomL"
+}
+
 startime=date()
 for(na in start.a:end.a) {
   for(nk in start.k:end.k) {
@@ -66,7 +80,7 @@ for(na in start.a:end.a) {
 #                          fix.N=TRUE,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod="MLE",
 #                          control.opt=control.opt)
       fns[simnum] = dosim(D.2D,L,w,b,sigmarates[ns],ks[nk],planespd,kappas[na],tau,p=p,movement=movement,
-                          fix.N=TRUE,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod=simethod,
+                          fix.N=fix.N,En=NULL,Nsim=Nsim,writeout=TRUE,seed=seed,simethod=simethod,
                           control.opt=control.opt)
     }
   }
@@ -97,7 +111,10 @@ for(i in 1:length(kappas)) {
 
 simID = paste("-D_",signif(D.2D,3),"-",Ltype,"-",Ntype,"-simethod_",simethod,"-Nsim_",Nsim,sep="")
 saveRDS(fns,file=paste("./inst/results/filenames",simID,".Rds",sep=""))
-saveRDS(simtab,file=paste("./inst/results/simdab",simID,".Rds",sep=""))
+saveRDS(simtab,file=paste("./inst/results/simtab",simID,".Rds",sep=""))
+
+
+boxplotsim(fns,method="mle",stat="D.est")
 
 
 require(plot3D)
@@ -142,6 +159,7 @@ make3Dplot(simtab,1.5,"covererr","Coverage error","speed=1.5",zlim=zlimCover)
 # Bias plot with sign
 scenario = as.character(1:length(simtab$pc.bias.mle))
 xylim.bias = range(simtab$pc.bias.mle,simtab$pc.bias.palm)
+#quartz(h=3,w=9)
 pdf(h=3,w=9,file="./inst/figs/mlepalmbias.pdf")
 par(mfrow=c(1,3))
 plot((simtab$pc.bias.palm),(simtab$pc.bias.mle),xlab="%Bias Palm",ylab="%Bias MLE",main="",
@@ -152,16 +170,44 @@ hist(simtab$pc.bias.mle,nclass=15,xlab="%Bias MLE",main="")
 hist(simtab$pc.bias.palm,nclass=15,xlab="%Bias Palm",main="")
 dev.off()
 
+# Mean percentage bias:
+mean(simtab$pc.bias.mle)
+mean(simtab$pc.bias.palm)
+# Correlation between estimators
+hist(simtab$Dhat.cor)
+range(simtab$Dhat.cor)
+
+n1 = simtab$n1
+shift = 8
+xlim = c(min(n1),max(shift+n1))
+plot(n1,simtab$pc.bias.mle,ylim=range(simtab$pc.bias.mle,simtab$pc.bias.palm),
+     xlim=xlim,xlab=expression(bar(n)[1]),ylab="% Bias")
+points(shift+n1,simtab$pc.bias.palm,pch=3,col="gray")
+lines(range(simtab$n1),c(0,0),lty=2)
+
+quartz(h=4,w=8)
+par(mfrow=c(1,2))
+plot(n1,simtab$pc.cv.mle,ylim=range(simtab$pc.cv.mle,simtab$pc.cv.palm),
+     xlim=xlim,xlab=expression(bar(n)[1]),ylab="% CV",main="(a)")
+points(shift+n1,simtab$pc.cv.palm,pch=3,col="gray")
+lines(range(simtab$n1),c(0,0),lty=2)
+
+cvdiff = 100*(simtab$pc.cv.palm - simtab$pc.cv.mle)/simtab$pc.cv.mle
+plot(n1,cvdiff,ylim=range(cvdiff),
+     xlim=xlim,xlab=expression(bar(n)[1]),ylab="relative % difference in CV",main="(n)")
+lines(range(simtab$n1),c(0,0),lty=2)
+
 # Abs bias and CV plot
 scenario = as.character(1:length(simtab$pc.bias.mle))
 
-badone = which(simtab$pc.bias.mle>10)
-xylim.abias = c(0,max(abs(simtab$pc.bias.mle[-badone]),abs(simtab$pc.bias.palm[-badone])))
-xylim.cv = c(0,max(abs(simtab$pc.cv.mle[-badone]),abs(simtab$pc.cv.palm[-badone])))
+#badone = which(simtab$pc.bias.mle>10)
+#xylim.abias = c(0,max(abs(simtab$pc.bias.mle[-badone]),abs(simtab$pc.bias.palm[-badone])))
+#xylim.cv = c(0,max(abs(simtab$pc.cv.mle[-badone]),abs(simtab$pc.cv.palm[-badone])))
 
 xylim.abias = c(0,max(abs(simtab$pc.bias.mle),abs(simtab$pc.bias.palm)))
 xylim.cv = c(0,max(abs(simtab$pc.cv.mle),abs(simtab$pc.cv.palm)))
 
+#quartz(h=4,w=8)
 pdf(h=4,w=8,file="./inst/figs/mlepalm.pdf")
 par(mfrow=c(1,2))
 plot(abs(simtab$pc.bias.palm),abs(simtab$pc.bias.mle),xlab="Abs %Bias Palm",ylab="Abs %Bias MLE",main="",
@@ -174,6 +220,8 @@ lines(xylim.cv,xylim.cv,col="gray")
 text(abs(simtab$pc.cv.palm),abs(simtab$pc.cv.mle),labels=scenario,cex=0.5)
 dev.off()
 
+quartz(h=3,w=9)
+par(mfrow=c(1,3))
 pccvdiff = 100*(simtab$pc.cv.palm-simtab$pc.cv.mle)/simtab$pc.cv.mle
 plot(simtab$pc.cv.mle,pccvdiff)
 lines(c(0,max(simtab$pc.cv.mle)),c(0,0),lty=2)

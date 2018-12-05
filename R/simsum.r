@@ -126,7 +126,7 @@ harvestsim = function(fn,badcut=100) {
   
   pc.bias.mle = 100*(mean(sim[[1]]$D.est[!bad])-D.2D)/D.2D
   pc.cv.mle = 100*sqrt(var(sim[[1]]$D.est[!bad]))/mean(sim[[1]]$D.est[!bad])
-  cover.mle = sum(sim[[1]]$inci[!bad])/Nsim
+  cover.mle = sum(sim[[1]]$D.inci[!bad])/(Nsim-nbad)
   
   pc.bias.palm = 100*(mean(sim[[2]]$Dhat[!bad])-D.2D)/D.2D
   pc.cv.palm = 100*sqrt(var(sim[[2]]$Dhat[!bad]))/mean(sim[[2]]$Dhat[!bad])
@@ -160,6 +160,81 @@ getspeed = function(sigmarate) return(1000*sigmarate*(sqrt(2)*gamma(1)/gamma(0.5
 
 
 
+boxplotsim = function(fns,method="mle",stat="D.est",diff.method=NULL,diff.from=NULL,sortby=" ",...) {
+  
+  if(method=="MLE") method = "mle"
+  if(method=="Palm") method = "palm"
+  if(!is.element(method,c("mle","palm"))) stop("method must be `mle` or `palm`")
+  if(!is.null(diff.method)) if(!is.element(diff.method,c("mle","palm"))) stop("diff.method must be `mle` or `palm`")
+  diff.statname = statname = stat
+  if(method=="palm" & stat=="D.est") statname = "Dhat" # palm name is different
+  if(!is.null(diff.method)) if(diff.method=="palm" & stat=="D.est") diff.statname = "Dhat" # palm name is different
+  if(sortby!=" ") if(sortby!="n" & sortby!="m") stop("sortby must b n or m")
+  
+  nscenarios = length(fns)
+  sim1 = readRDS(fns[[1]])
+  nsims = dim(sim1$mle)[1]
+  plotstat = matrix(rep(NA,nsims*nscenarios),nrow=nsims)
+  n = m = rep(NA,nscenarios)
+  
+  for(ns in 1:nscenarios) {
+    sim = readRDS(fns[[ns]])
+    if(method=="mle" & !is.element(stat,names(sim$mle))) stop("Invalid stat for method mle")
+    if(method=="palm" & !is.element(statname,names(sim$palm))) stop("Invalid stat for method palm")
+    if(is.null(diff.method)) {
+      plotstat[,ns] = sim[[method]][,statname]
+    } else if(is.numeric(diff.from)) {
+      plotstat[,ns] = sim[[method]][,statname] - diff.from
+    } else {
+      plotstat[,ns] = sim[[method]][,statname] - sim[[diff.method]][,diff.statname]
+    }
+    n[ns] = (mean(sim$mle$n1) + mean(sim$mle$n2))/2
+    m[ns] = mean(sim$mle$m)
+  }
+  ord = simnum = 1:nscenarios
+  if(sortby=="n") ord = order(n)
+  if(sortby=="m") ord = order(m)
+  boxplot(plotstat[,ord],names=as.character(ord),xlab="Scenario",...)
+}
+  
+#quartz(h=8,w=10)
+#boxplotsim (fns,method="palm",stat="D.est",ylab=expression(hat(D)))
+#boxplotsim (fns,method="mle",stat="D.est",diff.method="palm")
+#lines(c(0,37),rep(0,2))
+
+
+calcsimbias = function(fns,method="mle",stat="D.est",truth) {
+  
+  if(method=="MLE") method = "mle"
+  if(method=="Palm") method = "palm"
+  statname = stat
+  if(!is.element(method,c("mle","palm"))) stop("method must be `mle` or `palm`")
+  if(method=="palm" & stat=="D.est") statname = "Dhat" # palm name is different
+
+  nscenarios = length(fns)
+  sim1 = readRDS(fns[[1]])
+  nsims = dim(sim1$mle)[1]
+  nas = rep(NA,nscenarios)
+  eststats = data.frame(mean=nas,se.mean=nas,lcl=nas,ucl=nas,biased=nas)
+
+  for(ns in 1:nscenarios) {
+    sim = readRDS(fns[[ns]])
+    if(method=="mle" & !is.element(stat,names(sim$mle))) stop("Invalid stat for method mle")
+    if(method=="palm" & !is.element(statname,names(sim$palm))) stop("Invalid stat for method palm")
+    eststats$mean[ns] = mean(sim[[method]][,statname])
+    eststats$se.mean[ns] = sqrt(var(sim[[method]][,statname])/nsims)
+    eststats$lcl[ns] = eststats$mean[ns]-1.96*eststats$se.mean[ns]
+    eststats$ucl[ns] = eststats$mean[ns]+1.96*eststats$se.mean[ns]
+    eststats$biased[ns] = truth<eststats$lcl[ns] | eststats$ucl[ns]<truth
+  }
+  return(eststats)
+}
+
+#biassum = calcsimbias (fns,method="mle",stat="D.est",truth=1.24)
+#sum(biassum$biased)/36
+
+#biassum = calcsimbias (fns,method="palm",stat="D.est",truth=1.24)
+#sum(biassum$biased)/36
 
 
 
