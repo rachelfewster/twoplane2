@@ -309,6 +309,7 @@ where $n=\sum_\omega n_\omega$.
 %In order to constrain $D$ to be non-negative, we parameterise it as $D=e^{\theta_1}$.
 
 \subsection{Model parameters}
+\label{sec:model_parameters}
 
 The model has four kinds of parameters:
 
@@ -540,7 +541,7 @@ However, the LCE method does not scale well. While we were able to deal with mod
 
 Being a maximum likelhood method, the LCE method can take advantage of the inference results and machinery associated with maximum likelihood estimators, including likelihood-based model selection criteria such as AIC, asymptotic efficientcy, asymptotic normality and associated interval estimation methods. The CCR estimator is not a maximdum likelihood estimator, requires interval estimation by bootstrap, is slightly less efficient than the LCE estimator and can not take advantage of likelihood-based model selection methods. Unlike the LCE estimtor, however, it scales well with increasing sample size, and is very nearly as efficient as the LCE estimator.
 
-We provide a theoretical structure on which one can build more general modesl for digital survey data, without requiring recapture identification. The framework allows inclusion of covariates in all paramters mentioned in Section~\ref{}. While covariates were not available for our application, we anticipate that they can be collected on future surveys. 
+We provide a theoretical structure on which one can build more general modesl for digital survey data, without requiring recapture identification. The framework allows inclusion of covariates in all parameters mentioned in Section~\ref{sec:model_parameters}. While covariates were not available for our application, we anticipate that they can be collected on future surveys. 
 
 We anticipate that the framework provided by the CLE and CCR methods could result in substantial increases in estimation efficiency by allowing the estimation process to be automated. To automate the process we need only an adequate automatic identifier of the species in question in the video stream from each ``observer'' separately -- we do not need recaptures to be identified. If false negatives affect only the availability process (e.g. remove animals underwater and partially visible), the only cost of using a strict identification criterion in order to avoid false positives, is reduced sample size. If, however, false negatives affect the detection process (e.g. remove some individuals because although they were as available as possible, a wave broke over them as the observer passed) then the assumption of $p=1$ may be violated and bias may ensue. Surveying at different lags may allow estimation of $p$ (in additon to $D$, $\sigma$ and $\kappa$) so that it will likely be possible to automate inference from digital surveys by using automated object identification criteria that are sufficiently strict so as to reduce the probability of false positives to virtually zero, providing that the survey involves effort and detections at more than one lag. 
 
