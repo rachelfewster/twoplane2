@@ -480,7 +480,7 @@ lines(c(0,length(fns)+1),rep(1.24,2))
 simtab <- readRDS("./results/simtab-D_1.24-RandomL-FixedN-simethod_MLE-Nsim_150.Rds")
 mlesimtab = simtab[,c(2:4,6:10,12,14)]
 mlesimtab$speed = mlesimtab$speed/sqrt(2)*gamma(0.5) # Correct for error when writing simtab
-names(mlesimtab) = c("gamma","lag","speed","\\%BiasMLE","\\%cvMLE","\\%CoverMLE","\\%BiasPalm","\\%cvPalm","mean(n)","mean(m)")
+names(mlesimtab) = c("gamma","lag","speed","\\%BiasLCE","\\%cvLCE","\\%CoverLCE","\\%BiasPalm","\\%cvPalm","mean(n)","mean(m)")
 print.xtable(xtable(mlesimtab, 
 #caption = "Preliminay sims with Nsim=300.", 
 caption = "Preliminay sims with Nsim=150 (n,m are number obs by 1 observer, and number recaptures). The first column is scenario number.", 
@@ -505,7 +505,7 @@ lines(range(simtab$n1),c(0,0),lty=2)
 
 The coefficients of variation (CV) of the LCE and CCR density estimators for all 36 scenarios are shown in Figure~\ref{fig:fig_mlepalm_cv}. The CVs decrease with sample size, as expected. The CV of the LCE estimator is smaller than that of the CCR estimator by a small percentage of the LCE estimator CV, with the difference increasing as sample size increases. We interpret this to be a consequnce of the fact that the CCR estimator is not a maximum likelihood estimator, being based on an approximation to the likelihood, and does not therefore have the asymptotic efficiency of a maximum likelihood estimator. Neverhteless, the difference in precision of the two estimators is very small, being no more than about 8\% of about a 9\% CV for the largest sample size cosidered (with about 270 detections by each observer).
 
-<<fig_mlepalm_cv, fig.env = "figure", fig.width = 8, fig.height= 4, fig.cap = "Percentage coefficient of variation (\\%CV), as a function of mean number of detections by a single observer. The LCE estimator is represented by circles, the CCR estimator by crosses. Crosses are offset to the right by 8, to avoid overlap with circles. Panel (a) shows the \\%CV, panel (b) the amount by which the CCR CV is greater than the MLE CV, as a percentage of the MLE CV.", cache=TRUE>>= 
+<<fig_mlepalm_cv, fig.env = "figure", fig.width = 8, fig.height= 4, fig.cap = "Percentage coefficient of variation (\\%CV), as a function of mean number of detections by a single observer. The LCE estimator is represented by circles, the CCR estimator by crosses. Crosses are offset to the right by 8, to avoid overlap with circles. Panel (a) shows the \\%CV, panel (b) the amount by which the CCR CV is greater than the LCE CV, as a percentage of the LCE CV.", cache=TRUE>>= 
 par(mfrow=c(1,2))
 plot(n1,simtab$pc.cv.mle,ylim=range(simtab$pc.cv.mle,simtab$pc.cv.palm),
      xlim=xlim,xlab=expression(bar(n)[1]),ylab="% CV",main="(a)")
