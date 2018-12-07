@@ -241,7 +241,7 @@ where $\text{Bern}(x_{ij};p_j(c))\equiv p_j(c)^{x_{ij}}[1-p_j(c)]^{1-x_{ij}}$. I
 
 Conditional on $t_{i}$, the probability of observing $(x_{i1},x_{i2})$, is 
 \be
-p(x_{i1},x_{i2}|t_{i})&=&
+p(x_{i1},x_{i2}\mid t_{i})&=&
 \bm{\delta}\bm{P}(x_{i1})\bm{\Gamma}(t_{i})\bm{P}(x_{i2})\bm{1}
 \label{eq:p_omga}
 \ee
@@ -267,7 +267,7 @@ f(\bm{s}_{\omega})&=&\left[\prod_{i=1}^{n_{\omega}}\tilde{p}_{\omega} D(s_{\omeg
 \noindent
 where $n_{\omega}$ is the number of individuals with capture history $\omega$.
 
-In the case of $\omega=(11)$, we also observe the time $t_{(11)i}$ between the two observers passing the $i$th animal with capture history $(11)$, for $i=1,\ldots,n_{(11)}$. (We do not observer these for capture histories (01) and (10).) The pdf for the $i$th of these is the conditional pdf of time between passing, given that the capture history is $(11)$. This is
+In the case of $\omega=(11)$, we also observe the time $t_{(11)i}$ between the two observers passing the $i$th animal with capture history $(11)$, for $i=1,\ldots,n_{(11)}$. (We do not observe these for capture histories (01) and (10).) The pdf for the $i$th of these is the conditional pdf of time between passing, given that the capture history is $(11)$. This is
 \be
 f_{T|11}(t_{(11)i},\omega_i=11)&=&\frac{f_{T}(t_{(11)i})p_{11}(t_{(11)i})}{\tilde{p}_{11}}.
 \ee
@@ -284,9 +284,9 @@ We assume that the $t_{(11)i}$s are independent ($i=1,\ldots,n_{(11)}$).% \footn
 Given the capture histories $\bm{\omega}$, the likelihood is therefore as follows (with model parameters suppressed for simplicity of presentation):
 \be
 \mathcal{L}(\bm{s}|\bm{\omega})&=&\left\{\prod_\omega\left[\prod_{i=1}^{n_\omega}\tilde{p}_\omega D(s_{\omega i})\right]e^{-\int_0^L\tilde{p}_\omega D(s)ds}\right\}
-\prod_{i=1}^{n_{(11)}}f_{T| 11}(t_{(11)i}| \omega_i=11) \nonumber \\
+\prod_{i=1}^{n_{(11)}}f_{T| 11}(t_{(11)i}\mid \omega_i=11) \nonumber \\
 &=&e^{-\int_0^L\tilde{p}_\cdot D(s)ds}\left\{\prod_\omega \tilde{p}_\omega^{n_\omega}\prod_{i=1}^{n_\omega}D(s_{\omega i})\right\}
-\prod_{i=1}^{n_{(11)}}f_{T|11}(t_{(11)i}|\omega_i=11) 
+\prod_{i=1}^{n_{(11)}}f_{T|11}(t_{(11)i}\mid \omega_i=11) 
 \label{eq:f(s)}
 \ee
 \noindent
@@ -299,7 +299,7 @@ In the homogeneous Poisson case, when $D(s)=D$
 \mathcal{L}(\bm{s}|\bm{\omega})
 &=&
 e^{-\tilde{p}_\cdot DL}D^n\left(\prod_{\omega\in \{10,01,11\}} \tilde{p}_\omega^{n_\omega}\right)
-\prod_{i=1}^{n_{(11)}}f_{T|11}(t_{(11)i}|\omega_i=11) \nonumber \\
+\prod_{i=1}^{n_{(11)}}f_{T|11}(t_{(11)i}\mid \omega_i=11) \nonumber \\
 &=&
 e^{-\tilde{p}_\cdot DL}D^n\left(\prod_{\omega\in \{10,01\}} \tilde{p}_\omega^{n_\omega}\right)
 \prod_{i=1}^{n_{(11)}}f_{T}(t_{(11)i})p_{11}(t_{(11)i})
