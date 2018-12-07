@@ -86,15 +86,15 @@ Keywords: Double-observer, Mark-recapture, line transect, availability bias, mov
 
 \section{Introduction}\label{sec:intro}
 
-Aerial surveys of marine mammals are generally much cheaper than shipboard surveys. We anticipate that aerial surveys with human observers will increasingly be replaced by unmanned aerial vehicle (UAV) surveys with digital video or still cameras as observers. Such surveys present some new statistical challenges. In this paper we address these challenges and develop a method of estimating animal density from a UAVs carrying cameras.
+Aerial surveys of marine mammals are generally much cheaper than shipboard surveys. We anticipate that aerial surveys with human observers will increasingly be replaced by unmanned aerial vehicle (UAV) surveys with digital video or still cameras as observers. Such surveys present some new statistical challenges. In this paper we address these challenges and develop a method of estimating animal density from UAVs carrying cameras.
 
-Animals are within detectable range of an observer on an aircraft for only a short time, because aircraft move fast. Some animals are missed from an aircraft because they are underwater and unobservable while within detection range. The bias that results from ignoring this problem is often called ``availability bias'' \cite{Marsh+Sinclair:89}. UAVs with digital cameras will tend to miss more animals than will aircraft with humans because the cameras typically have much smaller fields of view: perhaps 100m either side of the survey transect line, compared with 1000m or more for human observers, and similar differences in the forward direction.
+Animals are within detectable range of an observer on an aircraft for only a short time, because aircraft move fast. Some animals are missed from an aircraft because they are underwater and unobservable while within detection range. The bias that results from ignoring this problem is often called ``availability bias'' \cite[]{Marsh+Sinclair:89}. UAVs with digital cameras will tend to miss more animals than will aircraft with humans because the cameras typically have much smaller fields of view: perhaps 100m either side of the survey transect line, compared with 1000m or more for human observers, and similar differences in the forward direction.
 
-Conventional line transect methods assume that the probability of detecting an animal that is at distance zero from the transect line (``$g(0)$'' in distance sampling parlance) is 1. Failure of this assumption is referred to as the ``$g(0)<1$'' problem. ``Mark-recapture distance sampling'' (MRDS) methods \cite[see][for an overview]{Burt+al:14} are commonly used to deal with this problem. MRDS a variety of capture-recapture method, in which two independently searching observers constitute two ``capture occasions'' and animals detected by both constitute ``recaptures''. 
+Conventional line transect methods assume that the probability of detecting an animal that is at distance zero from the transect line (``$g(0)$'' in distance sampling parlance) is 1. Failure of this assumption is referred to as the ``$g(0)<1$'' problem. ``Mark-recapture distance sampling'' (MRDS) methods \cite[see][for an overview]{Burt+al:14} are commonly used to deal with this problem. MRDS covers a variety of capture-recapture methods, in which two independently searching observers constitute two ``capture occasions'' and animals detected by both constitute ``recaptures.'' 
 
 MRDS methods on aerial surveys suffer from the fact that two observers on the same aircraft search the same patch of sea at the same time so that animals tend to be available or unavailable to both observers at the same time. This induces positive correlation in the detection events between the observers, and negative bias in density estimates. %(For those familiar with capture-recapture models, you can think of the availability state of an animal as an individual-level latent variable: when there is unmodelled individual heterogeneity on capture-recapture surveys, density estimates are biased.) 
 
-There are two ways in which this problem has been dealt with. The first is to model the latent process, i.e., the availability process. For example, \cite{Borchers+al:13} modelled latent availability using a hidden Markov model, while \cite{Langrock+al:13} and \cite{Borchers+Langrock:15}  modelled it using a Markov modulated Poisson processes. The second way is to separate the times that the two observers search the same region, either by having one observer search far ahead of the aircraft and the other close to it, or by using two aircraft in tandem, or having a single aircraft circle back over its path a second time \citep[see][]{Hiby+Lovell:98}.
+There are two ways in which this problem has been dealt with. The first is to model the latent process, i.e., the availability process. For example, \cite{Borchers+al:13} modelled latent availability using a hidden Markov model, while \cite{Langrock+al:13} and \cite{Borchers+Langrock:15}  modelled it using Markov modulated Poisson processes. The second way is to separate the times that the two observers search the same region, either by having one observer search far ahead of the aircraft and the other close to it, or by using two aircraft in tandem, or having a single aircraft circle back over its path a second time \citep[see][]{Hiby+Lovell:98}.
 
 However, separating the observers in this way has a cost: it introduces uncertainty into capture histories, and may introduce correlation in detections due to movement in and out of the observers' field of view (see below).
 
@@ -140,7 +140,7 @@ There are two reasons that animals that are within the survey strip at some poin
 
 \subsubsection{The up/down availability model}
 
-We assume animals unavailability due to diving is governed by a two-state continuous time Markov process with transition intensity matrix parameters such that the time in state 1 (the near-surface state) is an exponential random variable with expected value $\kappa$, and the time in state 2 (the diving state) is an exponential random variable with expected value $\tau-\kappa$, where $\tau$ is the expected dive cycle duration:
+We assume animals unavailability due to diving is governed by a two-state continuous-time Markov process with transition intensity matrix parameters such that the time in state 1 (the near-surface state) is an exponential random variable with expected value $\kappa$, and the time in state 2 (the diving state) is an exponential random variable with expected value $\tau-\kappa$, where $\tau$ is the expected dive cycle duration:
 
 The Markov transition rate matrix $\bm{Q}$ is
 \be
@@ -171,12 +171,12 @@ The transition probability matrix for transitions between states at time separat
 \subsubsection{The in/out availability model}
 
 
-Both observers search a distance $w$ either side of the transect line. We consider a strip of half-with $b>w$, such that there is zero, or neglibly small probability that an animal outside this strip when the first observer passes, moves to within $w$ of the transect in the time between the two observers passing the animal. For each animal that is within $b$ of the transect when observer 1 passes it, we define the binary random variable $Z(t)$ to be 1 if the animal is within $w$ of the transect at time $t$ after the first observer passes it, and is zero otherwise. For notational convenience, we define $\bar{Z}_j=1-Z_j$. Under the above movement model for $X(t)$, the probability $\mathbb{P}(Z(t)=0|Z(0)=1)$, that an animal moves from inside the searched strip to outside it in an interval $t$, and the probability $\mathbb{P}(Z(t)=1|Z(0)=0)$, that it moves from outside the searched strip to inside it, are 
+Both observers search a distance $w$ either side of the transect line. We consider a strip of half-with $b>w$, such that there is zero, or neglibly small probability that an animal outside this strip when the first observer passes, moves to within $w$ of the transect in the time between the two observers passing the animal. For each animal that is within $b$ of the transect when observer 1 passes it, we define the binary random variable $Z(t)$ to be 1 if the animal is within $w$ of the transect at time $t$ after the first observer passes it, and is zero otherwise. For notational convenience, we define $\bar{Z}_j=1-Z_j$. Under the above movement model for $X(t)$, the probability $\mathbb{P}(Z(t)=0 \mid Z(0)=1)$, that an animal moves from inside the searched strip to outside it in an interval $t$, and the probability $\mathbb{P}(Z(t)=1\mid Z(0)=0)$, that it moves from outside the searched strip to inside it, are 
 
 \be
-p_{IO}(t)=\mathbb{P}(Z(t)=0|Z(0)=1)&=&\frac{1}{w}\int_{-w}^w\Phi(x-w;\sigma^2t)+\Phi(-x-w;\sigma^2t)dx
+p_{IO}(t)=\mathbb{P}(Z(t)=0 \mid Z(0)=1)&=&\frac{1}{w}\int_{-w}^w\Phi(x-w;\sigma^2t)+\Phi(-x-w;\sigma^2t)dx
 \label{eq:p_{IO}}\\
-p_{OI}(t)=\mathbb{P}(Z(t)=1|Z(0)=0)&=&\frac{1}{b-w}\int_w^{b}\Phi(w-x;\sigma^2t)-\Phi(-x-w;\sigma^2t)dx 
+p_{OI}(t)=\mathbb{P}(Z(t)=1 \mid Z(0)=0)&=&\frac{1}{b-w}\int_w^{b}\Phi(w-x;\sigma^2t)-\Phi(-x-w;\sigma^2t)dx 
 \label{eq:p_{OI}}
 \ee
 %\todo[inline]{Lifted from old notes without checking -- needs checking.}
@@ -219,7 +219,7 @@ Assuming uniform animal distribution with respect to the transect line at the ti
 
 We assume that the probability that an animal is in each state at the time the first observer passes over it is given by the stationary distribution $\bm{\delta}$, and hence that its state distribution after a waiting time $t$, when the second observer passes it, is $\bm{\delta}\bm{\Gamma}(t)$. 
 
-Each observer records binary variable $X_{ij}$, which is 1 if animal $i$ is detected by observer $j$ and is zero otherwise. We model $X_{ij}$ as a state-dependent Bernoulli random variable with parameter $p_j(c)=\mbox{Pr}(X_{ij}=1|C_{ij}=c)$ where $C_{ij}$ is the state of animal $i$ when observer $j$ passes over it and $c\in(1,2,3,4)$. 
+Each observer records binary variable $X_{ij}$, which is 1 if animal $i$ is detected by observer $j$ and is zero otherwise. We model $X_{ij}$ as a state-dependent Bernoulli random variable with parameter $p_j(c)=\mbox{Pr}(X_{ij}=1\mid C_{ij}=c)$ where $C_{ij}$ is the state of animal $i$ when observer $j$ passes over it and $c\in(1,2,3,4)$. 
 
 It follows that $X_{ij}$ ($j=1,2$) are observations from a Markov modulated Bernoulli process (MMBP) at times $t_{i1}$ and $t_{i2}$. It is convenient to define the time at which the first observer passes animal $i$ ($t_{i1}$) to be zero, so that the time at which the second observer passes is $t_i=t_{i2}-t_{i1}$ ($t$ in the development of the previous section).
 
@@ -246,7 +246,7 @@ p(x_{i1},x_{i2}|t_{i})&=&
 \label{eq:p_omga}
 \ee
 \noindent
-where $\bm{1}$ is a column vector of ones. The joint probability of the second observer passing animal $i$ at $t_{i}$ and observing $(x_{i1},x_{i2})$ is $p(x_{i1},x_{i2}|t_{i})f_{T}(t_{i})$. For brevity, we now write $p(x_{i1}=0,x_{i2}=1|t_{i})$ as $p_{01}(t_{i})$, we write $p(x_{i1}=1,x_{i2}=0|t_{i})$ as $p_{10}(t_{i})$, and we write $p(x_{i1}=1,x_{i2}=1|t_{i})$ as $p_{11}(t_{i})$.
+where $\bm{1}$ is a column vector of ones. The joint probability of the second observer passing animal $i$ at $t_{i}$ and observing $(x_{i1},x_{i2})$ is $p(x_{i1},x_{i2}\mid t_{i})f_{T}(t_{i})$. For brevity, we now write $p(x_{i1}=0,x_{i2}=1\mid t_{i})$ as $p_{01}(t_{i})$, we write $p(x_{i1}=1,x_{i2}=0\mid t_{i})$ as $p_{10}(t_{i})$, and we write $p(x_{i1}=1,x_{i2}=1\mid t_{i})$ as $p_{11}(t_{i})$.
 
 Writing the three observable capture histories as $\omega_1=(01), \omega_2=(10), \omega_3=(11)\}$, we can write the probability of observing each of these as
 \be
@@ -257,7 +257,7 @@ for $k=1,2,3$.
 
 \section{The survey model}
 
-We assume that the number and locations of animals in the along-transect dimension, within a distance $b$ of the transect line, at the time that the first observer passing over them are governed by a Poisson process (PP) with intensity $2bD(s)$ at along-transect location $s$. As mentioned above, we also assume that animals ar uniformly distributed on the interval $(-b,b)$ perpendicular to the transect line, so that the number and location of animals within distance $b$ of the transect follows a PP with intensity $D(s,y)=2bD(s)/2b=D(s)$ at along-transect distance $s$ and perpendicular distance $y\in (-b,b)$ %As a result, points within a distance $b$ of the transect are located in the along-transect dimension according to a PP with intensity $2bD(s)$, where $s$ is the distance along the transect.   
+We assume that the number and locations of animals in the along-transect dimension, within a distance $b$ of the transect line, at the time that the first observer passing over them are governed by a Poisson process (PP) with intensity $2bD(s)$ at along-transect location $s$. As mentioned above, we also assume that animals are uniformly distributed on the interval $(-b,b)$ perpendicular to the transect line, so that the number and location of animals within distance $b$ of the transect follows a PP with intensity $D(s,y)=2bD(s)/2b=D(s)$ at along-transect distance $s$ and perpendicular distance $y\in (-b,b)$ %As a result, points within a distance $b$ of the transect are located in the along-transect dimension according to a PP with intensity $2bD(s)$, where $s$ is the distance along the transect.   
 
 Let $\bm{s}_{\omega}=(s_{\omega_1},s_{\omega_2},s_{\omega_3})$ be the observed locations along the transect at time of first detection, of detections with capture history $\omega_1=(01), \omega_2=(10), \omega_3=(11)$. These arise from thinned PPs with thinning probabilities $ \tilde{p}_{\omega_k}$ ($k=1,2,3$), so that for a survey along transects of total length $L$, the pdf of locations $s_{\omega}$ is
 \be
