@@ -34,11 +34,12 @@ opts_chunk$set(echo = FALSE,
 \title{A latent capture history model for digital aerial surveys of marine mammals without recapture identification}
 
 \author{D. L. Borchers\(^{1, *}\)\email{dlb@st-andrews.ac.uk},
-P. Nightingale\(^1\),
-B.C. Stevenson\(^{2}\), and
-R.M. Fewster\(^{2}\) \\
-\(^1\)University of St Andrews, Centre for Research into Ecological and Environmental Modelling, \\ St Andrews, Fife, UK \\
-\(^2\)Department of Statistics, University of Auckland, Private Bag 92019, \\ Auckland, New Zealand
+P. Nightingale\(^{2}\),
+B.C. Stevenson\(^{3}\), and
+R.M. Fewster\(^{3}\) \\
+\(^1\)University of St Andrews, Centre for Research into Ecological and Environmental Modelling, \\St Andrews, Fife, UK \\
+\(^2\)Department of Computer Science, University of York, Deramore Lane, Heslington, York, UK \\
+\(^3\)Department of Statistics, University of Auckland, Private Bag 92019, \\ Auckland, New Zealand
 }
 %\author[1]{D.L. Borchers\thanks{dlb@st-andrews.ac.uk}}
 %\author[2]{P. Nightingale}
@@ -452,7 +453,7 @@ for(i in 1:ngamas) {
 lines(ts,hmm.cor[1,],lty=1,col="black",lwd=2)
 @
 
-It is apparent that increasing the lag to $\tau$ or more reduces correlation to about zero if animals do not move (grey lines), but not if they do move. In the presence of animal movement, we do need a model for availability and cannot design our way out of the problem of corelated detections by increasing lag. 
+It is apparent that increasing the lag to $\tau$ or more reduces correlation to about zero if animals do not move (grey lines), but not if they do move. In the presence of animal movement, we do need a model for availability and cannot design our way out of the problem of correlated detections by increasing lag. 
 
 Although the survey above had a lag of 248 seconds, we are primarily interested in methods for surveys with two cameras on one aircraft, and with this configuration lags of more than some tens of seconds are difficult or impossible to achieve. In light of this, and the results of Figure~\ref{fig:fig_correlation_plot}, we decided to simulate scenarios with lag $l$ equal 10, 20, 50 and 80 seconds and $\gamma$ equal to 10\%, 20\%, 50\% and 80\%. We do this for three values of $\sigma$, coresponding to mean animal speed of 1.5 m/s \citep[the value estimated by][]{Hiby+Lovell:98}, 0.95 m/s \citep[the value estimated by][]{Westgate+al:95}, and 0.65 m/s \citep[a value lower than that estimated above or by ][]{Stevenson+al:18}. In all cases we simulate with true density $D=1.24$, as estimated in the previous section, and with observer speed of 100 knots (which is around the typical speed of marine aerial surveys).
 
