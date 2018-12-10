@@ -390,7 +390,7 @@ Like \cite{Stevenson+al:18}, we use a searched strip half-width of $w=0.125$ km 
 
 \cite{Stevenson+al:18} estimated the coefficients of variation (CVs) of $\hat{D}$, $\hat{\sigma}_{palm}$ and $\hat{\gamma}$ to be $19$\%, $16$\% and $13$\%, respectively. The corresponding estimated CVs from the LCE method are $\Sexpr{round(mle$D["cv"]*100)}$\%, $\Sexpr{round(mle$sigmarate["cv"]*100)}$\% and $\Sexpr{round(mle$gamma["cv"]*100)}$\%, respectively.
 
-The estimates from the two methods are broadly consistent; the LCE method estimates there to be substantially less animal movement, slightly less time at the surfac, and a higher animal density. As we can't evaluate the relative merits of the two method on the basis of a single survey with unknown density, we investigated their performance by simulation.
+The estimates from the two methods are broadly consistent; the LCE method estimates there to be substantially less animal movement, slightly less time at the surface, and a higher animal density. As we can't evaluate the relative merits of the methods on the basis of a single survey with unknown density, we investigated their performance by simulation.
 
 
 \section{Simulation study \label{sec:sim}}
@@ -532,7 +532,7 @@ We conclude from this simulation study that (1) the LCE estimator is unbiased, o
 
 If capture histories \textit{are} known, as is assumed with MRDS models, the LCE model provides a framework for extending MRDS methods to incorporate animal movement and allow for the fact that the two observers on MRDS surveys very commonly observe the same animals at different perpendicular distances. A complication when such an extension with human observers is that, unlike cameras on aircraft, human observers typically have a wide range of forward distances in view at once, so that animals may be wihin detection range for very much more than an instant. In this case, one would need to model the observers' detection hazard functions rather than their detection probability functions, as has been done by \cite{Langrock+al:13, Borchers+al:13, Borchers+Langrock:15, Borchers+Cox:16}, for example.
 
-Varying the lag, or having more than two cameras operating should in principle make one more parameter identifiable. It is possible that incorporating covariates into some of the parameters will also make more parameters identifiable. This is an area worth exploring in future.
+Varying the lag, or having more than two cameras operating may make one more parameter identifiable. It is possible that incorporating covariates into some of the parameters will also make more parameters identifiable. This is an area worth exploring in future.
 
 As noted by \cite{Stevenson+al:18}, if capture histories are known the CCR model can be viewed as a kind of SCR area search model, and the same is true for the LCE model. Looking at Figure~\ref{fig:fig_correlation_plot}, one might be tempted to think of the LCE model as a kind of M$_b$ SCR model, in which capture probability is elevated by first capture and then decays slowly over time. The LCE model is not quite that though, because capture pobability for the second observer changes with time since an animal was available for detection by the first observer, whether or not the first observer detected it.
 
