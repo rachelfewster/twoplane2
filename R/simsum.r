@@ -185,10 +185,10 @@ speed2sigmarate = function(speed,lag) return(speed*gamma(0.5)*sqrt(lag)/sqrt(2))
 #' @title Converts between Palm sigma and LCE sigma
 #'
 #' @description
-#'  Converts between Palm sigma and LCE sigma.
+#'  Converts between LCE sigma and Palm sigma.
 #'  
 #' @param sigmarate The Brownian motion with movement rate paramter
-#' @param lag The time over which the average speed is required.
+#' @param lag The time lag.
 sigmarate2sigmapalm = function(sigmarate,lag) return(sigmarate*sqrt(lag)/2)
 
 #' @title Converts between Palm sigma and LCE sigma
@@ -196,9 +196,29 @@ sigmarate2sigmapalm = function(sigmarate,lag) return(sigmarate*sqrt(lag)/2)
 #' @description
 #'  Converts between LCE sigma and Palm sigma.
 #'  
-#' @param sigmarate The Brownian motion with movement rate paramter
-#' @param lag The time over which the average speed is required.
-sigmapalm2sigmarate = function(sigmarate,lag) return(sigmarate*2/sqrt(lag))
+#' @param sigmarate The Palm distibution sigma
+#' @param lag The time lag.
+sigmapalm2sigmarate = function(sigma,lag) return(sigma*2/sqrt(lag))
+
+
+#' @title Calculates number of possible capture histories
+#'
+#' @description
+#'  Calculates number of possible capture histories, given the number of 
+#'  detections by each observer.
+#'  
+#' @param n1 The number of observer 1 detections.
+#' @param n2 The number of observer 2 detections.
+nch = function(n1,n2=n1) {
+  n = 1
+  nbig = n1; nsmall = n2
+  if(n2>n1) {nbig=n2; nsmall=n1}
+  for(m in 1:nsmall) {
+    n = n + choose(nsmall,m) * exp(lgamma(nbig+1)-lgamma(nbig-m+1))
+  }
+  return(n)
+}
+
 
 
 boxplotsim = function(fns,method="mle",stat="D.est",diff.method=NULL,diff.from=NULL,sortby=" ",...) {
