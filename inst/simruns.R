@@ -1,7 +1,6 @@
 library(twoplane)
 library(palm)
 
-#names(sigmas)=c("Hiby","Westgate","mle","palm")
 nm2km=1.852 # multiplier to convert nautical miles to kilometres
 planeknots=100 # observer speed in knots   CHECK THIS
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
@@ -16,8 +15,13 @@ kappa <- 80
 ## Animal movement (roughly based on 0.95 m per s).
 #sigma <- gamma(0.5)*sqrt(((0.95*l/1000)^2)/2)/2
 #sigmarate = sigma*sqrt(2)/sqrt(k)
-sigma = 0.13 # estimatd from porpoise data
-sigmarate = sigma*sqrt(2)/sqrt(248)
+sigma_palm = 0.13 # estimated Palm-type sigma (in km) from porpoise data, with lag 248 seconds
+# Calcluate Brownian sigmarate consistent with this displacement sigma over 248 seconds:
+# Variance of Palm-type movement is half that of LCE-type movement, and Brownian variance is proportional to lag
+sigmarate = sigma_palm*2/sqrt(248) # Brownian sigmarate consistent with sigma_palm
+animalspd = getspeed(sigmarate,248)*1000 # in m/s
+planespd/(animalspd/1000) # How much faster plane is going than average animal speed
+#speed2sigmarate(.95/1000,248) # Bownian motion parameter that gives the observed speed over 248 seconds
 sigma.mult=5 # multiplier to set bound for maximum distance moved
 
 p=c(1,1)

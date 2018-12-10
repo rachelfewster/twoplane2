@@ -106,8 +106,8 @@ Separating UAV ``observers'' (cameras) by using UAVs in tandem or circling back 
 
 We seek a method for surveys using a single UAV carrying two cameras. This limits the extent to which the two observers can be separated in time and requires that we deal with dependence between detections resulting from cameras passing in quick succession. We develop a method that does not require capture histories to be assigned to individuals and deals with dependence by modelling the availability process. 
 
-Our method is similar to that of \cite{Stevenson+al:18} in that it has the same data requirements and does not require capture histories. It differs in that we do inference by maximum likelihood rather than using an approximation to the Palm likelihood. Unlike the method of \cite{Stevenson+al:18}, our method becomes computationally infeasible when there are very many plausible pairings of detections by different observers. %(The number of possible pairings of $n$ detections is given by the Bell number \citep{Becker+Riordan:48}, which grows extremely quickly as $n$ increases; for example, it is 877 for $n=7$ and 115,975 for $n=10$.) 
-Our method is similar to that of \cite{Hiby+Lovell:98}, which suffers from the same computational restriction. We investigate its utility for aerial UAV surveys and compare it to the method of \cite{Stevenson+al:18}. 
+The method we develop (which we will refer to as the ``Latent Capture history Enumeration'' method, or LCE method for short) is similar to that of \cite{Stevenson+al:18} in that it has the same data requirements and does not require capture histories. It differs in that we do inference by maximum likelihood rather than using an approximation to the likelihood. Unlike the method of \cite{Stevenson+al:18}, the LCE method becomes computationally infeasible when there are very many plausible pairings of detections by different observers. %(The number of possible pairings of $n$ detections is given by the Bell number \citep{Becker+Riordan:48}, which grows extremely quickly as $n$ increases; for example, it is 877 for $n=7$ and 115,975 for $n=10$.) 
+The LCE method is similar to that of \cite{Hiby+Lovell:98}, which suffers from the same computational restriction. We investigate its utility for aerial UAV surveys and compare it to the method of \cite{Stevenson+al:18}. 
 
 \section{The model\label{sec:genmod}}
 
@@ -377,17 +377,18 @@ We estimated the variances of parameters using the inverse of the Hessian obtain
 
 \section{Application \label{sec:applic}}
 
-We  developed our estimation method (which we will refer to as the ``Latent Capture history Enumeration'' method, or LCE method for short) in anticipation of digital aerial survey data becoming widely used, but we do not currently have any digital aerial survey data of marine mammals. We therefore estimate density from the same data as were used by \cite{Stevenson+al:18} -- data from an aerial survey with human observers, from the periods when the aircraft circled back over its transect (in which the second ``observer'' is the second pass) after a lag of $l=248$ seconds. 
+We  developed the LCE method in anticipation of digital aerial survey data becoming widely used, but we do not currently have any digital aerial survey data of marine mammals. We therefore estimate density from the same data as were used by \cite{Stevenson+al:18} -- data from an aerial survey with human observers, from the periods when the aircraft circled back over its transect (in which the second ``observer'' is the second pass) after a lag of $l=248$ seconds. 
 
 <<get.mless>>=
 mle <- readRDS("./results/survey.mle.Rds") 
-getspeed = function(sigmarate) return(1000*sigmarate*(sqrt(2)*gamma(1)/gamma(0.5)))
+library(twoplane)
+#getspeed = function(sigmarate) return(1000*sigmarate*(sqrt(2)*gamma(1)/gamma(0.5)))
 #speeds <- readRDS("./results/speeds.Rds")
 @
 
-Like \cite{Stevenson+al:18}, we use a searched strip half-width of $w=0.125$ km and a ``buffer'' of $b=2$ km beyond this, beyond which we assume no animal could enter the searched strip between the fist and second observer passing it. They  obtained the following estimates (95\% confidence intervals in brackets): $\hat{D}=1.05$ (0.84, 1.60) pods per km2, $\hat{\sigma}_{palm}=0.15$ km, and the expected proportion of time in the surface state $\hat{\gamma}=0.86$ (0.56, 1.00)). The corresponding estimates using our method are $\hat{D}=\Sexpr{round(mle$D["est"],2)}$ (\Sexpr{round(mle$D["lcl"],2)},\Sexpr{round(mle$D["ucl"],2)}) pods per km$^2$, $\hat{\sigma}_{palm}=\Sexpr{round(mle$sigmarate["est"]/(sqrt(2)/sqrt(248)),2)}$ (\Sexpr{round(mle$sigmarate["lcl"]/(sqrt(2)/sqrt(248)),2)},\Sexpr{round(mle$sigmarate["ucl"]/(sqrt(2)/sqrt(248)),2)}) km, and $\hat{\gamma}=\Sexpr{round(mle$gamma["est"],2)}$ (\Sexpr{round(mle$gamma["lcl"],2)},\Sexpr{round(mle$gamma["ucl"],2)}). The estimate $\hat{\sigma}_{palm}=\Sexpr{round(mle$sigmarate["est"]/(sqrt(2)/sqrt(248)),2)}$ corresponds to a mean rate of movement over $l=248$ seconds of $\Sexpr{round(getspeed(mle$sigmarate["est"]),2)}$ m/s, with 95\% confidence interval ($\Sexpr{round(getspeed(mle$sigmarate["lcl"]),2)}$,$\Sexpr{round(getspeed(mle$sigmarate["ucl"]),2)}$) m/s.
+Like \cite{Stevenson+al:18}, we use a searched strip half-width of $w=0.125$ km and a ``buffer'' of $b=2$ km beyond this, beyond which we assume no animal could enter the searched strip between the fist and second observer passing it. They  obtained the following estimates (95\% confidence intervals in brackets): $\hat{D}=1.05$ (0.84, 1.60) pods per km2, $\hat{\sigma}_{palm}=0.15$ km, and the expected proportion of time in the surface state $\hat{\gamma}=0.86$ (0.56, 1.00)). The corresponding estimates using the LCE method are $\hat{D}=\Sexpr{round(mle$D["est"],2)}$ (\Sexpr{round(mle$D["lcl"],2)},\Sexpr{round(mle$D["ucl"],2)}) pods per km$^2$, $\hat{\sigma}_{palm}=\Sexpr{round(sigmarate2sigmapalm(mle$sigmarate["est"],248),2)}$ (\Sexpr{round(sigmarate2sigmapalm(mle$sigmarate["lcl"],248),2)},\Sexpr{round(sigmarate2sigmapalm(mle$sigmarate["ucl"],248),2)}) km, and $\hat{\gamma}=\Sexpr{round(mle$gamma["est"],2)}$ (\Sexpr{round(mle$gamma["lcl"],2)},\Sexpr{round(mle$gamma["ucl"],2)}). The estimate $\hat{\sigma}_{palm}=\Sexpr{round(sigmarate2sigmapalm(mle$sigmarate["est"],248),2)}$ corresponds to a mean rate of movement over $l=248$ seconds of $\Sexpr{round(getspeed(mle$sigmarate["est"],248)*1000,2)}$ m/s, with 95\% confidence interval ($\Sexpr{round(getspeed(mle$sigmarate["lcl"],248)*1000,2)}$,$\Sexpr{round(getspeed(mle$sigmarate["ucl"],248)*1000,2)}$) m/s.
 
-\cite{Stevenson+al:18} estimated the coefficients of variation (CVs) of $\hat{D}$, $\hat{\sigma}_{palm}$ and $\hat{\gamma}$ to be $19$\%, $16$\% and $13$\%, respectively. The corresponding estimated CVs from our method are $\Sexpr{round(mle$D["cv"]*100)}$\%, $\Sexpr{round(mle$sigmarate["cv"]*100)}$\% and $\Sexpr{round(mle$gamma["cv"]*100)}$\%, respectively.
+\cite{Stevenson+al:18} estimated the coefficients of variation (CVs) of $\hat{D}$, $\hat{\sigma}_{palm}$ and $\hat{\gamma}$ to be $19$\%, $16$\% and $13$\%, respectively. The corresponding estimated CVs from the LCE method are $\Sexpr{round(mle$D["cv"]*100)}$\%, $\Sexpr{round(mle$sigmarate["cv"]*100)}$\% and $\Sexpr{round(mle$gamma["cv"]*100)}$\%, respectively.
 
 The estimates from the two methods are broadly consistent, but as we can't evaluate their relative merits on the basis of a single survey with unknown density, we investigated the performance by simulation.
 
@@ -420,7 +421,6 @@ where $p_{X_1X_2}(t)$ is as defined below \eqref{eq:p_omga} for $X_1X_2\in\{01,1
 The dark line in Figure~\ref{fig:fig_correlation_plot} shows the correlation as a function of the lag ($l$) for $\tau=110$ seconds and $\gamma$ and $\sigma$ equal to the estimates obtained in the previous section. It also shows the correlation for $\gamma\in\{0.1, 0.2,\ldots,0.9\}$ and the correlation under the assumption that animals do not move but do become unavailable by diving. 
 
 <<fig_correlation_plot, fig.env = "figure", fig.width = 6, fig.height= 4, fig.cap = "Correlation between detections by the two observes as a function of lag for mean proportions of time available \\(\\gamma=10\\%\\) (bottom black line), \\(20\\%, 30\\%, 40\\%, 50\\%, 60\\%, 70\\%, 80\\%, 90\\%\\) (top black line). The thick black line is for \\(\\gamma=73\\%\\). The grey dashed lines show the correlation under the assumption of no animal movement.", cache=TRUE>>= 
-library(twoplane)
 
 w=0.125;sigma.mult=10;tau=110; k=20
 
@@ -455,7 +455,7 @@ lines(ts,hmm.cor[1,],lty=1,col="black",lwd=2)
 
 It is apparent that increasing the lag to $\tau$ or more reduces correlation to about zero if animals do not move (grey lines), but not if they do move. In the presence of animal movement, we do need a model for availability and cannot design our way out of the problem of correlated detections by increasing lag. 
 
-Although the survey above had a lag of 248 seconds, we are primarily interested in methods for surveys with two cameras on one aircraft, and with this configuration lags of more than some tens of seconds are difficult or impossible to achieve. In light of this, and the results of Figure~\ref{fig:fig_correlation_plot}, we decided to simulate scenarios with lag $l$ equal 10, 20, 50 and 80 seconds and $\gamma$ equal to 10\%, 20\%, 50\% and 80\%. We do this for three values of $\sigma$, coresponding to mean animal speed of 1.5 m/s \citep[the value estimated by][]{Hiby+Lovell:98}, 0.95 m/s \citep[the value estimated by][]{Westgate+al:95}, and 0.65 m/s \citep[a value lower than that estimated above or by ][]{Stevenson+al:18}. In all cases we simulate with true density $D=1.24$, as estimated in the previous section, and with observer speed of 100 knots (which is around the typical speed of marine aerial surveys).
+Although the survey above had a lag of 248 seconds, we are primarily interested in methods for surveys with two cameras on one aircraft, and with this configuration and fast-moving aerial platforms, lags of more than some tens of seconds are difficult or impossible to achieve. In light of this, and the results of Figure~\ref{fig:fig_correlation_plot}, we decided to simulate scenarios with lag $l$ equal 10, 20, 50 and 80 seconds and $\gamma$ equal to 10\%, 20\%, 50\% and 80\%. We do this for three values of $\sigma$, coresponding to mean animal speed of 1.5 m/s \citep[the value estimated by][]{Hiby+Lovell:98}, 0.95 m/s \citep[the value estimated by][]{Westgate+al:95}, and 0.65 m/s \citep[a value lower than that estimated above or by ][]{Stevenson+al:18}. In all cases we simulate with true density $D=1.24$, as estimated in the previous section, and with observer speed of 100 knots (which is around the typical speed of marine aerial surveys).
 
 The three main questions of interest with our simulations are
 \begin{enumerate}
@@ -594,8 +594,14 @@ f_{T} (t)
 %\ee
 
 
-%\section{Relationship between $\sigma$ and mean animal speed}
-%\label{appx:sigmaspd}
+\section{The relationship between $\sigma_{palm}$, $\sigma$ and mean animal speed}
+\label{appx:sigmaspd}
+
+The $\sigma$ of \cite{Stevenson+al:18}, which we call $\sigma_{palm}$ here is based on the displacement of animals \textit{from the midpoint} of their two locations after time $l$ has passed, being normally distributed with mean zero variance equal to $\sigma_{palm}^2$. If we let the distance between these two locations be $d$, then $d/2\sim N(0,\sigma_{palm}^2)$ and hence $\sqrt{[d/(2\sigma_{palm})]^2}\sim\chi(1)$ and $E(d/2)=\sigma_{palm}\sqrt{2}/\Gamma(0.5)$ and $2\sigma_{palm}=E(d)*\Gamma(0.5)/\sqrt{2}$.
+
+Bownian motion with rate parameter $\sigma$ implies that $\sqrt{l}\sigma=E(d)*\Gamma(0.5)/\sqrt{2}$, hence $\sigma=2\sigma_{palm}/\sqrt{l}$.
+
+As the average speed of an animal following Brownian motion with parameter $\sigma$ for time $l$ is $E(v)=E(d)/l$, the average speed can be written in terms of $\sigma$ as $E(v)=\sigma\sqrt{2}/[\Gamma(0.5)\sqrt{l}]$.
 
 %\todo[inline]{Mostly notes to myself - should trim/remove later.}
 
