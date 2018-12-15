@@ -225,7 +225,7 @@ Each observer records binary variable $X_{ij}$, which is 1 if animal $i$ is dete
 
 It follows that $X_{ij}$ ($j=1,2$) are observations from a Markov modulated Bernoulli process (MMBP) at times $t_{i1}$ and $t_{i2}$. It is convenient to define the time at which the first observer passes animal $i$ ($t_{i1}$) to be zero, so that the time at which the second observer passes is $t_i=t_{i2}-t_{i1}$ ($t$ in the development of the previous section).
 
-It is convenient for the hidden Markov model formulation to arrange the $p_j(c)$s in a diagonal observation process matrix \citep[see][Eqn (2.13), for example]{Zucchini+al:16}. For observer $j$, this matrix is
+It is convenient for the hidden Markov model formulation to arrange the state-dependent probability mass functions of $X_{ij}$ in a diagonal matrix \citep[see][Eqn (2.13), for example]{Zucchini+al:16}. For observer $j$, this matrix is
 \be
 \bm{P}(x_{ij})\;=\;
 \begin{blockarray}{cccc}
