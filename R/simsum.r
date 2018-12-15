@@ -1,9 +1,14 @@
 
 dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=list(forward=TRUE,sideways=TRUE),
-                 fix.N=TRUE,En=NULL,Nsim=100,writeout=TRUE,seed=1,simethod="MLE",control.opt=control.opt,hessian=TRUE) {
+                 fix.N=TRUE,En=NULL,Nsim=100,writeout=TRUE,seed=1,simethod="MLE",control.opt=control.opt,
+                 hessian=TRUE,adj.mvt=FALSE,ft.normal=FALSE,sim.ft.normal=FALSE) {
 
+# Create progress bar
+  total <- Nsim
+  pb <- tkProgressBar(title=paste("Function dosim Progress (Nsim=",Nsim,")",sep=""), min=0, max=total, width=400)
+  
   dmax.t = (b-w)/planespd
-  ps = p.t(kappa,tau,p,sigmarate,k,dmax.t,planespd,w,io=movement$sideways) # capture history probabilities
+  ps = p.t(kappa,tau,p,sigmarate,k,dmax.t,planespd,w,adj.mvt=adj.mvt,io=movement$sideways) # capture history probabilities
 #  p. = sum(ps) # prob at least one observer detects
   p1 = mean((ps$ch01+ps$ch11),(ps$ch10+ps$ch11)) # mean prob single observer detects
   
@@ -40,24 +45,25 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
 #  true=list(D=D.2D,sigma=sigmarate,E1=kappa) # parameters to use in simulation
   
 # Convert from sigmarate to Ben's sigma
-  sigma = sigmarate/(sqrt(2)/sqrt(k))
+  sigmapalm = sigmarate2sigmapalm(sigmarate,k)
   
   set.seed(seed) # initialise random number sequence (for repeatability)
 #  skip=c()
   startime=date()
   for(sim in 1:Nsim) {
     if(simethod=="MLE") {
-      sdat = sim.2plane(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=movement,fix.N=fix.N)
+      sdat = sim.2plane(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=movement,fix.N=fix.N,
+                        sim.ft.normal=sim.ft.normal)
     } else if(simethod=="Palm") {
       Ntype = "RandomN"
-      palmdat <- sim.twocamera(c(D.2D=D.2D, kappa=kappa, sigma=sigma),d=L, w=w, b=b, l=k, tau=tau)
+      palmdat <- sim.twocamera(c(D.2D=D.2D, kappa=kappa, sigma=sigmapalm),d=L, w=w, b=b, l=k, tau=tau)
       sdat = Palm2mleData(palmdat$points,palmdat$sibling.list$cameras,d=L,l=k,w=w,b=b)
     } else stop("simethod must be 'MLE' or 'Palm'.")
     
     # MLE
     mlefit<-segfit(sdat,D.2D,E1=kappa,Ec=tau,sigmarate=sigmarate,planespd=planespd,p=c(1,1),
                    sigma.mult=sigma.mult,control.opt=control.opt,method="BFGS",estimate=estimate,
-                   set.parscale=TRUE,io=TRUE,Dbound=NULL,hessian=hessian)
+                   set.parscale=TRUE,io=TRUE,Dbound=NULL,hessian=hessian,adj.mvt=adj.mvt)
     if(hessian) {
       # Density
       mlests$D.se[sim]=mlefit$D["est"]
@@ -82,7 +88,7 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
     palmfit<-twoplane.fit(sdat,tau=tau,R=550,all=TRUE)
     palmests$Dhat[sim]=coef(palmfit)["D.2D"]
     palmests$kappa[sim]=coef(palmfit)["kappa"]
-    palmests$sigmarate[sim]=coef(palmfit)["sigma"]*sqrt(2)/sqrt(sdat$k) # Convert to Brownian sigmarate
+    palmests$sigmarate[sim]=sigmarate2sigmapalm(coef(palmfit)["sigma"],sdat$k) # Convert to Brownian sigmarate
     
     # Sample size statistics
     mlests$n1[sim]=length(sdat$y1)
@@ -91,7 +97,13 @@ dosim = function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),movement=lis
     palmests$n2[sim]=length(sdat$y2)
     if(simethod=="MLE") mlests$m[sim]=sdat$n11 # record number of actual duplicates
 
+    # Progress bar stuff
+    setTkProgressBar(pb, sim, label=paste( round(sim/total*100, 0),"% done"))
+    
   }  # End sim loop
+  
+  # Close progress bar
+  close(pb)
   
   results = list(mle=mlests,palm=palmests)
   dir = "./inst/results/"
@@ -127,6 +139,12 @@ harvestsim = function(fn,badcut=100) {
   pc.bias.mle = 100*(mean(sim[[1]]$D.est[!bad])-D.2D)/D.2D
   pc.cv.mle = 100*sqrt(var(sim[[1]]$D.est[!bad]))/mean(sim[[1]]$D.est[!bad])
   cover.mle = sum(sim[[1]]$D.inci[!bad])/(Nsim-nbad)
+  pc.bias.gamma = 100*(mean(sim[[1]]$gamma.est[!bad])-gamma)/gamma
+  pc.cv.gamma = 100*sqrt(var(sim[[1]]$gamma.est[!bad]))/mean(sim[[1]]$gamma.est[!bad])
+  cover.gamma = sum(sim[[1]]$gamma.inci[!bad])/(Nsim-nbad)
+  pc.bias.sigmarate = 100*(mean(sim[[1]]$sigmarate.est[!bad])-sigmarate)/sigmarate
+  pc.cv.sigmarate = 100*sqrt(var(sim[[1]]$sigmarate.est[!bad]))/mean(sim[[1]]$sigmarate.est[!bad])
+  cover.sigmarate = sum(sim[[1]]$sigmarate.inci[!bad])/(Nsim-nbad)
   
   pc.bias.palm = 100*(mean(sim[[2]]$Dhat[!bad])-D.2D)/D.2D
   pc.cv.palm = 100*sqrt(var(sim[[2]]$Dhat[!bad]))/mean(sim[[2]]$Dhat[!bad])
@@ -146,6 +164,8 @@ harvestsim = function(fn,badcut=100) {
   out = data.frame(Nsim=Nsim,gamma=gamma,k=k,speed=getspeed(sigmarate),D.2D=D.2D,
                    pc.bias.mle=pc.bias.mle,pc.cv.mle=pc.cv.mle,cover.mle=cover.mle,
                    pc.bias.palm=pc.bias.palm,pc.cv.palm=pc.cv.palm,
+                   pc.bias.gamma=pc.bias.gamma,pc.cv.gamma=pc.cv.gamma,cover.gamma=cover.gamma,
+                   pc.bias.sigmarate=pc.bias.sigmarate,pc.cv.sigmarate=pc.cv.sigmarate,cover.sigmarate=cover.sigmarate,
                    Dhat.cor=Dhat.cor,
                    n1=n1,n2=n2,m=m,
                    gamma=gamma,

@@ -16,9 +16,8 @@ kappa <- 80
 #sigma <- gamma(0.5)*sqrt(((0.95*l/1000)^2)/2)/2
 #sigmarate = sigma*sqrt(2)/sqrt(k)
 sigma_palm = 0.13 # estimated Palm-type sigma (in km) from porpoise data, with lag 248 seconds
-# Calcluate Brownian sigmarate consistent with this displacement sigma over 248 seconds:
-# Variance of Palm-type movement is half that of LCE-type movement, and Brownian variance is proportional to lag
 sigmarate = sigma_palm*2/sqrt(248) # Brownian sigmarate consistent with sigma_palm
+sigma = sigmarate*sqrt(k)
 animalspd = getspeed(sigmarate,248)*1000 # in m/s
 planespd/(animalspd/1000) # How much faster plane is going than average animal speed
 #speed2sigmarate(.95/1000,248) # Bownian motion parameter that gives the observed speed over 248 seconds
@@ -50,7 +49,7 @@ mletmvt = system.time(testmlemvt <- dosim(D.2D,L,w,b,sigmarate,k,planespd,kappa,
 harvestsim(testmlemvt$file)
 
 
-sigmarates = c(0.65, 0.95, 1.5)/1000
+sigmarates = c(0.5, 0.95, 1.5)/1000
 kappas = c(0.2, 0.5, 0.8)*tau
 ks = c(10, 20, 50, 80)
 

@@ -1,5 +1,5 @@
 sim.2plane=function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),
-                    movement=list(forward=TRUE,sideways=TRUE),fix.N=FALSE){
+                    movement=list(forward=TRUE,sideways=TRUE),fix.N=FALSE,sim.ft.normal=TRUE){
   
   if(!movement$sideways) b = w
   E.N = D.2D * 2*b*L
@@ -14,7 +14,7 @@ sim.2plane=function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),
 #  b=sigma.mult*sigmarate*sqrt(k) # max dist apart (in km) observations could be considered duplicates; 
   # Also width of buffer around strip.
   # Brownian mvt has sd of sigmarate*sqrt(time passed)
-  tb=b/planespd   # max time apart (in seconds) observations could be considered duplicates
+  tb=b/planespd   # half-width of buffered stip, in plane seconds
 
   tL=L/planespd # transect length, in plane seconds
   tw=w/planespd # half-width of searched stip, in plane seconds
@@ -23,7 +23,8 @@ sim.2plane=function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),
   l=sort(runif(NumSimAnimals,0,tL)) # generate animal locations along line (in plane seconds)
   lhoriz=runif(NumSimAnimals,-tb,tb)  #  Place animals uniformly in buffered strip.
   if(movement$forward) {
-    simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) - k # deviation from lag of k
+    if(sim.ft.normal) simt = rnorm(NumSimAnimals,mean=0,sd=sqrt(k)*sigmarate/planespd)
+    else simt = rft(NumSimAnimals,k,planespd,log(sigmarate)) - k # deviation from lag of k
   } else { # no forward movement
     simt=rep(0,NumSimAnimals)
   }
@@ -69,6 +70,11 @@ sim.2plane=function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),
   x2 = sh2*planespd
   y1 = s1*planespd
   y2 = s2*planespd
+  # convert from times to distances
+  ally1 = l*planespd
+  ally2 = l2*planespd
+  allx1 = lhoriz*planespd
+  allx2 = l2horiz*planespd
   # mark duplicates:
   d1=which(is.element(sno1,dno))
   d2=which(is.element(sno2,dno))
@@ -81,10 +87,12 @@ sim.2plane=function(D.2D,L,w,b,sigmarate,k,planespd,kappa,tau,p=c(1,1),
   sim.D=NumSimAnimals/sim.area
   
   simdat=list(s1=s1,s2=s2,sh1=sh1,sh2=sh2,x1=x1,x2=x2,y1=y1,y2=y2,tL=tL,tw=tw,tb=tb,k=k,L=L,w=w,b=b,
-              sno1=sno1,sno2=sno2,d1=d1,d2=d2,n1=n1,n2=n2,n11=m,n=n1+n2-m,alls1=l,allsh1=lhoriz,alls2=l2,allsh2=l2horiz,dups=dups,
-              sim.t.area=sim.t.area,sim.t.D=sim.t.D,sim.area=sim.area,sim.D=sim.D,
+              sno1=sno1,sno2=sno2,d1=d1,d2=d2,n1=n1,n2=n2,n11=m,n=n1+n2-m,
+              alls1=l,allsh1=lhoriz,alls2=l2,allsh2=l2horiz,ally1=ally1,ally2=ally2,allx1=allx1,allx2=allx2,
+              dups=dups,sim.t.area=sim.t.area,sim.t.D=sim.t.D,sim.area=sim.area,sim.D=sim.D,
               p.01.2=p.01.2,p.11.2=p.11.2
-              ,see.1=see.1, see.2=see.2)
+              ,see.1=see.1, see.2=see.2,
+              dy=simt*planespd,dx=simthoriz*planespd)
   class(simdat)=c("sim2plane",class(simdat))
   return(simdat)
 }

@@ -75,14 +75,15 @@ rft = function(n,k,spd,theta3,prop.mult=1.5) {
 #'  vector,for animals available according to Markov process and allowed to move 
 #'  in and out of searched strip according to Brownian motion. 
 #'  
-#' @param t The time bewtween 2 observers passing
+#' @param t The time(s) bewtween 2 observers passing
 #' @param idbn The initial state distribution.
 #' If no movement assumed (\code{IO} is NULL), this is  (p(up), p(down));
 #' If movement is assumed, it is  (p(in & up), p(out & up), p(in & down), p(out & down)).
 #' @param p1 Probability that obs 1 detects animal that is available and in searched strip
 #' @param p2 Probability that obs 2 detects animal that is available and in searched strip
 #' @param Qmat Transition intensity matrix for up-down Markov process
-#' @param IO The in-out transition probability matrix.
+#' @param IO The in-out transition probability matrix. Must either be 2x2 or 2x2xlength(t), 
+#' with IO[,,i] being the in-out transition probability matrix for time t[i].
 #' 
 #' @examples 
 p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
@@ -102,13 +103,25 @@ p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
       P2=diag(c(p2,0))
       for(i in 1:nt) p[i]=idbn%*%P1%*%expm(t[i]*Qmat)%*%P2%*%c(1,1)
     }else stop(paste("Invalid omega:",omega))
-  } else {
+  } else { # Here if you have an IO transition pobability matrix
     d = c(omega%/%10,omega%%10)
     P1 = diag(c(p1^d[1]*(1-p1)^(1-d[1]),rep((1-d[1]),3)))
     P2 = diag(c(p2^d[2]*(1-p2)^(1-d[2]),rep((1-d[2]),3)))
-    for(i in 1:nt) {
-      TPM = kronecker(expm(t[i]*Qmat),IO)
-      p[i]=idbn%*%P1%*%TPM%*%P2%*%rep(1,4)
+    if(length(dim(IO))==2) { # here if have only one TPM matrix
+      # warning("You have multiple times but only one IO transition probability matrix.")
+      for(i in 1:nt) {
+        TPM = kronecker(expm(t[i]*Qmat),IO)
+        p[i]=idbn%*%P1%*%TPM%*%P2%*%rep(1,4)
+      }
+    } else {
+      if(length(dim(IO))==3) {
+        for(i in 1:nt) {
+          TPM = kronecker(expm(t[i]*Qmat),IO[,,i]) # Use ith IO transition probability matrix
+          p[i]=idbn%*%P1%*%TPM%*%P2%*%rep(1,4)
+        }
+        } else {
+        stop("Your IO transition probability matrix has to be 2D or 3D (wih appropriate dimension lengths).")
+      }
     }
   }
   return(round(p,10))
@@ -131,16 +144,27 @@ p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
 #' @param dmax.t maximum distance can move (in plane-seconds)
 #' @param planespd speed observers move along transect
 #' @param halfw.dist half-width of searched strip
-#' @param adj.norm if TRUE, uses correct mvt dbn (Brownian hitting time) in place of normal (not yet impelmented).
+#' @param adj.mvt if TRUE, uses Brownian hitting time PDF to average over in-out TPMs.
+#' @param nts number of integration points for averaging over in-out TPMs.
+#' @param ft.norm if TRUE uses normal to approximate Brownian hitting times, else 
+#' uses exact expression for Brownian hitting times.
 #' 
 #' @examples 
-p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.norm=FALSE,io=TRUE,idbn=NULL) {
+p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.mvt=FALSE,io=TRUE,
+               idbn=NULL,nts=200,ft.norm=TRUE) {
   Qmat=matrix(c(-1/E1,1/(Ec-E1),1/E1,-1/(Ec-E1)),nrow=2)
   # deal with in-out movement:
 #  TPM = make.inout.tpm(sigma=sigmarate*sqrt(k)*planespd,dmax=dmax.t*planespd,w=halfw.dist) # in-out transition probability matrix
   if(io) {
     if(is.null(halfw.dist)) stop("Need halfw.dist if io=TRUE.")
-    TPM = make.inout.tpm(sigma=sigmarate*sqrt(k),dmax=dmax.t*planespd,w=halfw.dist) # in-out transition probability matrix
+    if(adj.mvt) {
+      ts = seq(k-dmax.t,k+dmax.t,length=nts) # integration points
+      dts = diff(ts)
+      dts = c(dts[1]/2,dts[2:(nts-1)],dts[nts-1]/2)
+      TPM = make.inout.tpm.array(sigma=sigmarate*sqrt(ts),dmax=dmax.t*planespd,w=halfw.dist) # array with multiple in-out transition probability matrices
+    } else {
+      TPM = make.inout.tpm(sigma=sigmarate*sqrt(k),dmax=dmax.t*planespd,w=halfw.dist) # in-out transition probability matrix
+    }
     p.in = halfw.dist/(halfw.dist+dmax.t*planespd) # unconditional probability is in strip, given within dmax.t*planespd of strip
     if(!is.null(idbn)) {
       if(length(idbn)!=4) stop ("idbn must be of length 4")
@@ -155,8 +179,16 @@ p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.norm=FALS
       idbn = c((E1/Ec),(1-(E1/Ec)))
     }
   }
-  if(adj.norm) {
-    stop("Not yet added movement with adj.norm option.")
+  if(adj.mvt & io) {
+    if(ft.norm) {
+      p01.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=01,TPM)*dnorm(ts,mean=k,sd=sqrt(k)*sigmarate/planespd)*dts)
+      p10.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=10,TPM)*dnorm(ts,mean=k,sd=sqrt(k)*sigmarate/planespd)*dts)
+      p11.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=11,TPM)*dnorm(ts,mean=k,sd=sqrt(k)*sigmarate/planespd)*dts)
+    } else {
+      p01.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=01,TPM)*dft(ts,k,planespd,log(sigmarate))*dts)
+      p10.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=10,TPM)*dft(ts,k,planespd,log(sigmarate))*dts)
+      p11.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=11,TPM)*dft(ts,k,planespd,log(sigmarate))*dts)
+    }
   } else {
     p01.k=p.omega.t(k,idbn,p[1],p[2],Qmat,omega=01,TPM)
     p10.k=p.omega.t(k,idbn,p[1],p[2],Qmat,omega=10,TPM)
@@ -359,6 +391,28 @@ make.inout.tpm=function(sigma,dmax,w,nx=500){
   colnames(inout)=row.names(inout)=c("in","out")
   return(inout)
 }
+
+
+# *************
+make.inout.tpm.array=function(sigma,dmax,w,nx=500){
+  ntpms = length(sigma)
+  inout = array(rep(NA,4*ntpms),dim=c(2,2,ntpms),
+                dimnames=list(c("in","out"),c("in","out"),as.character(1:ntpms)))
+  for(i in 1:ntpms) {
+    if(sigma[i]==0) {
+      inout[,,i] = diag(c(1,1))  
+    } else {
+      inout[,,i]=matrix(c(
+        p.i2i(sigma[i],dmax,w,nx),
+        p.o2i(sigma[i],dmax,w,nx),
+        p.i2o(sigma[i],dmax,w,nx),
+        p.o2o(sigma[i],dmax,w,nx)
+      ),ncol=2)
+    }
+  }
+  return(inout)
+}
+
 
 
 
