@@ -2,10 +2,11 @@
 % Please edit documentation in R/pomega.r
 \name{p.t}
 \alias{p.t}
-\title{Calculates the observable capture histories}
+\title{Calculates the probabilitis of the observable capture histories}
 \usage{
 p.t(E1, Ec, p, sigmarate, k, dmax.t, planespd, halfw.dist = NULL,
-  adj.norm = FALSE, io = TRUE, idbn = NULL)
+  adj.mvt = FALSE, io = TRUE, idbn = NULL, nts = 200,
+  ft.norm = TRUE)
 }
 \arguments{
 \item{E1}{expected time available per dive cycle}
@@ -24,10 +25,15 @@ p.t(E1, Ec, p, sigmarate, k, dmax.t, planespd, halfw.dist = NULL,
 
 \item{halfw.dist}{half-width of searched strip}
 
-\item{adj.norm}{if TRUE, uses correct mvt dbn (Brownian hitting time) in place of normal (not yet impelmented).}
+\item{adj.mvt}{if TRUE, uses Brownian hitting time PDF to average over in-out TPMs.}
+
+\item{nts}{number of integration points for averaging over in-out TPMs.}
+
+\item{ft.norm}{if TRUE uses normal to approximate Brownian hitting times, else 
+uses exact expression for Brownian hitting times.}
 }
 \description{
-Calculates the three observable capture histories for animals available 
+Calculates the probabilitis of the three observable capture histories for animals available 
  according to Markov process and allowed to move in and out of searched
  strip according to Brownian motion.
 }

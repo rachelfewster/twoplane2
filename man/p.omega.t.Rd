@@ -2,12 +2,12 @@
 % Please edit documentation in R/pomega.r
 \name{p.omega.t}
 \alias{p.omega.t}
-\title{Calculates an observable capture histories}
+\title{Calculates observable capture histories}
 \usage{
 p.omega.t(t, idbn, p1, p2, Qmat, omega, IO = NULL)
 }
 \arguments{
-\item{t}{The time bewtween 2 observers passing}
+\item{t}{The time(s) bewtween 2 observers passing}
 
 \item{idbn}{The initial state distribution.
 If no movement assumed (\code{IO} is NULL), this is  (p(up), p(down));
@@ -19,7 +19,8 @@ If movement is assumed, it is  (p(in & up), p(out & up), p(in & down), p(out & d
 
 \item{Qmat}{Transition intensity matrix for up-down Markov process}
 
-\item{IO}{The in-out transition probability matrix.}
+\item{IO}{The in-out transition probability matrix. Must either be 2x2 or 2x2xlength(t), 
+with IO[,,i] being the in-out transition probability matrix for time t[i].}
 }
 \description{
 Calculates an observable capture history \code{omega}, given an initial state
