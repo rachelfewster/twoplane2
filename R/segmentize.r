@@ -45,3 +45,17 @@ segmentplot = function(dat,planespd,cutstretch=1) {
   barplot(table(pair))
   
 }
+
+
+numinsegment = function(n1,n2=n1) {
+  if(n1<n2) {
+    temp = n1
+    n1 = n2
+    n2 = n1
+  }
+  nn = 1
+  for(m in 1:n2) {
+    nn = nn + choose(n2,m)*exp(lgamma(n1+1)-lgamma(n1-m+1))
+  }
+  return(nn)
+}
