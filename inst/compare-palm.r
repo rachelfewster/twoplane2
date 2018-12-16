@@ -19,13 +19,16 @@ planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
 sigma=0.15*2/sqrt(248)   #  sigma from Ben's paper * sqrt(2).
 b = 2
-sigma.mult = (b-sdat$w)/sigma
+w = 0.125
+sigma.mult = (b-w)/sigma
 
 # Convert data to format required by segfit:
 sdat = Palm2mleData(porpoise.data$points,porpoise.data$cameras,porpoise.data$d,porpoise.data$l,porpoise.data$w,b)
 
 # Look at numbers within segments:
+pdf(h=4,w=8,file="./inst/results/porpoise_pairingdbn.pdf")
 segmentplot(sdat,planespd)
+dev.off()
 
 control.opt=list(trace=0,maxit=1000)
 estimate=c("D","sigma","E1") # parameters to estimate
