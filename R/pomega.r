@@ -146,12 +146,12 @@ p.omega.t=function(t,idbn,p1,p2,Qmat,omega,IO=NULL){
 #' @param halfw.dist half-width of searched strip
 #' @param adj.mvt if TRUE, uses Brownian hitting time PDF to average over in-out TPMs.
 #' @param nts number of integration points for averaging over in-out TPMs.
-#' @param ft.norm if TRUE uses normal to approximate Brownian hitting times, else 
+#' @param ft.normal if TRUE uses normal to approximate Brownian hitting times, else 
 #' uses exact expression for Brownian hitting times.
 #' 
 #' @examples 
 p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.mvt=FALSE,io=TRUE,
-               idbn=NULL,nts=200,ft.norm=TRUE) {
+               idbn=NULL,nts=200,ft.normal=TRUE) {
   Qmat=matrix(c(-1/E1,1/(Ec-E1),1/E1,-1/(Ec-E1)),nrow=2)
   # deal with in-out movement:
 #  TPM = make.inout.tpm(sigma=sigmarate*sqrt(k)*planespd,dmax=dmax.t*planespd,w=halfw.dist) # in-out transition probability matrix
@@ -180,7 +180,7 @@ p.t = function(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist=NULL,adj.mvt=FALSE
     }
   }
   if(adj.mvt & io) {
-    if(ft.norm) {
+    if(ft.normal) {
       p01.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=01,TPM)*dnorm(ts,mean=k,sd=sqrt(k)*sigmarate/planespd)*dts)
       p10.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=10,TPM)*dnorm(ts,mean=k,sd=sqrt(k)*sigmarate/planespd)*dts)
       p11.k=sum(p.omega.t(ts,idbn,p[1],p[2],Qmat,omega=11,TPM)*dnorm(ts,mean=k,sd=sqrt(k)*sigmarate/planespd)*dts)

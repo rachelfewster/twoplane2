@@ -46,7 +46,7 @@ segmentplot = function(dat,planespd,cutstretch=1) {
   
 }
 
-
+# Copy of nch; forgot I wrote nch and rewrote it here; need to tidy up!
 numinsegment = function(n1,n2=n1) {
   if(n1<n2) {
     temp = n1
@@ -59,3 +59,23 @@ numinsegment = function(n1,n2=n1) {
   }
   return(nn)
 }
+
+#' @title Calculates number of possible capture histories
+#'
+#' @description
+#'  Calculates number of possible capture histories, given the number of 
+#'  detections by each observer.
+#'  
+#' @param n1 The number of observer 1 detections.
+#' @param n2 The number of observer 2 detections.
+nch = function(n1,n2=n1) {
+  n = 1
+  nbig = n1; nsmall = n2
+  if(n2>n1) {nbig=n2; nsmall=n1}
+  for(m in 1:nsmall) {
+    n = n + choose(nsmall,m) * exp(lgamma(nbig+1)-lgamma(nbig-m+1))
+  }
+  return(n)
+}
+
+
