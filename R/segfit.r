@@ -1,7 +1,7 @@
 
 segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.opt=NULL,
                 method="BFGS",estimate=c("D","sigma","E1"),set.parscale=TRUE,
-                io=TRUE,Dbound=NULL,hessian=TRUE,adj.mvt=TRUE,ft.norm=FALSE,cutstretch=1,krtest=FALSE) {
+                io=TRUE,Dbound=NULL,hessian=TRUE,adj.mvt=TRUE,ft.normal=FALSE,cutstretch=1,krtest=FALSE) {
   
   require(car) # Needed for delta method se and cv of gamma
   
@@ -24,7 +24,7 @@ segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.
   
   fit=segfit.cpp(D=D.line.t,E1=E1,sigmarate=sigmarate,tw=tw,tb=tb,s1=s1,s2=s2,tL=tL,planespd=planespd,k=k,
                  p1=p[1],p2=p[2],Ec=Ec,hessian=hessian,control.opt=control.opt,method=method,estimate=estimate,
-                 set.parscale-set.parscale,Dbound=Dbound,io=io,adj.mvt=adj.mvt,ft.norm=ft.norm,cutstretch=cutstretch)
+                 set.parscale-set.parscale,Dbound=Dbound,io=io,adj.mvt=adj.mvt,ft.normal=ft.normal,cutstretch=cutstretch)
 
   Dhat=fit$D/(2*dat$b*planespd)
   tau=fit$mu_c
@@ -70,7 +70,7 @@ segfit=function(dat,D.2D,E1,Ec,sigmarate,planespd,p=c(1,1),sigma.mult=5,control.
 
 
 segfit.cpp=function(D,E1,sigmarate,tw,tb,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=FALSE,control.opt=NULL,method="BFGS",
-                    estimate=c("D","E1","sigma"),set.parscale=TRUE,Dbound=NULL,io=FALSE,adj.mvt=FALSE,ft.norm=FALSE,
+                    estimate=c("D","E1","sigma"),set.parscale=TRUE,Dbound=NULL,io=FALSE,adj.mvt=FALSE,ft.normal=FALSE,
                     cutstretch=1)
   #-------------------------------------------------------------------------------
   # Just calls optim to maximise function rcpp_compute_likelihood() with respect 
@@ -156,11 +156,11 @@ segfit.cpp=function(D,E1,sigmarate,tw,tb,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=FA
     optout=optim(par=theta,fn=segnegllik.cpp.mix.io,s1=s1,s2=s2,dmax.t=dmax.t,p1=p1,p2=p2,k=k,planespd=planespd,theta_1=theta_1,
                  theta_2=theta_2,theta_3=theta_3,theta_4=theta_4,cuts=cuts,estimate=estimate,tw=tw,
                  control=control.opt,method="Brent",lower=log(D)-1,upper=log(D)+1,hessian=hessian,adj.mvt=adj.mvt,io=io,
-                 ft.norm=ft.norm)
+                 ft.normal=ft.normal)
   } else {
     optout=optim(par=theta,fn=segnegllik.cpp.mix.io,s1=s1,s2=s2,dmax.t=dmax.t,p1=p1,p2=p2,k=k,planespd=planespd,theta_1=theta_1,
                  theta_2=theta_2,theta_3=theta_3,theta_4=theta_4,cuts=cuts,estimate=estimate,tw=tw,
-                 control=control.opt,method=method,hessian=hessian,adj.mvt=adj.mvt,io=io,ft.norm=ft.norm)
+                 control=control.opt,method=method,hessian=hessian,adj.mvt=adj.mvt,io=io,ft.normal=ft.normal)
   }
   
   # convert parameters to natural scale and save:
@@ -206,7 +206,7 @@ segfit.cpp=function(D,E1,sigmarate,tw,tb,s1,s2,tL,planespd,k,p1,p2,Ec,hessian=FA
 
 
 segnegllik.cpp.mix.io=function(theta,s1,s2,dmax.t,p1,p2,k,planespd,adj.mvt=FALSE,
-                               theta_1,theta_2,theta_3,theta_4,cuts,estimate,tw=0,io=TRUE,ft.norm=FALSE) {
+                               theta_1,theta_2,theta_3,theta_4,cuts,estimate,tw=0,io=TRUE,ft.normal=FALSE) {
   #-----------------------------------------------------------------------------------------
   # This is segnegllik.cpp.mix modified to deal with in-out movement
   # tw is strip half-width in observer-seconds
@@ -287,7 +287,7 @@ segnegllik.cpp.mix.io=function(theta,s1,s2,dmax.t,p1,p2,k,planespd,adj.mvt=FALSE
   } else {
     # get capture history probabilities:
     p=c(p1, p2)
-    ps = p.t(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist,adj.mvt,io,ft.norm=ft.norm)
+    ps = p.t(E1,Ec,p,sigmarate,k,dmax.t,planespd,halfw.dist,adj.mvt,io,ft.normal=ft.normal)
     p10.k = ps$ch10
     p01.k = ps$ch01
     p11.k = ps$ch11
