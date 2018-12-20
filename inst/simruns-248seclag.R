@@ -3,7 +3,7 @@ library(palm)
 library(tcltk2) # for progress bar
 
 nm2km=1.852 # multiplier to convert nautical miles to kilometres
-planeknots=100 # observer speed in knots   CHECK THIS
+planeknots=100 # observer speed in knots   
 planespd=planeknots*nm2km/(60^2) # observer speed in km/sec
 
 D = D.2D <- 1.05
