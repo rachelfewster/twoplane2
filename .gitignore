@@ -2,3 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+/inst/cache/*
+*.tex
+*.fff
+*.log
+*.gz
+*.ttt
+*.bbl
+*.bak
