@@ -349,7 +349,7 @@ We use constraint programming methods (see Section~\ref{sec:constrprog}) to effi
 
 \subsection{Subdivision of $\bm{s}$}
 
-We subdivide $\bm{s}$ by ``cutting'' the transect line immediately after detections by observer $j$ for which the distance to the next detection by the othr observer is greater than a maximum possible distance that an animal could have moved between the two observers passing over it ($d_{max}$). This distance $d_{max}$ must be decided by the user in the light of knowledge of the target species' movement speed and behaviour. Users can investigate what $d_{max}$ is reasonable by doing inference at a range of plausible values to find where estimates become insensitive to $d_{max}$. The cost of setting $d_{max}$ too large is in computational speed; the cost of setting $d_{max}$ too small is positive bias in estimation of $D$ since too small a $d_{max}$ will result in some animals with true capture history (11) being assigned capture history (01) or (10).
+We subdivide $\bm{s}$ by ``cutting'' the transect line immediately after detections by observer $j$ for which the distance to the next detection by the other observer is greater than a maximum possible distance that an animal could have moved between the two observers passing over it ($d_{max}$). This distance $d_{max}$ must be decided by the user in the light of knowledge of the target species' movement speed and behaviour. Users can investigate what $d_{max}$ is reasonable by doing inference at a range of plausible values to find where estimates become insensitive to $d_{max}$. The cost of setting $d_{max}$ too large is in computational speed; the cost of setting $d_{max}$ too small is positive bias in estimation of $D$ since too small a $d_{max}$ will result in some animals with true capture history (11) being assigned capture history (01) or (10).
 
 Having divided the transect line into $C$ segments, we enumerate the possible pairings $\bm{\omega}^{(m_c)}$ for segments $c=1,\ldots,C$ (with $M_c$ possible pairings in segment $c$) and calculate the likelihood as 
 \be
@@ -368,7 +368,7 @@ Two detections by different observers may be paired iff the distance between the
 
 Suppose we have two sets, \(s_1=\{i,j\}\) and \(s_2=\{u,v\}\), where \(s_1 \cap s_2 \ne \emptyset\), \(i\) may be paired with \(j\), and \(u\) may be paired with \(v\). The two sets cannot both be paired simultaneously because they share an observation. In all such cases we add the constraint \(c_{i,j}=0 \vee c_{u,v}=0\) to prevent both sets being paired simultaneously. 
 
-We use a backtracking search procedure with forward checking~\cite[Chapter 6]{russell-norvig-aima3} to enumerate all solutions to the CSP. The set of solutions to the CSP correspond one-to-one to the set of valid pairings within the segment. When a solution is found, the part of the likelihood pertaining to that pairing is calculated, avoiding the need to store the set of pairings and allowing efficient calculation of \(\sum_{m_c=1}^{M_c}\mathcal{L}(\bm{\theta};\bm{s}|\bm{\omega}^{(m_c)})\).
+We use a backtracking search procedure with forward checking~\cite[Chapter 6]{russell-norvig-aima3} to enumerate all solutions to the CSP. The set of solutions to the CSP correspond one-to-one to the set of valid pairings within the segment. When a solution is found, the part of the likelihood pertaining to that pairing is calculated, avoiding the need to store the set of pairings and allowing efficient calculation of \(\sum_{m_c=1}^{M_c}\mathcal{L}(\bm{\theta};\bm{s},\bm{\omega}^{(m_c)})\).
 
 
 \subsection{Interval estimation}
@@ -397,7 +397,7 @@ The estimates from the two methods are broadly consistent; the LCE method estima
 
 \section{Simulation study \label{sec:sim}}
 
-If $X_{i1}$ and $X_{i2}$ were independent, we could estimate detection probability and density without concerning ourselves with an availability model. In this case, if $p_1=p_2=1$, then the estimated detection probability from MRDS or two-sample mark-recapture methods is an estimate of the probability that an animal is available, and if $p_j<1$ $j=1,2$ then the estimated detection probability is an estimate of the product of the probability that an animal is available and $p_j$. 
+If $X_{i1}$ and $X_{i2}$ were independent, we could estimate detection probability and density without concerning ourselves with an availability model. In this case, if $p_1=p_2=1$, then the estimated detection probability from MRDS or two-sample mark-recapture methods is an estimate of the probability that an animal is available, and if $p_j<1$ ($j=1,2$) then the estimated detection probability is an estimate of the product of the probability that an animal is available and $p_j$. 
 
 With lags close to zero, $X_{i1}$ and $X_{i2}$ are highly correlated because animals available to one observer are almost certain to be available to the other. As lag increases, we expect this correlation to decrease and so a pertinant question is whether dependence can be removed by choosing a suitably long lag. To investigate this we look at the correlation betwen $X_{i1}$ and $X_{i2}$ as a function of lag. We consider a range of $\gamma$s, from 0.1 to 0.9, and lags from 0 to $248$ seconds.
 
