@@ -271,7 +271,7 @@ where $n_{\omega}$ is the number of individuals with capture history $\omega$.
 
 In the case of $\omega=(11)$, if we knew the capture history we would know the time $t_{(11)i}$ between the two observers passing the $i$th animal with capture history $(11)$, for $i=1,\ldots,n_{(11)}$. (We do not observe these for capture histories (01) and (10).) The pdf for the $i$th of these is the conditional pdf of time between passing, given that the capture history is $(11)$. This is
 \be
-f_{T|11}(t_{(11)i},\omega_i=11)&=&\frac{f_{T}(t_{(11)i})p_{11}(t_{(11)i})}{\tilde{p}_{11}}.
+f_{T|11}(t_{(11)i}\mid\omega_i=11)&=&\frac{f_{T}(t_{(11)i})p_{11}(t_{(11)i})}{\tilde{p}_{11}}.
 \ee
 %\noindent
 %where $p_{11}(k+\delta_{(11)_i}|X_{i1}(0)=1)$ and $\tilde{p}_{11}(k|X_{i1}(0)=1)$ are 
