@@ -175,10 +175,11 @@ The survey involves two observers searching a distance $w$ either side of the li
 
 We assume that $Y(0)\sim U(-b,b)$, independently for all animals. With this assumpiton and the above movement model for $Y(t)$, the probability $\mathbb{P}(Z(t)=0 \mid Z(0)=1)$, that an animal moves from inside the searched strip to outside it in an interval $t$, and the probability $\mathbb{P}(Z(t)=1\mid Z(0)=0)$, that it moves from outside the searched strip to inside it, are 
 
+\todo[inline]{RMF: corrected lower integral limit in eqn 4 from -w to 0; also added curly brackets and re-ordered eqn 5 to remove the double negatives. I've already made these changes, this comment indicates what I did.}
 \be
-p_{IO}(t)=\mathbb{P}(Z(t)=0 \mid Z(0)=1)&=&\frac{1}{w}\int_{-w}^w\Phi(y-w;\sigma^2t)+\Phi(-y-w;\sigma^2t)dy
+p_{IO}(t)=\mathbb{P}(Z(t)=0 \mid Z(0)=1)&=&\frac{1}{w}\int_{0}^w \left\{ \Phi(y-w;\sigma^2t)+\Phi(-y-w;\sigma^2t)\right\} dy
 \label{eq:p_{IO}}\\
-p_{OI}(t)=\mathbb{P}(Z(t)=1 \mid Z(0)=0)&=&\frac{1}{b-w}\int_w^{b}\Phi(w-y;\sigma^2t)-\Phi(-y-w;\sigma^2t)dy 
+p_{OI}(t)=\mathbb{P}(Z(t)=1 \mid Z(0)=0)&=&\frac{1}{b-w}\int_w^{b} \left\{ \Phi(y+w;\sigma^2t)-\Phi(y-w;\sigma^2t) \right\} dy 
 \label{eq:p_{OI}}
 \ee
 %\todo[inline]{Lifted from old notes without checking -- needs checking.}
