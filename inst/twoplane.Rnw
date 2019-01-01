@@ -113,6 +113,7 @@ The LCE method is similar to that of \cite{Hiby+Lovell:98}, which suffers from t
 
 Two observers move along a transect line at speed $v$, one behind the other separated by a time $l$ and distance $vl$, searching a strip of half-width $w$. Animals may move between the time that the first and second observers pass overhead. \todo[inline]{Intro is heavy on observers=cameras and both on the same UAV, so I've added a not to explain more general terminology here:} We use the general term `observers' and develop the model for lags $l$ of any size, although we anticipate that the most likely application case is where the two observers are cameras mounted on the same UAV. 
 
+\todo[inline]{Could we cut the bit about the extensions in 2.1 (from "This model is consistent" to "do not consider them further here")? It uses up prime real estate with something that's not obviously very useful. If we cut it, we could change the section structure to: 2.1 Forward movement; 2.2 Transverse movement and in/out availability; 2.3 Diving behavior and up/down availability; 2.4 State space formulation. This way we wouldn't separate "movement" from "availability" in different subsections. Any good?}
 
 \subsection{The movement model}
 
