@@ -600,7 +600,7 @@ The encounter time for observer 2 is therefore $T=\inf\{t: vt/\sigma + B_t = vl/
 f_{T} (t) = \frac{ a \exp \Big\{ \frac{- (a-ct)^2}{2t} \Big\} }{\sqrt{2 \pi t^3}}\,.
 \end{equation}
 \noindent
-Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which the animal may be encountered by observer 2: 
+Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which the animal's forward coordinate equals that of observer 2: 
 \be
 f_{T} (t)
 &=&
