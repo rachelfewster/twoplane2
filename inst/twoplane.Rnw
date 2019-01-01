@@ -584,10 +584,10 @@ We anticipate that the framework provided by the LCE and CCR methods may facilit
 \appendix
 %\appendixpage
 
-\section{Derivation of $f_{T}(t)$}
+\section{A: Derivation of $f_{T}(t)$}
 \label{appx:firstpassage}
 
-We model the animal's position at time $t$ as $\sigma W_t$, where $W_t$ represents Brownian motion. We model observer 2's position at time $t$ as $-vl+vt$ When the two positions coincide, then
+Consider an animal encountered by observer 1 at time 0 and forward coordinate 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time $t$ at which observer 2 encounters the animal therefore satisfies
 \be
 -vl+vt&=&\sigma W_t \nonumber \\
 \Rightarrow \frac{vl}{\sigma}&=&\frac{vt}{\sigma} - W_t \nonumber \\
