@@ -587,23 +587,23 @@ We anticipate that the framework provided by the LCE and CCR methods may facilit
 \section{A: Derivation of $f_{T}(t)$}
 \label{appx:firstpassage}
 
-Consider an animal encountered by observer 1 at time 0 and forward coordinate 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time $t$ at which observer 2 encounters the animal therefore satisfies
+\todo[inline]{RMF - I've made several edits to tidy up the derivation here.}
+Define the time and forward coordinate at which observer 1 encounters an animal to be 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time at which observer 2 encounters the animal is therefore the minimum $t$ such that
 \be
 -vl+vt&=&\sigma W_t \nonumber \\
-\Rightarrow \;\;\;\frac{vl}{\sigma}&=&\frac{vt}{\sigma} - W_t \nonumber \\[5pt]
-&=&\frac{vt}{\sigma}+B_t\,,
+\Rightarrow \;\;\;\frac{vt}{\sigma} - W_t &=& \frac{vl}{\sigma}\,.
 \ee
 \noindent
-where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$, where $B_t$ represents Brownian motion without drift. The first passage time to location $a$ is the random variable $T=\inf\{t: X_t=a\}$, and has probability density function
+Observer 2 therefore encounters the animal at time $T=\inf\{t: vt/\sigma + B_t = vl/\sigma\}$, where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$. The random variable $T=\inf\{t: X_t=a\}$ is the first passage time to location $a$, which has probability density function
 \begin{equation}
 f_{T} (t) = \frac{ a \exp \Big\{ \frac{- (a-ct)^2}{2t} \Big\} }{\sqrt{2 \pi t^3}}\,.
 \end{equation}
 \noindent
-Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $t$ at which the animal is encountered by observer 2: 
+Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which the animal is encountered by observer 2: 
 \be
 f_{T} (t)
 &=&
-\frac{vl \exp \Big\{ \frac{- v^2(l-t)^2}{2\sigma^2t} \Big\} }{\sqrt{2 \pi\sigma^2 t^3}}.
+\frac{vl \exp \Big\{ \frac{- v^2(l-t)^2}{2\sigma^2t} \Big\} }{\sqrt{2 \pi\sigma^2 t^3}}\,.
 \ee
 
 %\todo[inline]{Note to self: need to simplify this - see Rachel's suggestions.}
@@ -627,7 +627,7 @@ f_{T} (t)
 %\ee
 
 
-\section{The relationship between $\sigma_{palm}$, $\sigma$ and mean animal speed}
+\section{B: The relationship between $\sigma_{palm}$, $\sigma$ and mean animal speed}
 \label{appx:sigmaspd}
 
 The $\sigma$ of \cite{Stevenson+al:18}, which we call $\sigma_{palm}$ here, is based on the displacement of animals \textit{from the midpoint} of their two locations after time $l$ has passed, being normally distributed with mean zero variance equal to $\sigma_{palm}^2$. If we let the signed distance between the first and second location be $Y$, then $Y/2\sim N(0,\sigma_{palm}^2)$ and hence $\sqrt{[Y/(2\sigma_{palm})]^2}=|Y|/(2\sigma_{palm})\sim\chi(1)$. Using the fact that the expected value of a $\chi(1)$ random variable is $\sqrt{2}/\Gamma(0.5)$, we have that $E(|Y|/[2\sigma_{palm}])=\sqrt{2}/\Gamma(0.5)$ and hence $2\sigma_{palm}=E(|Y|)\Gamma(0.5)/\sqrt{2}$.
