@@ -111,7 +111,7 @@ The LCE method is similar to that of \cite{Hiby+Lovell:98}, which suffers from t
 
 \section{The model\label{sec:genmod}}
 
-Two observers move along a transect line, one behind the other moving at $v$ m/s, separated by a time $l$ and distance $vl$, searching a strip of half-width $w$. Animals may move between the time that the first and second observers pass them. 
+Two observers move along a transect line at speed $v$, one behind the other separated by a time $l$ and distance $vl$, searching a strip of half-width $w$. Animals may move between the time that the first and second observers pass overhead. \todo[inline]{Intro is heavy on observers=cameras and both on the same UAV, so I've added a not to explain more general terminology here:} We use the general term `observers' and develop the model for lags $l$ of any size, although we anticipate that the most likely application case is where the two observers are cameras mounted on the same UAV. 
 
 
 \subsection{The movement model}
@@ -588,18 +588,18 @@ We anticipate that the framework provided by the LCE and CCR methods may facilit
 \label{appx:firstpassage}
 
 \todo[inline]{RMF - I've made several edits to tidy up the derivation here.}
-Define the time and forward coordinate at which observer 1 encounters an animal to be 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time at which observer 2 encounters the animal is therefore the minimum $t$ such that
+Define the time and forward coordinate at which observer 1 encounters an animal to be 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time at which observer 2 may encounter the animal is therefore the minimum $t$ such that
 \be
 -vl+vt&=&\sigma W_t \nonumber \\
 \Rightarrow \;\;\;\frac{vt}{\sigma} - W_t &=& \frac{vl}{\sigma}\,.
 \ee
 \noindent
-Observer 2 therefore encounters the animal at time $T=\inf\{t: vt/\sigma + B_t = vl/\sigma\}$, where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$. The random variable $T=\inf\{t: X_t=a\}$ is the first passage time to location $a$, which has probability density function
+The encounter time for observer 2 is therefore $T=\inf\{t: vt/\sigma + B_t = vl/\sigma\}$, where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$. The random variable $T=\inf\{t: X_t=a\}$ is the first passage time to location $a$, which has probability density function
 \begin{equation}
 f_{T} (t) = \frac{ a \exp \Big\{ \frac{- (a-ct)^2}{2t} \Big\} }{\sqrt{2 \pi t^3}}\,.
 \end{equation}
 \noindent
-Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which the animal is encountered by observer 2: 
+Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which the animal may be encountered by observer 2: 
 \be
 f_{T} (t)
 &=&
