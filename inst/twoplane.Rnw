@@ -590,16 +590,16 @@ We anticipate that the framework provided by the LCE and CCR methods may facilit
 Consider an animal encountered by observer 1 at time 0 and forward coordinate 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time $t$ at which observer 2 encounters the animal therefore satisfies
 \be
 -vl+vt&=&\sigma W_t \nonumber \\
-\Rightarrow \frac{vl}{\sigma}&=&\frac{vt}{\sigma} - W_t \nonumber \\
-&=&\frac{vl}{\sigma}+B_t\;\;\;\mbox{(where $B_t=-W_t$ is also Bownian motion)},
+\Rightarrow \;\;\;\frac{vl}{\sigma}&=&\frac{vt}{\sigma} - W_t \nonumber \\[5pt]
+&=&\frac{vt}{\sigma}+B_t\,,
 \ee
 \noindent
- and using the result that for a particle following Brownian motion with drift parameter $c$, such that its location $X_t$ at time $t$ is given by $X_t=ct+B_t$ where $B_t$ represents Brownian motion without drift, the PDF of $T=\inf\{t: X_t=a\}$ (the time to reach a location $a$ from the particle's initial location) is 
+where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$, where $B_t$ represents Brownian motion without drift. The first passage time to location $a$ is the random variable $T=\inf\{t: X_t=a\}$, and has probability density function
 \begin{equation}
-f_{T} (t) = \frac{ a \exp \Big\{ \frac{- (a-ct)^2}{2t} \Big\} }{\sqrt{2 \pi t^3}},
+f_{T} (t) = \frac{ a \exp \Big\{ \frac{- (a-ct)^2}{2t} \Big\} }{\sqrt{2 \pi t^3}}\,.
 \end{equation}
 \noindent
-we obtain the required result:
+Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $t$ at which the animal is encountered by observer 2: 
 \be
 f_{T} (t)
 &=&
