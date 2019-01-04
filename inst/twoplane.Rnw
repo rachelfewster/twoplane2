@@ -1,4 +1,3 @@
-
 \documentclass[useAMS, usenatbib, referee]{biom}
 \usepackage{appendix, subfigure}
 \usepackage{framed}
@@ -92,9 +91,9 @@ Animals are within detectable range of an observer on an aircraft for only a sho
 
 Conventional line transect methods assume that the probability of detecting an animal that is at distance zero from the transect line (``$g(0)$'' in distance sampling parlance) is 1. Failure of this assumption is referred to as the ``$g(0)<1$'' problem. ``Mark-recapture distance sampling'' (MRDS) methods \cite[see][for an overview]{Burt+al:14} are commonly used to deal with this problem. MRDS covers a variety of capture-recapture methods, in which two independently searching observers constitute two ``capture occasions'' and animals detected by both constitute ``recaptures.'' 
 
-MRDS methods on aerial surveys suffer from the fact that two observers on the same aircraft search the same patch of sea at the same time so that animals tend to be available or unavailable to both observers at the same time. This induces positive correlation in the detection events between the observers, and negative bias in density estimates. %(For those familiar with capture-recapture models, you can think of the availability state of an animal as an individual-level latent variable: when there is unmodelled individual heterogeneity on capture-recapture surveys, density estimates are biased.) 
+MRDS methods on aerial surveys suffer from the fact that two observers on the same aircraft search the same patch of sea at the same time so that animals tend to be available or unavailable to both observers at the same time. This induces positive correlation in the detection events between the observers, and negative bias in density estimates. %(For those familiar with capture-recapture models, you can think of the availability state of an animal as an individual-level latent variable: when there is unmodeled individual heterogeneity on capture-recapture surveys, density estimates are biased.) 
 
-There are two ways in which this problem has been dealt with. The first is to model the latent process, i.e., the availability process. For example, \cite{Borchers+al:13} modelled latent availability using a hidden Markov model, while \cite{Langrock+al:13} and \cite{Borchers+Langrock:15}  modelled it using Markov modulated Poisson processes. The second way is to separate the times that the two observers search the same region, either by having one observer search far ahead of the aircraft and the other close to it, or by using two aircraft in tandem, or having a single aircraft circle back over its path a second time \citep[see][]{Hiby+Lovell:98}.
+There are two ways in which this problem has been dealt with. The first is to model the latent process, i.e., the availability process. For example, \cite{Borchers+al:13} modeled latent availability using a hidden Markov model, while \cite{Langrock+al:13} and \cite{Borchers+Langrock:15}  modeled it using Markov modulated Poisson processes. The second way is to separate the times that the two observers search the same region, either by having one observer search far ahead of the aircraft and the other close to it, or by using two aircraft in tandem, or having a single aircraft circle back over its path a second time \citep[see][]{Hiby+Lovell:98}.
 
 However, separating the observers in this way has a cost: it introduces uncertainty into capture histories (see below), and may introduce correlation in detections due to movement in and out of the observers' field of view (see below).
 
@@ -104,30 +103,34 @@ The greater the time separation between observers, the more severe is the proble
 
 Separating UAV ``observers'' (cameras) by using UAVs in tandem or circling back on themselves is much less feasible than doing the same with human observers on aircraft. This is because field conditions are typically such that it is not possible for the aircraft doing the second pass to follow exactly the path of the aircraft doing the first pass. When observer field of view is around 2,000m wide (as is not unusual with human observers), having a second pass that deviates by 200m from the path of the first pass still leaves considerable overlap between the regions surveyed by each observer. It would leave no overlap at all for UAVs with a field of view 200m wide. 
 
-We seek a method for surveys using a single UAV carrying two cameras. This limits the extent to which the two observers can be separated in time and requires that we deal with dependence between detections resulting from cameras passing in quick succession. We develop a method that does not require capture histories to be assigned to individuals and deals with dependence by modelling the availability process. 
+We seek a method for surveys using a single UAV carrying two cameras. This limits the extent to which the two observers can be separated in time and requires that we deal with dependence between detections resulting from cameras passing in quick succession. We develop a method that does not require capture histories to be assigned to individuals and deals with dependence by modeling the availability process. 
 
 The method we develop (which we will refer to as the ``Latent Capture history Enumeration'' method, or LCE method for short) is similar to that of \cite{Stevenson+al:18} in that it has the same data requirements and does not require capture histories. It differs in that we do inference by maximum likelihood rather than using an approximation to the likelihood. Unlike the method of \cite{Stevenson+al:18}, the LCE method becomes computationally infeasible when there are very many plausible pairings of detections by different observers. %(The number of possible pairings of $n$ detections is given by the Bell number \citep{Becker+Riordan:48}, which grows extremely quickly as $n$ increases; for example, it is 877 for $n=7$ and 115,975 for $n=10$.) 
 The LCE method is similar to that of \cite{Hiby+Lovell:98}, which suffers from the same computational restriction. We investigate its utility for aerial UAV surveys and compare it to the method of \cite{Stevenson+al:18}. 
 
-\section{The model\label{sec:genmod}}
+\section{Models for movement and availability\label{sec:genmod}}
 
-Two observers move along a transect line at speed $v$, one behind the other separated by a time $l$ and distance $vl$, searching a strip of half-width $w$. Animals may move between the time that the first and second observers pass overhead. \todo[inline]{RMF - Intro is heavy on observers=cameras mounted on the same UAV, so I've added a note to explain the more general terminology used here:} We use the general term `observers' and develop the model for lags $l$ of any size, although we anticipate that the most likely application case is where the two observers are cameras mounted on the same UAV. 
+\todo[inline]{RMF - subsection structure edited and various small edits throughout this section}
 
-\todo[inline]{RMF - Could we cut the bit about the extensions in 2.1 (from "This model is consistent" to "do not consider them further here")? It uses up prime real estate with something that's not obviously very useful. If we cut it, we could change the section structure to: 2.1 Forward movement; 2.2 Transverse movement and in/out availability; 2.3 Diving behavior and up/down availability; 2.4 State space formulation. This way we wouldn't separate "movement" from "availability" in different subsections. Any good?}
+Two observers move along a transect line, one behind the other, searching a strip of half-width $w$. The observers move at constant speed $v$ and are separated by a time-lag $l$ and distance $vl$. We use the general term `observers' and develop the model for lags $l$ of any size, although we anticipate that the two observers are most likely to be two cameras mounted on the same UAV. 
 
-\subsection{The movement model}
+We use two coordinates for location: the forward coordinate along the transect line, and the transverse coordinate perpendicular to the line. We say that an observer `passes over' an animal at the instant that their forward coordinates coincide, regardless of the animal's transverse coordinate at that instant. We assume that observer speed exceeds animal speed, so the time at which each observer passes over each animal is well-defined.
 
-We model animal movement in time $t$, as a bivariate normal distribution with mean $(0,0)$ and variance $\Sigma(t)=\sigma^2t\bm{I}$, where $\bm{I}$ is a $2\times 2$ identity matrix. This model is consistent with Brownian motion and it is extendable. For example, it is straightforward to introduce preferential movement in either direction along some axis by replacing the zero off-diagonal elements of $\bm{I}$ with a correlation parameter $\rho$, or to introduce directionality via drift in the mean ($\mu t$ after time $t$). Both these things require additional parameters to be estimated and we do not consider them further here.
+Animals may move between the passage of the first and second observers. We model animal movement as a Brownian motion, such that the animal's displacement over time $t$ follows a bivariate normal distribution with mean $(0,0)$ and variance $\bm{\Sigma}(t)=\sigma^2t\bm{I}$, where $\bm{I}$ is the $2\times 2$ identity matrix. 
 
-\subsubsection{Forward movement}
 
-In Appendix~\ref{appx:firstpassage} we show that when the two observers are moving at a speed $v$ separated by time lag $l$, and animals are moving as above, the pdf of the time between the first and second observers encounter an animal ($T$), is 
+\subsection{Forward movement}
+\todo[inline]{RMF - how to get the appendix labels correct? I would give up and do it manually.}
+
+For a given animal, the time elapsed between the passage of the first and second observers overhead is a random variable $T$. We show in Appendix~\ref{appx:firstpassage} that $T$ has probability density function (PDF)
 \be
 %f_Y(y)&=&\frac{f_B(y;\sigma^2t)}{\int_{-\infty}^{\infty}f_B\left(\frac{uy}{t};\sigma^2u\right)du}
 f_{T}(t)&=&\frac{vl\exp\left\{-\frac{v^2(l-t)^2}{2\sigma^2t}\right\}}{\sqrt{2\pi\sigma^2t^3}}.
 \ee
 
-The animal will have moved a forward distance $v(t-l)$ in this time, with negative distance being movement in the opposite direction to that of the observers, and positive distance being in the same direction.
+For $T=t$, the animal's forward displacement between the passage of the two observers is $v(t-l)$, and the PDF of its forward displacement is $\phi\big(v(t-l)\,; \sigma^2 t\big)$, where $\phi(\cdot\,; \sigma^2t)$ is the normal density with mean 0 and variance $\sigma^2t$.
+
+\todo[inline]{RMF - added PDF to the forward displacement above. If this isn't used in the likelihood, both sentences after (1) can be removed. Presumably transverse displacement isn't used in the likelihood, since it isn't used for in/out availability. See comment (**) later.}
 
 %It follows that the distance $y=vt$ that the animal has moved in the forward direction when the second observer passes it is 
 %\be
@@ -135,60 +138,28 @@ The animal will have moved a forward distance $v(t-l)$ in this time, with negati
 %\ee
 
 
-\subsection{Availability models}
+\subsection{Transverse movement and in/out availability}
 
-There are two reasons that animals that are within the survey strip at some point between the passing of the first and second observers may not be available for detection. The first is that they are invisible to the observers because they are diving. The second is that they are invisible because they are not within the strip at the time they are passed. We construct models for each of these processes below. 
+\todo[inline]{RMF - changed from $Y(0)$, $Y(t)$ to $Y_0$, $Y_t$ for conciseness / convention. Also corrected $Y_t-Y_0 \sim N(0, \sigma^2t)$.}
 
-\subsubsection{The up/down availability model}
+The survey design involves two observers detecting animals within a strip of width $w$ either side of the line. As animals may move into or out of the detection zone between the passage of the two observers, we consider the survey area to constitute a wider strip of width $b>w$ either side of the line, where the buffer $b$ is chosen such that there is negligibly small probability that animals beyond $b$ at the passage of the first observer will be within the searched strip $w$ at the passage of the second. The buffered strip of width $2b$ therefore covers all animals that may be exposed to detection.
 
-We assume animals' unavailability due to diving is governed by a two-state continuous-time Markov process with transition intensity matrix parameters such that the time in state 1 (the near-surface state) is an exponential random variable with expected value $\kappa$, and the time in state 2 (the diving state) is an exponential random variable with expected value $\tau-\kappa$, where $\tau$ is the expected dive cycle duration:
+Let $Y_0$ be the signed distance of an animal to the right of the transect line when the first observer passes overhead, and let $Y_t$ be its distance to the right time $t$ later. We assume that $Y_0\sim U(-b,b)$, independently for all animals. Our movement model implies that $Y_t-Y_0\sim N(0,\sigma^2t)$. 
 
-The Markov transition rate matrix $\bm{Q}$ is
+For each animal within the buffered strip $b$ at the passage of the first observer, let the binary random variable $Z_t$ be 1 if the animal is within the detection zone of width $w$ at time $t$, and 0 otherwise. Thus $Z_t$ describes the animal's in/out availability for detection at time $t$. The probability $\mathbb{P}(Z_t=0 \mid Z_0=1)$ that an animal moves from inside to outside the detection zone during time $t$, and the probability $\mathbb{P}(Z_t=1\mid Z_0=0)$ that it moves from outside to inside the detection zone, are 
+
+\todo[inline]{RMF: corrected lower integral limit in eqn 4 from -w to 0; also added curly brackets and re-ordered eqn 5 to remove the double negatives.}
 \be
-\bm{Q}&=&
-\left(
-\begin{array}{cc}
--\frac{1}{\kappa} & \frac{1}{\kappa} \\
-\frac{1}{\tau-\kappa} & -\frac{1}{\tau-\kappa}
-\end{array}
-\right)
-\label{eq:Q}
-\ee
-\noindent
-from which it follows that the stationary distribution of the Markov chain, which gives the long-term proportion of time in each state, is 
-\begin{eqnarray}
-\underline{\pi}
-&=&
-%\left(\frac{q_{22}}{q_{22}+q_{11}},\frac{q_{11}}{q_{11}+q_{22}}\right)
-%\;=\;
-\left(\gamma,(1-\gamma)\right).
-\end{eqnarray}
-\noindent
-where $\gamma=\frac{\kappa}{\tau}$.
-
-The transition probability matrix for transitions between states at time separation $t$ is $\bm{U}(t)=\exp(\bm{Q}t)$.
-
-
-\subsubsection{The in/out availability model}
-
-
-The survey involves two observers searching a distance $w$ either side of the line. Let $Y(0)$ be the (signed) distance of an animal to the right of the transect line at the time the first observer passes it and $Y(t)$ be its distance from the line $t$ seconds later. Our movement model implies that $Y(t)-Y(0)\sim N(Y(0),\sigma^2t)$. As animals may move into or out of the searched strip in the time $t$, we consider a strip of half-with $b>w$, such that there is zero, or neglibly small probability that an animal outside this strip when the first observer passes, moves to within $w$ of the transect in the time between the two observers passing the animal. For each animal that is within $b$ of the transect when observer 1 passes it, we define the binary random variable $Z(t)$ to be 1 if the animal is within $w$ of the transect at time $t$ after the first observer passes it, and is zero otherwise. 
-
-We assume that $Y(0)\sim U(-b,b)$, independently for all animals. With this assumpiton and the above movement model for $Y(t)$, the probability $\mathbb{P}(Z(t)=0 \mid Z(0)=1)$, that an animal moves from inside the searched strip to outside it in an interval $t$, and the probability $\mathbb{P}(Z(t)=1\mid Z(0)=0)$, that it moves from outside the searched strip to inside it, are 
-
-\todo[inline]{RMF: corrected lower integral limit in eqn 4 from -w to 0; also added curly brackets and re-ordered eqn 5 to remove the double negatives. I've already made these changes, this comment indicates what I did.}
-\be
-p_{IO}(t)=\mathbb{P}(Z(t)=0 \mid Z(0)=1)&=&\frac{1}{w}\int_{0}^w \left\{ \Phi(y-w;\sigma^2t)+\Phi(-y-w;\sigma^2t)\right\} dy
+p_{IO}(t)=\mathbb{P}(Z_t=0 \mid Z_0=1)&=&\frac{1}{w}\int_{0}^w \left\{ \Phi(y-w;\sigma^2t)+\Phi(-y-w;\sigma^2t)\right\} dy
 \label{eq:p_{IO}}\\
-p_{OI}(t)=\mathbb{P}(Z(t)=1 \mid Z(0)=0)&=&\frac{1}{b-w}\int_w^{b} \left\{ \Phi(y+w;\sigma^2t)-\Phi(y-w;\sigma^2t) \right\} dy 
+p_{OI}(t)=\mathbb{P}(Z_t=1 \mid Z_0=0)&=&\frac{1}{b-w}\int_w^{b} \left\{ \Phi(y+w;\sigma^2t)-\Phi(y-w;\sigma^2t) \right\} dy 
 \label{eq:p_{OI}}
 \ee
 %\todo[inline]{Lifted from old notes without checking -- needs checking.}
 \noindent
 where $\Phi(\cdot;\sigma^2t)$ is the cumulative distribution function of a normal random variable with mean zero and variance $\sigma^2t$.
 
-We model the movement in and out of the survey strip as a two-state Markov process in which the transition probabilities at time $t$ after being passed by the first observer are given by Eqns~\eqref{eq:p_{IO}} and \eqref{eq:p_{OI}}:
-
+We model in/out availability as a two-state Markov process with transition probabilities over an interval of time $t$ given by Eqns~\eqref{eq:p_{IO}} and \eqref{eq:p_{OI}}:
 \be
 \bm{M}(t)&=&
 \left(
@@ -196,30 +167,57 @@ We model the movement in and out of the survey strip as a two-state Markov proce
 1-p_{IO}(t) & p_{IO}(t) \\
 p_{OI}(t) & 1-p_{OI}(t)
 \end{array}
-\right)
+\right)\,.
 \label{eq:M}
 \ee
+The stationary distribution of the in/out Markov chain, which gives the long-term proportion of time spent in each state, is $(w/b, \;1-w/b)$.
 
-\subsubsection{The combined availability model}
 
-The possibility of being in the survey strip or outside it and on the surface or below it, gives rise to four states that animals can occupy: (up and in), (up and out), (down and in) and (down and out), which we now number 1 to 4 in that order. Assuming that being up or down is independent of being in or out, transitions between these states at a time separation $t$ is governed by the transition probability matrix $\bm{\Gamma}(t)=\bm{U}(t)\otimes\bm{M}(t)$.
+%%%RMF - delete this?
+%%%There are two reasons that animals that are within the survey strip at some point between the passing of the first and second observers may not be available for detection. The first is that they are invisible to the observers because they are diving. The second is that they are invisible because they are not within the strip at the time they are passed. We construct models for each of these processes below. 
+%%%
+
+\subsection{Diving behavior and up/down availability}
+
+We model animal diving behavior using a two-state continuous-time Markov chain such that the time spent in state 1 (the near-surface state) is an exponential random variable with expected value $\kappa$, and the time spent in state 2 (the diving state) is an exponential random variable with expected value $\tau-\kappa$, where $\tau$ is the expected dive cycle duration. The Markov transition rate matrix $\bm{Q}$ is
+\be
+\bm{Q}&=&
+\left(
+\begin{array}{cc}
+-\frac{1}{\kappa} & \frac{1}{\kappa} \\
+\frac{1}{\tau-\kappa} & -\frac{1}{\tau-\kappa}
+\end{array}
+\right) \,.
+\label{eq:Q}
+\ee
+\noindent
+The transition probability matrix for transitions between up/down states at time separation $t$ is $\bm{U}(t)=\exp(\bm{Q}t)$. The stationary distribution of the Markov chain is $(\gamma, \:1-\gamma)$, where $\gamma=\kappa/\tau$.
+
+\todo[inline]{RMF - put the stationary distribution $\bm{\pi}$ inline, and we don't need a notation for it.}
+
+\subsection{Combined availability model}
+
+\todo[inline]{RMF - need to explain why you're using this matrix formulation. I guess it's computationally efficient for the detection model? I added a possible explanation.}
+
+The possibilities of being in or out of the detection zone, and up or down with respect to diving, generate four states that animals can occupy: (up and in), (up and out), (down and in), and (down and out). We number the states 1 to 4 in that order. Assuming that the up/down state is independent of the in/out state, the matrix of transition probabilities between these states at time separation $t$ is the Kronecker product $\bm{\Gamma}(t)=\bm{U}(t)\otimes\bm{M}(t)$. Using a matrix formulation for $\bm{\Gamma}(t)$ provides a computationally efficient way of dealing with the hidden states 2, 3, and 4.
 
 %To obtain the initial state distribution, we consider a ``buffer'' of width $b\sigma T$ either side of the searched strip (of width $W$). We choose $b$ such that there is zero, or close to zero, probability of an animal beyond this buffer moving into the survey strip in a time $T$, and we choose $T$ such that there is zero, or nearly zero, probability of the time between observers passing an animal being greater than $T$.
 
-Assuming uniform animal distribution with respect to the transect line at the time that the first observer passes animals, the probability that an animal that is within $b$ of the line, is in the searched strip is $w/b$. Combined with the stationary distribution $\pi$, this gives the following stationary distribution for $\bm{\Gamma}(t)$:
+
+The stationary distribution for the four-state Markov process is
 \be
-\bm{\delta}&=&\left(
+\bm{\delta}&=&\Bigg(
 \gamma\frac{w}{b},\;
-\gamma\left[1-\frac{w}{b}\right],\;
-\left[1-\gamma\right]\frac{w}{b},\;
-\left[1-\gamma\right]\left[1-\frac{w}{b}\right]
-\right).
+\gamma\left(1-\frac{w}{b}\right),\;
+\left(1-\gamma\right)\frac{w}{b},\;
+\left(1-\gamma\right)\left(1-\frac{w}{b}\right)
+\Bigg).
 \label{eq:delta}
 \ee
 
 
 
-\section{A Markov modulated Bernoulli process model}
+\section{Detection model}
 
 We assume that the probability that an animal is in each state at the time the first observer passes over it is given by the stationary distribution $\bm{\delta}$, and hence that its state distribution after a waiting time $t$, when the second observer passes it, is $\bm{\delta}\bm{\Gamma}(t)$. 
 
@@ -271,6 +269,7 @@ f(\bm{s}_{\omega})&=&\left[\prod_{i=1}^{n_{\omega}}\tilde{p}_{\omega} D(s_{\omeg
 \noindent
 where $n_{\omega}$ is the number of individuals with capture history $\omega$.
 
+\todo[inline]{RMF (**) - is it correct that the distance travelled between the two captures isn't included in the likelihood?}
 In the case of $\omega=(11)$, if we knew the capture history we would know the time $t_{(11)i}$ between the two observers passing the $i$th animal with capture history $(11)$, for $i=1,\ldots,n_{(11)}$. (We do not observe these for capture histories (01) and (10).) The pdf for the $i$th of these is the conditional pdf of time between passing, given that the capture history is $(11)$. This is
 \be
 f_{T|11}(t_{(11)i}\mid\omega_i=11)&=&\frac{f_{T}(t_{(11)i})p_{11}(t_{(11)i})}{\tilde{p}_{11}}.
@@ -324,9 +323,9 @@ The model has four kinds of parameters:
 
 \textbf{Movement parameters}: The movement model has one parameter, $\sigma$, which we model using a log link: $\sigma=e^\phi$.
 
-\textbf{Detection parameters}: Assuming that animals are only detectable when in state $c=1$ (up,in), we have two Bernoulli parameters to model: $p_1(1)$ and  $p_2(1)$. These can be modelled using logit link functions and if the observers are identical digital detectors it may be reasonable to assume these two probabilities are identical, i.e. $p_1(1)=p_2(1)=p=e^\beta/(1+e^\beta)$.
+\textbf{Detection parameters}: Assuming that animals are only detectable when in state $c=1$ (up,in), we have two Bernoulli parameters to model: $p_1(1)$ and  $p_2(1)$. These can be modeled using logit link functions and if the observers are identical digital detectors it may be reasonable to assume these two probabilities are identical, i.e. $p_1(1)=p_2(1)=p=e^\beta/(1+e^\beta)$.
 
-As is the case with density parameters, the other three kinds of parameters can be modelled as functions of suitable covariates by replacing the relevant scalar parameter on the link scale with a suitable linear predictor involving the covariates.
+As is the case with density parameters, the other three kinds of parameters can be modeled as functions of suitable covariates by replacing the relevant scalar parameter on the link scale with a suitable linear predictor involving the covariates.
 
 We focus on the constant density model in the rest of this paper. With no covariates, it has five parameters, which we write as $\bm{\theta}^*=(\theta,\alpha_\gamma,\alpha_\tau, \phi, \beta)$. \cite{Stevenson+al:18} show that not all of these parameters are identifiable. They assume that $p=e^\beta/(1+e^\beta)=1$, and we do the same. This is reasonable for digital aerial surveys conducted in low sea states if we define the near-surface state to be ``at or breaking the surface'' (a state that is easily observed). The field of view of a digital camera is such that objects towards the periphery of the image are as easily detected as objects in the centre of the image so that a detection function of the sort used on line transect surveys, i.e., one that drops off with distance from the line, is not needed. 
 
@@ -351,7 +350,7 @@ We use constraint programming methods (see Section~\ref{sec:constrprog}) to effi
 
 \subsection{Subdivision of $\bm{s}$}
 
-We subdivide $\bm{s}$ by ``cutting'' the transect line immediately after detections by observer $j$ for which the distance to the next detection by the other observer is greater than a maximum possible distance that an animal could have moved between the two observers passing over it ($d_{max}$). This distance $d_{max}$ must be decided by the user in the light of knowledge of the target species' movement speed and behaviour. Users can investigate what $d_{max}$ is reasonable by doing inference at a range of plausible values to find where estimates become insensitive to $d_{max}$. The cost of setting $d_{max}$ too large is in computational speed; the cost of setting $d_{max}$ too small is positive bias in estimation of $D$ since too small a $d_{max}$ will result in some animals with true capture history (11) being assigned capture history (01) or (10).
+We subdivide $\bm{s}$ by ``cutting'' the transect line immediately after detections by observer $j$ for which the distance to the next detection by the other observer is greater than a maximum possible distance that an animal could have moved between the two observers passing over it ($d_{max}$). This distance $d_{max}$ must be decided by the user in the light of knowledge of the target species' movement speed and behavior. Users can investigate what $d_{max}$ is reasonable by doing inference at a range of plausible values to find where estimates become insensitive to $d_{max}$. The cost of setting $d_{max}$ too large is in computational speed; the cost of setting $d_{max}$ too small is positive bias in estimation of $D$ since too small a $d_{max}$ will result in some animals with true capture history (11) being assigned capture history (01) or (10).
 
 Having divided the transect line into $C$ segments, we enumerate the possible pairings $\bm{\omega}^{(m_c)}$ for segments $c=1,\ldots,C$ (with $M_c$ possible pairings in segment $c$) and calculate the likelihood as 
 \be
@@ -581,26 +580,25 @@ As was shown by \cite{Stevenson+al:18}, it is not possible to estimate all param
 We anticipate that the framework provided by the LCE and CCR methods may facilitate substantial reduction in the cost of processing double-observer data by allowing the estimation process to be automated. To do this, we need only an adequate automatic identifier of the species in question in the video stream from each ``observer'' separately -- we do not need recaptures to be identified. If false negatives affect only the availability process (e.g. remove animals underwater and partially visible), the only cost of using a strict identification criterion in order to avoid false positives, is reduced sample size. If, however, false negatives affect the detection process (e.g. remove some individuals because although they were as available as possible, a wave broke over them as the observer passed) then the assumption of $p=1$ may be violated and bias may ensue if lag between observers is short. Surveying at different lags may allow estimation of $p$ (in additon to $D$, $\sigma$ and $\kappa$) so that it will likely be possible to automate inference from digital surveys by using automated object identification criteria that are sufficiently strict so as to reduce the probability of false positives to virtually zero, providing that the survey involves effort and detections at more than one lag. 
 
 
-
 \appendix
 %\appendixpage
 
-\section{A: Derivation of $f_{T}(t)$}
+\section{A. Derivation of $f_{T}(t)$}
 \label{appx:firstpassage}
 
 \todo[inline]{RMF - I've made several edits to tidy up the derivation here.}
-Define the time and forward coordinate at which observer 1 encounters an animal to be 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time at which observer 2 may encounter the animal is therefore the minimum $t$ such that
+Define the time and forward coordinate at which observer 1 passes over an animal to be 0. The animal's forward coordinate at time $t$ is $\sigma W_t$, where $W_t$ is a one-dimensional Brownian motion. The forward coordinate of observer 2 at time $t$ is $-vl+vt$. The time at which observer 2 passes over the animal is therefore the minimum $t$ such that
 \be
 -vl+vt&=&\sigma W_t \nonumber \\
 \Rightarrow \;\;\;\frac{vt}{\sigma} - W_t &=& \frac{vl}{\sigma}\,.
 \ee
 \noindent
-The encounter time for observer 2 is therefore $T=\inf\{t: vt/\sigma + B_t = vl/\sigma\}$, where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$. The random variable $T=\inf\{t: X_t=a\}$ is the first passage time to location $a$, which has probability density function
+The passage time for observer 2 is therefore $T=\inf\{t: vt/\sigma + B_t = vl/\sigma\}$, where $B_t=-W_t$ is also a Brownian motion. We now use the following standard result for the first passage time of a Brownian motion with drift. Suppose a particle follows Brownian motion with drift parameter $c$, such that its location at time $t$ is $X_t=ct+B_t$. The random variable $T=\inf\{t: X_t=a\}$ is the first passage time to location $a$, which has probability density function
 \begin{equation}
 f_{T} (t) = \frac{ a \exp \Big\{ \frac{- (a-ct)^2}{2t} \Big\} }{\sqrt{2 \pi t^3}}\,.
 \end{equation}
 \noindent
-Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which the animal's forward coordinate equals that of observer 2: 
+Substituting $c=v/\sigma$ and $a=vl/\sigma$, we obtain the probability density of the time $T$ at which observer 2 passes over the animal: 
 \be
 f_{T} (t)
 &=&
@@ -628,7 +626,7 @@ f_{T} (t)
 %\ee
 
 
-\section{B: The relationship between $\sigma_{palm}$, $\sigma$ and mean animal speed}
+\section{B. The relationship between $\sigma_{palm}$, $\sigma$ and mean animal speed}
 \label{appx:sigmaspd}
 
 The $\sigma$ of \cite{Stevenson+al:18}, which we call $\sigma_{palm}$ here, is based on the displacement of animals \textit{from the midpoint} of their two locations after time $l$ has passed, being normally distributed with mean zero variance equal to $\sigma_{palm}^2$. If we let the signed distance between the first and second location be $Y$, then $Y/2\sim N(0,\sigma_{palm}^2)$ and hence $\sqrt{[Y/(2\sigma_{palm})]^2}=|Y|/(2\sigma_{palm})\sim\chi(1)$. Using the fact that the expected value of a $\chi(1)$ random variable is $\sqrt{2}/\Gamma(0.5)$, we have that $E(|Y|/[2\sigma_{palm}])=\sqrt{2}/\Gamma(0.5)$ and hence $2\sigma_{palm}=E(|Y|)\Gamma(0.5)/\sqrt{2}$.
@@ -639,9 +637,9 @@ As the average speed of an animal over a period of $l$ seconds is $E(v)=E(|Y|)/l
 
 %\todo[inline]{Mostly notes to myself - should trim/remove later.}
 
-%We're considering 1-dimensional movement here. Let $X(t)$ be the location of the animal relative to its starting position after time $t$. Then, assuming it starts at $X(0)=0$, $X(t)\sim N(0,\sigma^2 t)$ and $Z(t)=X(t)/(\sigma\sqrt{t})\sim N(0,1)$. Let $U(t)=\sqrt{Z(t)^2}$. Then\footnote{See \texttt{https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable}} $U(t)\sim\chi(1)$. And since the expected value of a $\chi(n)$ random variable is $\sqrt{2}\Gamma((n-1)/2)/\Gamma(1/2)$, $E[U(t)]=\sqrt{2}\Gamma(1)/\Gamma(1/2)=0.7978846$. 
+%We're considering 1-dimensional movement here. Let $X(t)$ be the location of the animal relative to its starting position after time $t$. Then, assuming it starts at $X(0)=0$, $X(t)\sim N(0,\sigma^2 t)$ and $Z_t=X(t)/(\sigma\sqrt{t})\sim N(0,1)$. Let $U(t)=\sqrt{Z_t^2}$. Then\footnote{See \texttt{https://math.stackexchange.com/questions/1059938/whats-the-expectation-of-square-root-of-chi-square-variable}} $U(t)\sim\chi(1)$. And since the expected value of a $\chi(n)$ random variable is $\sqrt{2}\Gamma((n-1)/2)/\Gamma(1/2)$, $E[U(t)]=\sqrt{2}\Gamma(1)/\Gamma(1/2)=0.7978846$. 
 
-%Let  $v(t)=\sqrt{X(t)^2}/t$ be the speed of movement away from the initial postion, at time $t$. then $E(v(t))=E(\sqrt{X(t)^2}/t)=E(\sqrt{Z(t)^2}\sigma\sqrt{t}/t)$$=0.7978846\times\sigma/\sqrt{t}$. If we want to model Brownian animal movement in which animals have an average speed of $v(t)$ at time $t$, we need $\sigma=v(t)\sqrt{t}/0.7978846$. For example, to model animal movement with average speed of 0.95m/s, as in \cite{Stevenson+al:18}, at time $t$, we require $\sigma=0.95/0.7978846\sqrt{t}$ m/s, or $0.95/797.8846\approx 0.00119\sqrt{t}$ km/s. With a lag of 248 seconds, this is $\sigma\approx 0.00119\sqrt{248}=0.01874$ km/s, while with a lag of 20 seconds it is $\sigma\approx 0.00119\sqrt{20}=0.00532$ km/s.
+%Let  $v(t)=\sqrt{X(t)^2}/t$ be the speed of movement away from the initial postion, at time $t$. then $E(v(t))=E(\sqrt{X(t)^2}/t)=E(\sqrt{Z_t^2}\sigma\sqrt{t}/t)$$=0.7978846\times\sigma/\sqrt{t}$. If we want to model Brownian animal movement in which animals have an average speed of $v(t)$ at time $t$, we need $\sigma=v(t)\sqrt{t}/0.7978846$. For example, to model animal movement with average speed of 0.95m/s, as in \cite{Stevenson+al:18}, at time $t$, we require $\sigma=0.95/0.7978846\sqrt{t}$ m/s, or $0.95/797.8846\approx 0.00119\sqrt{t}$ km/s. With a lag of 248 seconds, this is $\sigma\approx 0.00119\sqrt{248}=0.01874$ km/s, while with a lag of 20 seconds it is $\sigma\approx 0.00119\sqrt{20}=0.00532$ km/s.
 
 %This seems a weird way of calculating $\sigma$, because we would like $\sigma$ to be a property of the animals, and not depend on the time lag is between the first and second observers passing over them! It would be better to assume that the standard deviation of $X(t)$ is proportional to $t$, so that $X(t)\sim N(0,\sigma^2 t^2)$ instead. In this case, $E(v(t))=0.7978846\times\sigma$, which does not depend on $t$.
 
@@ -653,6 +651,7 @@ As the average speed of an animal over a period of $l$ seconds is $E(v)=E(|Y|)/l
 %\textit{As the scale parameter was made proportional to the interval $t$, the standard deviation of the displacement, rather than its variance, increased in proportion to the elapsed time. We thus assumed continuous movement in one direction, as would result from the pod transiting or moving with a water current rather than a milling movement with frequent changes in direction over $t$.}''
 
 %If we have $X(t)\sim N(0,\sigma^2 t)$, we should have $\sigma=v/0.7978846$, where $v$ is the expected animal movement speed (e.g. for $v=9.5$ m/s, we have $\sigma=9.5/0.7978846\approx 11.9$ m/s, or 0.0119 km/s). This results in a speed  of movement away from the initial postion after 1 second, of 9.5 m/s, reducing with $t$ in inverse proportion to $\sqrt{t}$.
+
 
 \section*{Acknowledgements}
 (TBC):
@@ -673,4 +672,5 @@ Stephen Marsland contributed substantially to obtaining the correct expression f
 
 
 \end{document}
+
 
